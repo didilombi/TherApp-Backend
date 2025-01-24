@@ -8,11 +8,11 @@
 		<version>3.4.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.proyecto</groupId>
-	<artifactId>Salud-Mental-app</artifactId>
+	<groupId>com.therapp</groupId>
+	<artifactId>TherApp</artifactId>
 	<version>1</version>
-	<name>Salud-Mental-app</name>
-	<description>Ejemplo de creacion de controladores</description>
+	<name>TherApp</name>
+	<description>TherApp</description>
 	<url/>
 	<licenses>
 		<license/>
