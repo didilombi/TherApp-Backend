@@ -18,9 +18,48 @@ public class MultimediaMensaje {
     private String url;
     private Date fechaEnvio;
 
-    
     @ManyToOne
     @JoinColumn(name = "mensaje_id")
     private Mensaje mensaje;
 
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTipoContenido() {
+        return tipoContenido;
+    }
+
+    public void setTipoContenido(String tipoContenido) {
+        this.tipoContenido = tipoContenido;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Date getFechaEnvio() {
+        return fechaEnvio;
+    }
+
+    public void setFechaEnvio(Date fechaEnvio) {
+        this.fechaEnvio = fechaEnvio;
+    }
+
+    public Mensaje getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(Mensaje mensaje) {
+        this.mensaje = mensaje;
+    }
 }

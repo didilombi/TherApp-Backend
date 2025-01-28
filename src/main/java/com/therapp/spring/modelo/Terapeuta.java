@@ -1,6 +1,5 @@
 package com.therapp.spring.modelo;
 
-import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -8,12 +7,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Terapeuta extends Usuario{
 
     private String nColegiado;
+    private String apellidos;
     private int experiencia;
     private String especialidad;
     private String idiomas;
@@ -46,6 +45,14 @@ public class Terapeuta extends Usuario{
 
     public void setnColegiado(String nColegiado) {
         this.nColegiado = nColegiado;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public int getExperiencia() {

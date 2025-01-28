@@ -2,10 +2,13 @@ package com.therapp.spring.modelo;
 
 import java.util.Set;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 
+@Entity
 public class Paciente extends Usuario {
 
+   private String apellidos;
    private String estado;
    private String sintomas;
 
@@ -13,6 +16,15 @@ public class Paciente extends Usuario {
     private Set<Terapeuta> terapeutas;
     
      // Getters and setters
+
+        public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
      public String getEstado() {
       return estado;
   }

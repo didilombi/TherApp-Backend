@@ -1,6 +1,9 @@
 package com.therapp.spring.modelo;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -8,25 +11,30 @@ import jakarta.persistence.MapsId;
 @Entity
 public class UsuarioPublicacion {
 
-    private String rol;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
-    @MapsId("usuarioId")
+    @MapsId("id")
     @JoinColumn(name = "usuarioId")
     private Usuario usuario;
 
     @ManyToOne
-    @MapsId("publicacionId")
+    @MapsId("id")
     @JoinColumn(name = "publicacionId")
     private Publicacion publicacion;
 
-     // Getters and setters
-     public String getRol() {
-        return rol;
+    private String rol;
+
+    // Getters and setters
+
+    public Long getId() {
+        return id;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Usuario getUsuario() {
@@ -45,5 +53,11 @@ public class UsuarioPublicacion {
         this.publicacion = publicacion;
     }
 
+    public String getRol() {
+        return rol;
+    }
 
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
 }

@@ -26,4 +26,36 @@ public class Seguidor {
 
     private Date fechaSeguimiento;
 
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuarioSeguido() {
+        return usuarioSeguido;
+    }
+
+    public void setUsuarioSeguido(Usuario usuarioSeguido) {
+        this.usuarioSeguido = usuarioSeguido;
+    }
+
+    public Usuario getUsuarioSeguidor() {
+        return usuarioSeguidor;
+    }
+
+    public void setUsuarioSeguidor(Usuario usuarioSeguidor) {
+        this.usuarioSeguidor = usuarioSeguidor;
+    }
+
+    public Date getFechaSeguimiento() {
+        return fechaSeguimiento;
+    }
+
+    public void setFechaSeguimiento(Date fechaSeguimiento) {
+        this.fechaSeguimiento = fechaSeguimiento;
+    }
 }

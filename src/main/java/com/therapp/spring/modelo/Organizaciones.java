@@ -8,7 +8,6 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class Organizaciones extends Usuario {
 
-    private String nombre;
     private String cif;
     private String direccion;
     private String telefono;
@@ -20,13 +19,6 @@ public class Organizaciones extends Usuario {
     private List<Terapeuta> terapeutas;
 
     // Getters and setters
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     public String getCif() {
         return cif;
