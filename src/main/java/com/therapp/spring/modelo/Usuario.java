@@ -23,7 +23,7 @@ public class Usuario {
     private String email;
     private String clave;
     private String fotoPerfil;
-    private String rol;
+    private Rol rol;
     private String dni;
     private Date fechaNacimiento;
     private String telefono;

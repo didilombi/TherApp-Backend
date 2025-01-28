@@ -17,7 +17,14 @@ public class Terapeuta extends Usuario{
     private String especialidad;
     private String idiomas;
 
-   
+    public Terapeuta() {} //constructor vacio
+
+    // Constructor con parámetros
+    public Terapeuta(String nombre, String nombreUsuario,String email, String nombre, String correo, String especialidad) {
+        super(nombre, nombreUsuario,email,clave,fotoPerfil,rol,dni,fechaNacimiento,telefono,fechaRegistro,ubicacion,biografia); // Llama al constructor de Usuario
+        this.especialidad = especialidad;
+    }
+
     @ManyToOne
     @JoinColumn(name = "organizacion_id")
     private Organizaciones organizacion;
