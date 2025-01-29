@@ -1,31 +1,28 @@
 package com.therapp.spring.controladores;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.servicios.TerapeutaService;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/terapeuta")
+@RequestMapping("/api/terapeutas")
 public class TerapeutaController {
-    @Autowired
-    private TerapeutaService terapeutaService;
 
+    private final TerapeutaService terapeutaService;
 
-    //endpoints para listar y registrar terapeutas
+    public TerapeutaController(TerapeutaService terapeutaService) {
+        this.terapeutaService = terapeutaService;
+    }
+
     @GetMapping
     public List<Terapeuta> getAllTerapeutas() {
         return terapeutaService.findAll();
     }
 
     @PostMapping
-    public Terapeuta añadiTerapeuta(@RequestBody Terapeuta terapeuta) {
+    public Terapeuta addTerapeuta(@RequestBody Terapeuta terapeuta) {
         return terapeutaService.save(terapeuta);
     }
 }

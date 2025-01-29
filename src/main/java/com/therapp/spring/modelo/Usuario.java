@@ -1,9 +1,11 @@
 package com.therapp.spring.modelo;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,11 +25,12 @@ public class Usuario {
     private String email;
     private String clave;
     private String fotoPerfil;
+    @Enumerated(EnumType.STRING)
     private Rol rol;
     private String dni;
-    private Date fechaNacimiento;
+    private LocalDate fechaNacimiento;
     private String telefono;
-    private Date fechaRegistro;
+    private LocalDateTime fechaRegistro;
     private String ubicacion;
     private String biografia;
 
@@ -50,6 +53,22 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<LikeComentario> likes;
 
+    public Usuario() {} //constructor vacio
+
+    public Usuario(String nombre, String nombreUsuario,String email, String clave, String fotoPerfil, Rol rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion, String biografia) {
+        this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.email = email;
+        this.clave = clave;
+        this.fotoPerfil = fotoPerfil;
+        this.rol = rol;
+        this.dni = dni;
+        this.fechaNacimiento = fechaNacimiento;
+        this.telefono = telefono;
+        this.fechaRegistro = LocalDateTime.now();
+        this.ubicacion = ubicacion;
+        this.biografia = biografia;
+    }
     // Getters and setters
     public Integer getId() {
         return id;
@@ -99,11 +118,11 @@ public class Usuario {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public String getRol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 
@@ -115,11 +134,11 @@ public class Usuario {
         this.dni = dni;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -131,11 +150,11 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public Date getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 

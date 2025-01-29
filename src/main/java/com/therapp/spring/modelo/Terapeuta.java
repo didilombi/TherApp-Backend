@@ -1,5 +1,6 @@
 package com.therapp.spring.modelo;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -13,17 +14,22 @@ public class Terapeuta extends Usuario{
 
     private String nColegiado;
     private String apellidos;
-    private int experiencia;
+    private String experiencia;
     private String especialidad;
     private String idiomas;
 
     public Terapeuta() {} //constructor vacio
 
     // Constructor con parámetros
-    public Terapeuta(String nombre, String nombreUsuario,String email, String nombre, String correo, String especialidad) {
-        super(nombre, nombreUsuario,email,clave,fotoPerfil,rol,dni,fechaNacimiento,telefono,fechaRegistro,ubicacion,biografia); // Llama al constructor de Usuario
-        this.especialidad = especialidad;
-    }
+    public Terapeuta(String nombre, String nombreUsuario, String email, String clave, String fotoPerfil, Rol rol, String dni, LocalDate fechaNacimiento, String telefono, String ubicacion, String biografia, String nColegiado, String apellidos, String experiencia, String especialidad, String idiomas) {
+    super(nombre, nombreUsuario, email, clave, fotoPerfil, rol, dni, fechaNacimiento, telefono, ubicacion, biografia); 
+    this.nColegiado = nColegiado;
+    this.apellidos = apellidos;
+    this.experiencia = experiencia;
+    this.especialidad = especialidad;
+    this.idiomas = idiomas;
+}
+
 
     @ManyToOne
     @JoinColumn(name = "organizacion_id")
@@ -62,11 +68,11 @@ public class Terapeuta extends Usuario{
         this.apellidos = apellidos;
     }
 
-    public int getExperiencia() {
+    public String getExperiencia() {
         return experiencia;
     }
 
-    public void setExperiencia(int experiencia) {
+    public void setExperiencia(String experiencia) {
         this.experiencia = experiencia;
     }
 

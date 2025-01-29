@@ -2,53 +2,46 @@ package com.therapp.spring.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import com.therapp.spring.modelo.Usuario;
-import com.therapp.spring.repositorios.UsuarioRepository;
+import com.therapp.spring.servicios.UsuarioService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
-    /* 
-    
-    ESTA IMPLEMENTACION ES PARA TENER UN BOCETO DE COMO SE DEBERIA DE HACER
 
-    */
-
+    private final UsuarioService usuarioService;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @GetMapping
-    public List<Usuario> TodosLosUsuarios() {
-        return usuarioRepository.findAll();
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
 
-    @GetMapping("/{id}")
-    public Usuario getUsuarioById(@PathVariable Integer id) {
-        return usuarioRepository.findById(id).orElse(null);
+    @GetMapping
+    public List<Usuario> getAllUsuarios() {
+        return usuarioService.findAll();
     }
 
     @PostMapping
     public Usuario crearUsuario(@RequestBody Usuario usuario) {
-        return usuarioRepository.save(usuario);
+        return usuarioService.save(usuario);
     }
 
-    @PutMapping("/{id}")
-    public Usuario modificarUsuario(@PathVariable Integer id, @RequestBody Usuario usuarioDetails) {
-        Usuario usuario = usuarioRepository.findById(id).orElse(null);
-        if (usuario != null) {
-            usuario.setNombre(usuarioDetails.getNombre());
-            usuario.setEmail(usuarioDetails.getEmail());
-            
-            return usuarioRepository.save(usuario);
-        }
-        return null;
-    }
+    // @PutMapping("/{id}")
+    // public Usuario modificarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioDetails) {
+    //     return usuarioService.findById(id)
+    //             .map(usuario -> {
+    //                 usuario.setNombre(usuarioDetails.getNombre());
+    //                 usuario.setEmail(usuarioDetails.getEmail());
+    //                 return usuarioService.save(usuario);
+    //             })
+    //             .orElse(null);
+    // }
 
-    @DeleteMapping("/{id}")
-    public void borrarUsuario(@PathVariable Integer id) {
-        usuarioRepository.deleteById(id);
-    }
+    // @DeleteMapping("/{id}")
+    // public void borrarUsuario(@PathVariable Long id) {
+    //     usuarioService.deleteById(id);
+    // }
 }
