@@ -5,8 +5,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
+import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.UsuarioRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class UsuarioService {
@@ -30,5 +33,23 @@ public class UsuarioService {
     public void saveAll(Iterable<Usuario> usuarios) {
 
         usuarioRepositorio.saveAll(usuarios);
+    }
+
+    public void delete(Usuario u){
+        usuarioRepositorio.delete(u);
+    }
+
+    public Usuario findByEmail(String email) {
+        return usuarioRepositorio.findByEmail(email);
+        
+    }
+
+    @Transactional
+    public void transform(Usuario usuarionuevo){
+
+        Terapeuta t = new Terapeuta(usuarionuevo,"numero de colegiado nuevo","Apellido nuevo", "Experiencia en terapia nueva", "Especialidad X nueva", "Español, Inglés nuevo");
+        
+        this.save(t);
+
     }
 }
