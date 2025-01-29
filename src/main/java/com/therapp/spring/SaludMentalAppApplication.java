@@ -27,7 +27,7 @@ public class SaludMentalAppApplication {
 
 			// Lista de usuarios iniciales que quiero guardar en la base de datos
 			List<Usuario> usuarios = Arrays.asList(
-				new Terapeuta("Juan", "JuanIncognito","juan@gmail.com","1234","Sin Imagen",Rol.TERAPEUTA,"12345678A",LocalDate.of(1989, 12, 12),"123ABC", "Apellidos", "Experiencia en terapia", "Especialidad X", "Español, Inglés","132456789","Alicante","Biografia Usuario"),
+				new Terapeuta("Juan", "JuanIncognito","juan@gmail.com","1234","Sin Imagen",Rol.TERAPEUTA,"12345678A",LocalDate.of(1989, 12, 12), "132456789", "Alicante","Biografia Usuario", "123ABC","Apellidos usuario", "Experiencia en terapia", "Especialidad X", "Español, Inglés"),
 				new Usuario("Maria", "MariaIncognito","maria@gmail.com","1234","Sin Imagen",
 							Rol.ADMIN,"12345678B",LocalDate.of(1989, 12, 12),
 							"132456789","Alicante","Biografia Usuario")
@@ -35,19 +35,6 @@ public class SaludMentalAppApplication {
 	
 			// Guardar todos los usuarios en la base de datos
 			usuarioService.saveAll(usuarios);
-
-			// // Filtrar los usuarios con rol TERAPEUTA y los convertimos a Terapeuta
-			// List<Terapeuta> terapeutas = usuarios.stream() //stream() filtra y transforma la lista, y me evita usar bucles, ademas de evita crear una lista nueva de terapeutas donde tendria que guardar los datos. de esta forma se ahorra codigo y memoria
-			// .filter(u -> u.getRol() == Rol.TERAPEUTA) // Filtrar solo terapeutas de la lista de usuarios de arriba
-			// .map(u -> new Terapeuta(
-			// 	u.getNombre(), u.getNombreUsuario(), u.getEmail(), u.getClave(), u.getFotoPerfil(),
-			// 	u.getRol(), u.getDni(), u.getFechaNacimiento(), u.getTelefono(), u.getUbicacion(),
-			// 	u.getBiografia(),
-			// 	"123ABC", "Apellidos", "Experiencia en terapia", "Especialidad X", "Español, Inglés"
-			// ))
-			// .toList(); // y aqui lo volvemos a transformar en una lista para poder iterar o manejarlo
-	
-			// terapeutaService.saveAll(terapeutas);
 			};
 		};
 
