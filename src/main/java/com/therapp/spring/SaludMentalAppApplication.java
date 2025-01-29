@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.List;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
@@ -35,19 +34,6 @@ public class SaludMentalAppApplication {
 	
 			// Guardar todos los usuarios en la base de datos
 			usuarioService.saveAll(usuarios);
-
-			// // Filtrar los usuarios con rol TERAPEUTA y los convertimos a Terapeuta
-			// List<Terapeuta> terapeutas = usuarios.stream() //stream() filtra y transforma la lista, y me evita usar bucles, ademas de evita crear una lista nueva de terapeutas donde tendria que guardar los datos. de esta forma se ahorra codigo y memoria
-			// .filter(u -> u.getRol() == Rol.TERAPEUTA) // Filtrar solo terapeutas de la lista de usuarios de arriba
-			// .map(u -> new Terapeuta(
-			// 	u.getNombre(), u.getNombreUsuario(), u.getEmail(), u.getClave(), u.getFotoPerfil(),
-			// 	u.getRol(), u.getDni(), u.getFechaNacimiento(), u.getTelefono(), u.getUbicacion(),
-			// 	u.getBiografia(),
-			// 	"123ABC", "Apellidos", "Experiencia en terapia", "Especialidad X", "Español, Inglés"
-			// ))
-			// .toList(); // y aqui lo volvemos a transformar en una lista para poder iterar o manejarlo
-	
-			// terapeutaService.saveAll(terapeutas);
 			};
 		};
 
