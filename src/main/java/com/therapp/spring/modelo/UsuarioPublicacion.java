@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 public class UsuarioPublicacion {
@@ -16,16 +18,15 @@ public class UsuarioPublicacion {
     private Long id;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "usuarioId")
     private Usuario usuario;
 
     @ManyToOne
-    @MapsId("id")
     @JoinColumn(name = "publicacionId")
     private Publicacion publicacion;
 
-    private String rol;
+    @Enumerated(EnumType.STRING)
+    private RolPublicacion rol;
 
     // Getters and setters
 
@@ -53,11 +54,11 @@ public class UsuarioPublicacion {
         this.publicacion = publicacion;
     }
 
-    public String getRol() {
+    public RolPublicacion getRol() {
         return rol;
     }
 
-    public void setRol(String rol) {
+    public void setRol(RolPublicacion rol) {
         this.rol = rol;
     }
 }

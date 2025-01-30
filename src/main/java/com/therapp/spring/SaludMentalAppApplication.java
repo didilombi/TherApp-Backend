@@ -6,16 +6,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.therapp.spring.modelo.Organizaciones;
+import com.therapp.spring.modelo.Publicacion;
 import com.therapp.spring.modelo.Rol;
-import com.therapp.spring.modelo.Terapeuta;
+import com.therapp.spring.modelo.RolPublicacion;
 import com.therapp.spring.modelo.Usuario;
-import com.therapp.spring.servicios.TerapeutaService;
+import com.therapp.spring.servicios.PublicacionService;
 import com.therapp.spring.servicios.UsuarioService;
-import com.therapp.spring.servicios.OrganizacionesService;
-
-import jakarta.transaction.Transactional;
 
 @SpringBootApplication
 public class SaludMentalAppApplication {
@@ -26,10 +24,10 @@ public class SaludMentalAppApplication {
 
     @Bean
     @Transactional
-    CommandLineRunner initData(UsuarioService usuarioService, TerapeutaService terapeutaService, OrganizacionesService organizacionesService) {
+    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService) {
         return args -> {
             // Crear un nuevo usuario
-            Usuario nuevoUsuario = new Usuario(
+            Usuario usuario1 = new Usuario(
                 "Carlos", 
                 "CarlosOrg", 
                 "carlos@org.com", 
@@ -43,22 +41,37 @@ public class SaludMentalAppApplication {
                 "Biografia de Carlos"
             );
 
-            // Guardar el nuevo usuario en la base de datos
-            usuarioService.save(nuevoUsuario);
+            Usuario usuario2 = new Usuario(
+                "Ana", 
+                "AnaColab", 
+                "ana@colab.com", 
+                "password", 
+                "Sin Imagen", 
+                Rol.USUARIO, 
+                "12345678X", 
+                LocalDate.of(1990, 8, 20), 
+                "987654321", 
+                "Barcelona", 
+                "Biografia de Ana"
+            );
 
-            // Crear una nueva organización asociada al usuario
-            Organizaciones nuevaOrganizacion = new Organizaciones();
-            nuevaOrganizacion.setUsuario(nuevoUsuario);
-            nuevaOrganizacion.setCif("B12345678");
-            nuevaOrganizacion.setDireccion("Calle Falsa 123");
-            nuevaOrganizacion.setTelefono("987654321");
-            nuevaOrganizacion.setEmail("contacto@org.com");
-            nuevaOrganizacion.setDescripcion("Descripción de la organización");
-            nuevaOrganizacion.setSitioweb("www.org.com");
+            // Guardar los usuarios en la base de datos
+            usuarioService.save(usuario1);
+            usuarioService.save(usuario2);
 
-            // Guardar la nueva organización en la base de datos
-            // Asumiendo que tienes un servicio para organizaciones
-            organizacionesService.save(nuevaOrganizacion);
+            // Crear una nueva publicación
+            Publicacion publicacion = new Publicacion();
+            publicacion.setTexto("Esta es una nueva publicación");
+            publicacion.setFechaPublicacion("2023-10-01");
+
+            // Guardar la publicación en la base de datos
+            publicacion = publicacionService.guardarPublicacion(publicacion);
+
+            // Guardar la relación con el usuario como autor
+            publicacionService.crearPublicacion(usuario1, publicacion, RolPublicacion.AUTOR);
+
+            // Añadir un colaborador a la publicación
+            publicacionService.crearPublicacion(usuario2, publicacion, RolPublicacion.COLABORADOR);
         };
     }
 }
