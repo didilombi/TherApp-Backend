@@ -22,6 +22,10 @@ public class ComentarioPublicacion {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "publicacion_id")
+    private Publicacion publicacion;
+
     @OneToMany(mappedBy = "comentario")
     private List<LikeComentario> likes;
 
