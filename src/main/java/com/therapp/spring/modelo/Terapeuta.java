@@ -1,5 +1,6 @@
 package com.therapp.spring.modelo;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -13,11 +14,33 @@ public class Terapeuta extends Usuario{
 
     private String nColegiado;
     private String apellidos;
-    private int experiencia;
+    private String experiencia;
     private String especialidad;
     private String idiomas;
 
-   
+    public Terapeuta() {} //constructor vacio
+
+    // Constructor con parámetros
+    public Terapeuta(String nombre, String nombreUsuario, String email, String clave, String fotoPerfil, Rol rol, String dni, LocalDate fechaNacimiento, String telefono, String ubicacion, String biografia, String nColegiado, String apellidos, String experiencia, String especialidad, String idiomas) {
+        super(nombre, nombreUsuario, email, clave, fotoPerfil, rol, dni, fechaNacimiento, telefono, ubicacion, biografia); 
+        this.nColegiado = nColegiado;
+        this.apellidos = apellidos;
+        this.experiencia = experiencia;
+        this.especialidad = especialidad;
+        this.idiomas = idiomas;
+    }
+
+    public Terapeuta(Usuario user, String nColegiado, String apellidos, String experiencia, String especialidad, String idiomas) {
+        super(user.getNombre(), user.getNombreUsuario(), user.getEmail(), user.getClave(), user.getFotoPerfil(), user.getRol(), user.getDni(), user.getFechaNacimiento(), user.getTelefono(), user.getUbicacion(), user.getBiografia());
+        this.nColegiado = nColegiado;
+        this.apellidos = apellidos;
+        this.experiencia = experiencia;
+        this.especialidad = especialidad;
+        this.idiomas = idiomas;
+        super.setId(user.getId());
+    }
+
+
     @ManyToOne
     @JoinColumn(name = "organizacion_id")
     private Organizaciones organizacion;
@@ -55,11 +78,11 @@ public class Terapeuta extends Usuario{
         this.apellidos = apellidos;
     }
 
-    public int getExperiencia() {
+    public String getExperiencia() {
         return experiencia;
     }
 
-    public void setExperiencia(int experiencia) {
+    public void setExperiencia(String experiencia) {
         this.experiencia = experiencia;
     }
 
