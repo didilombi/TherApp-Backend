@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.List;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
@@ -40,11 +39,13 @@ public class SaludMentalAppApplication {
 							"132456789","Alicante","Biografia Usuario")
 			);
 
+			usuarioService.saveAll(usuarios); //Guardar todos los usuarios en la base de datos
 
+			
 			/* 
 				LOS CAMBIOS QUE HIZO SERGIO
-			Guardar todos los usuarios en la base de datos
-			usuarioService.saveAll(usuarios);
+			
+			
 			Usuario usuarionuevo = usuarioService.findByEmail("paco@gmail.com");
 			usuarioService.transform(usuarionuevo);
 			Terapeuta t = new Terapeuta(usuarionuevo,"numero de colegiado nuevo","Apellido nuevo", "Experiencia en terapia nueva", "Especialidad X nueva", "Español, Inglés nuevo");

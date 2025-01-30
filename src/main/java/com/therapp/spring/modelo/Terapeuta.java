@@ -2,14 +2,15 @@ package com.therapp.spring.modelo;
 
 import java.time.LocalDate;
 import java.util.Set;
-
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+@Table(name = "terapeutas")
 public class Terapeuta extends Usuario{
 
     private String nColegiado;

@@ -17,7 +17,12 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                    .requestMatchers("/h2-console/**").permitAll() // Permitir acceso a la consola H2
+                    .requestMatchers(
+                        "/h2-console/**",
+                        "/swagger-ui/**",
+                        "/v3/**",
+                        "/api/**"
+                        ).permitAll() // Permitir acceso a la consola H2
                     .anyRequest().authenticated()
             )
             .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF para la consola H2
