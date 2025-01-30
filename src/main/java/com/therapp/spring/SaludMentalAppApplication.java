@@ -11,6 +11,9 @@ import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.TerapeutaService;
 import com.therapp.spring.servicios.UsuarioService;
+
+import jakarta.transaction.Transactional;
+
 import com.therapp.spring.modelo.Terapeuta;
 
 @SpringBootApplication
@@ -21,14 +24,18 @@ public class SaludMentalAppApplication {
 	}
 
 	@Bean
+	@Transactional
 	CommandLineRunner initData(UsuarioService usuarioService,TerapeutaService terapeutaService) {
 		return args -> {
 
 			// Lista de usuarios iniciales que quiero guardar en la base de datos
 			List<Usuario> usuarios = Arrays.asList(
-				new Terapeuta("Juan", "JuanIncognito","juan@gmail.com","1234","Sin Imagen",Rol.TERAPEUTA,"12345678A",LocalDate.of(1989, 12, 12),"123ABC", "Apellidos", "Experiencia en terapia", "Especialidad X", "Español, Inglés","132456789","Alicante","Biografia Usuario"),
+				new Terapeuta("Juan", "JuanIncognito","juan@gmail.com","1234","Sin Imagen",Rol.TERAPEUTA,"12345678A",LocalDate.of(1989, 12, 12), "132456789", "Alicante","Biografia Usuario", "123ABC","Apellidos usuario", "Experiencia en terapia", "Especialidad X", "Español, Inglés"),
 				new Usuario("Maria", "MariaIncognito","maria@gmail.com","1234","Sin Imagen",
 							Rol.ADMIN,"12345678B",LocalDate.of(1989, 12, 12),
+							"132456789","Alicante","Biografia Usuario"),
+				new Usuario("Paco", "PacoIncognito","paco@gmail.com","1234","Sin Imagen",
+							Rol.ORGANIZACION,"12345678C",LocalDate.of(1989, 12, 12),
 							"132456789","Alicante","Biografia Usuario")
 			);
 	
