@@ -13,6 +13,9 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepositorio;
+
+    @Autowired
+    private TerapeutaService terapeutaService;
     
     // @Autowired
     // private BCryptPasswordEncoder passwordEncoder; // Codificador de contraseñas
@@ -32,8 +35,13 @@ public class UsuarioService {
         usuarioRepositorio.saveAll(usuarios);
     }
 
-    public void delete(Usuario u){
+    public void delete(Usuario u) {
+        terapeutaService.deleteByUsuario(u);
         usuarioRepositorio.delete(u);
+    }
+
+    public void deleteById(Integer id) {
+        usuarioRepositorio.deleteById(id);
     }
 
     public Usuario findByEmail(String email) {

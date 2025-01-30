@@ -25,4 +25,9 @@ public class TerapeutaController {
     public Terapeuta addTerapeuta(@RequestBody Terapeuta terapeuta) {
         return terapeutaService.save(terapeuta);
     }
+
+    @DeleteMapping("/{id}")
+    public void borrarTerapeuta(@PathVariable Integer id) {
+        terapeutaService.deleteById(id);
+    }
 }

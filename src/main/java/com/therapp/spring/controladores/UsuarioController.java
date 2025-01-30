@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.UsuarioService;
@@ -33,19 +35,8 @@ public class UsuarioController {
         return usuarioService.save(usuario);
     }
 
-    // @PutMapping("/{id}")
-    // public Usuario modificarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioDetails) {
-    //     return usuarioService.findById(id)
-    //             .map(usuario -> {
-    //                 usuario.setNombre(usuarioDetails.getNombre());
-    //                 usuario.setEmail(usuarioDetails.getEmail());
-    //                 return usuarioService.save(usuario);
-    //             })
-    //             .orElse(null);
-    // }
-
-    // @DeleteMapping("/{id}")
-    // public void borrarUsuario(@PathVariable Long id) {
-    //     usuarioService.deleteById(id);
-    // }
+    @DeleteMapping("/{id}")
+    public void borrarUsuario(@PathVariable Integer id) {
+        usuarioService.deleteById(id);
+    }
 }

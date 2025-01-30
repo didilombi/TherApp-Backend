@@ -1,28 +1,42 @@
 package com.therapp.spring.seguridad;
 
+import org.springframework.security.core.userdetails.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
-
-    
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(authorizeRequests ->
-                authorizeRequests
-                    .requestMatchers("/h2-console/**").permitAll() // Permitir acceso a la consola H2
-                    .anyRequest().authenticated()
+            .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF para permitir peticiones desde Postman y PowerShell
+            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())) // Permitir carga de H2 Console en frames
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/h2-console/**").permitAll() // Permitir acceso a H2 Console
+                .requestMatchers("/api/**").authenticated() // Proteger rutas de la API
+                .anyRequest().permitAll() // Permitir acceso al resto
             )
-            .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF para la consola H2
-            .headers(headers -> headers.frameOptions().disable()); // Deshabilitar frame options para la consola H2
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Evitar sesiones
+            .httpBasic(); // Habilitar autenticación básica para probar con Invoke-RestMethod
 
         return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.withDefaultPasswordEncoder()
+            .username("admin")
+            .password("admin123")
+            .roles("USER")
+            .build();
+        return new InMemoryUserDetailsManager(user);
     }
 }

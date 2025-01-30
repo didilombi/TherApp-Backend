@@ -1,0 +1,4 @@
+2025-01-30 21:52:30.729213+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]USUARIO"; se esperaba "UPDATE"
+Syntax error in SQL statement "[*]USUARIO"; expected "UPDATE"; SQL statement:
+USUARIO [42001-232]
