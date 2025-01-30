@@ -1,45 +1,32 @@
 package com.therapp.spring.modelo;
 
-import java.time.LocalDate;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
-public class Terapeuta extends Usuario{
+public class Terapeuta {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String nColegiado;
     private String apellidos;
     private String experiencia;
     private String especialidad;
     private String idiomas;
 
-    public Terapeuta() {} //constructor vacio
-
-    // Constructor con parámetros
-    public Terapeuta(String nombre, String nombreUsuario, String email, String clave, String fotoPerfil, Rol rol, String dni, LocalDate fechaNacimiento, String telefono, String ubicacion, String biografia, String nColegiado, String apellidos, String experiencia, String especialidad, String idiomas) {
-        super(nombre, nombreUsuario, email, clave, fotoPerfil, rol, dni, fechaNacimiento, telefono, ubicacion, biografia); 
-        this.nColegiado = nColegiado;
-        this.apellidos = apellidos;
-        this.experiencia = experiencia;
-        this.especialidad = especialidad;
-        this.idiomas = idiomas;
-    }
-
-    public Terapeuta(Usuario user, String nColegiado, String apellidos, String experiencia, String especialidad, String idiomas) {
-        super(user.getNombre(), user.getNombreUsuario(), user.getEmail(), user.getClave(), user.getFotoPerfil(), user.getRol(), user.getDni(), user.getFechaNacimiento(), user.getTelefono(), user.getUbicacion(), user.getBiografia());
-        this.nColegiado = nColegiado;
-        this.apellidos = apellidos;
-        this.experiencia = experiencia;
-        this.especialidad = especialidad;
-        this.idiomas = idiomas;
-        super.setId(user.getId());
-    }
-
+    @OneToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "organizacion_id")
@@ -57,11 +44,19 @@ public class Terapeuta extends Usuario{
     @JoinTable(
         name = "terapeuta_especialidad",
         joinColumns = @JoinColumn(name = "terapeutaId"),
-        inverseJoinColumns = @JoinColumn(name = "pacienteId")
+        inverseJoinColumns = @JoinColumn(name = "especialidadId")
     )
     private Set<Especialidad> especialidades;
 
     // Getters and setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getnColegiado() {
         return nColegiado;
     }
@@ -100,6 +95,14 @@ public class Terapeuta extends Usuario{
 
     public void setIdiomas(String idiomas) {
         this.idiomas = idiomas;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Organizaciones getOrganizacion() {

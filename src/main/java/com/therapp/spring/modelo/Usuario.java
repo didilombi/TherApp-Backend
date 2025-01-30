@@ -1,8 +1,9 @@
 package com.therapp.spring.modelo;
 
-import java.time.LocalDateTime;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -12,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -34,7 +36,12 @@ public class Usuario {
     private String ubicacion;
     private String biografia;
 
-    
+    @OneToOne(mappedBy = "usuario")
+    private Terapeuta terapeuta;
+
+    @OneToOne(mappedBy = "usuario")
+    private Organizaciones organizacion;
+
     @OneToMany(mappedBy = "usuario")
     private List<Mensaje> mensajes;
 

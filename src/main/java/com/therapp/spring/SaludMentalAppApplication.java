@@ -1,47 +1,60 @@
 package com.therapp.spring;
 
+import java.time.LocalDate;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+
 import com.therapp.spring.modelo.Rol;
+import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.TerapeutaService;
 import com.therapp.spring.servicios.UsuarioService;
 
 import jakarta.transaction.Transactional;
 
-import com.therapp.spring.modelo.Terapeuta;
-
 @SpringBootApplication
 public class SaludMentalAppApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SaludMentalAppApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SaludMentalAppApplication.class, args);
+    }
 
-	@Bean
-	@Transactional
-	CommandLineRunner initData(UsuarioService usuarioService,TerapeutaService terapeutaService) {
-		return args -> {
+    @Bean
+    @Transactional
+    CommandLineRunner initData(UsuarioService usuarioService, TerapeutaService terapeutaService) {
+        return args -> {
+            // Crear un nuevo usuario
+            Usuario nuevoUsuario = new Usuario(
+                "Ana", 
+                "AnaNormal", 
+                "ana@gmail.com", 
+                "1234", 
+                "Sin Imagen", 
+                Rol.TERAPEUTA, 
+                "12345678D", 
+                LocalDate.of(1990, 1, 1), 
+                "987654321", 
+                "Valencia", 
+                "Biografia de Ana"
+            );
 
-			// Lista de usuarios iniciales que quiero guardar en la base de datos
-			List<Usuario> usuarios = Arrays.asList(
-				new Terapeuta("Juan", "JuanIncognito","juan@gmail.com","1234","Sin Imagen",Rol.TERAPEUTA,"12345678A",LocalDate.of(1989, 12, 12), "132456789", "Alicante","Biografia Usuario", "123ABC","Apellidos usuario", "Experiencia en terapia", "Especialidad X", "Español, Inglés"),
-				new Usuario("Maria", "MariaIncognito","maria@gmail.com","1234","Sin Imagen",
-							Rol.ADMIN,"12345678B",LocalDate.of(1989, 12, 12),
-							"132456789","Alicante","Biografia Usuario"),
-				new Usuario("Paco", "PacoIncognito","paco@gmail.com","1234","Sin Imagen",
-							Rol.ORGANIZACION,"12345678C",LocalDate.of(1989, 12, 12),
-							"132456789","Alicante","Biografia Usuario")
-			);
-	
-			// Guardar todos los usuarios en la base de datos
-			usuarioService.saveAll(usuarios);
-			};
-		};
+            // Guardar el nuevo usuario en la base de datos
+            usuarioService.save(nuevoUsuario);
 
-	}
+            // Crear un nuevo terapeuta asociado al usuario
+            Terapeuta nuevoTerapeuta = new Terapeuta();
+            nuevoTerapeuta.setUsuario(nuevoUsuario);
+            nuevoTerapeuta.setnColegiado("12345");
+            nuevoTerapeuta.setApellidos("Perez");
+            nuevoTerapeuta.setExperiencia("5 años");
+            nuevoTerapeuta.setEspecialidad("Psicología");
+            nuevoTerapeuta.setIdiomas("Español, Inglés");
+
+            // Guardar el nuevo terapeuta en la base de datos
+            terapeutaService.save(nuevoTerapeuta);
+        };
+    }
+}
