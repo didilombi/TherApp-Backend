@@ -5,11 +5,7 @@ import java.util.List;
 
 import com.therapp.spring.dto.TerapeutaDTo;
 import com.therapp.spring.modelo.Terapeuta;
-<<<<<<< HEAD
-import com.therapp.spring.modelo.Usuario;
-=======
 import java.util.Optional;
->>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)
 import com.therapp.spring.repositorios.TerapeutaRepository;
 
 @Service
@@ -38,18 +34,6 @@ public class TerapeutaService {
         terapeutaRepositorio.saveAll(terapeutas);
     }
 
-<<<<<<< HEAD
-    public void deleteById(Integer id) {
-        terapeutaRepositorio.deleteById(id);
-    }
-
-    public void deleteByUsuario(Usuario usuario) {
-        Terapeuta terapeuta = terapeutaRepositorio.findByUsuario(usuario);
-        if (terapeuta != null) {
-            terapeutaRepositorio.delete(terapeuta);
-        }
-    }
-=======
     public void deleteById(Long id) {
         terapeutaRepositorio.deleteById(id.intValue());
     }
@@ -63,5 +47,4 @@ public class TerapeutaService {
         return terapeutaRepositorio.save(terapeuta);
     }
     
->>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)
 }

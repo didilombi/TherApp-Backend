@@ -78,6 +78,8 @@ public class SaludMentalAppApplication {
 				LOS CAMBIOS QUE HIZO SERGIO
 			
 			
+			
+			
 			Usuario usuarionuevo = usuarioService.findByEmail("paco@gmail.com");
 			usuarioService.transform(usuarionuevo);
 			Terapeuta t = new Terapeuta(usuarionuevo,"numero de colegiado nuevo","Apellido nuevo", "Experiencia en terapia nueva", "Especialidad X nueva", "Español, Inglés nuevo");

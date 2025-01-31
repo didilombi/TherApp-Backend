@@ -4,11 +4,7 @@ import java.util.List;
 <<<<<<< HEAD
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.therapp.spring.modelo.Usuario;
-import com.therapp.spring.repositorios.UsuarioRepository;
-=======
+import java.util.List;
 import com.therapp.spring.dto.UsuarioDTO;
 import com.therapp.spring.dto.TerapeutaDTo;
 import com.therapp.spring.dto.UsuarioDTO;
@@ -60,9 +56,6 @@ public class UsuarioService {
         
     }
 
-<<<<<<< HEAD
-   
-=======
     public Usuario registrarUsuario(UsuarioDTO usuarioDTO) {
     Usuario usuario = new Usuario();
     usuario.setNombre(usuarioDTO.getNombre());
@@ -81,5 +74,4 @@ public class UsuarioService {
 
     // }
 
->>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)
 }

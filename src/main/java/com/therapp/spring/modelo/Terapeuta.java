@@ -2,13 +2,7 @@ package com.therapp.spring.modelo;
 
 import java.util.Set;
 import jakarta.persistence.Entity;
-<<<<<<< HEAD
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-=======
 import jakarta.persistence.Table;
->>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -16,9 +10,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
-<<<<<<< HEAD
-public class Terapeuta {
-=======
 @Table(name = "terapeutas")
 public class Terapeuta extends Usuario{
 >>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)

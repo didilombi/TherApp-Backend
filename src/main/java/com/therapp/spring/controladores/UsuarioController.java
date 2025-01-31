@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.therapp.spring.modelo.Usuario;
-import com.therapp.spring.servicios.UsuarioService;
-=======
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.therapp.spring.dto.UsuarioDTO;
@@ -23,7 +21,6 @@ import com.therapp.spring.dto.ConverserDTO;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.servicios.UsuarioService;
 import com.therapp.spring.servicios.TerapeutaService;
->>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -46,17 +43,4 @@ public class UsuarioController {
             return ResponseEntity.ok(usuarioService.registrarUsuario(usuarioDTO));
         }
     }
-<<<<<<< HEAD
-
-    @PostMapping
-    public Usuario crearUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.save(usuario);
-    }
-
-    @DeleteMapping("/{id}")
-    public void borrarUsuario(@PathVariable Integer id) {
-        usuarioService.deleteById(id);
-    }
-=======
->>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)
 }
