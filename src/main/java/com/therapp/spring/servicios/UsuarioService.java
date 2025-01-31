@@ -58,31 +58,10 @@ public class UsuarioService {
         
     }
 
-    //metodo para recibir 
-    public Usuario registrarUsuario(UsuarioDTO usuarioDTO) {
-        Usuario usuario;
-
-        switch (usuarioDTO.getRol().toString().toUpperCase()) {
-            case "null":
-                usuario = new Usuario();
-                break;
-            case "TERAPEUTA":
-                Terapeuta terapeuta = new Terapeuta();
-                terapeuta.setEspecialidad(usuarioDTO.getEspecialidad());
-                usuario = terapeuta;
-                break;
-            case "ORGANIZACION":
-                Organizacion organizacion = new Organizacion();
-                organizacion.setCif(usuarioDTO.getCif());
-                usuario = organizacion;
-                break;
-            default:
-                usuario = new Usuario(); // Usuario genérico
+    public Usuario guardarUsuario(Usuario usuario) {
+        if (usuarioRepositorio.existsByEmail(usuario.getEmail())) {
+            throw new RuntimeException("El email ya está registrado.");
         }
-
-        usuario.setNombre(usuarioDTO.getNombre());
-        usuario.setEmail(usuarioDTO.getEmail());
-        usuario.setClave(usuarioDTO.getClave()); // Ojo: Encriptar antes de guardar
         return usuarioRepositorio.save(usuario);
     }
 }

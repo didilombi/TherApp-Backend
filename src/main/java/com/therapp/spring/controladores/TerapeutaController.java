@@ -36,16 +36,16 @@ public class TerapeutaController {
         return terapeutaService.findById(id);
     }
 
-    @PostMapping
-    public Terapeuta addTerapeuta(@RequestBody TerapeutaDTo terapeutaDTO) {
-        Terapeuta terapeuta = new Terapeuta();
-        terapeuta.setNombre(terapeutaDTO.getNombre());
-        terapeuta.setEspecialidad(terapeutaDTO.getEspecialidad());
-        terapeuta.setNombreUsuario(terapeutaDTO.getNombreUsuario());
-        terapeuta.setEmail(terapeutaDTO.getEmail());
+    // @PostMapping
+    // public Terapeuta addTerapeuta(@RequestBody TerapeutaDTo terapeutaDTO) {
+    //     Terapeuta terapeuta = new Terapeuta();
+    //     terapeuta.setNombre(terapeutaDTO.getNombre());
+    //     terapeuta.setEspecialidad(terapeutaDTO.getEspecialidad());
+    //     terapeuta.setNombreUsuario(terapeutaDTO.getNombreUsuario());
+    //     terapeuta.setEmail(terapeutaDTO.getEmail());
 
-        return terapeutaService.save(terapeuta);
-    }
+    //     return terapeutaService.save(terapeuta);
+    // }
 
     @DeleteMapping("/{id}")
     public void borrarTerapeuta(@PathVariable Integer id) {

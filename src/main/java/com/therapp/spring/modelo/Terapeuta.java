@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "terapeutas")
-public class Terapeuta extends Usuario{
+public class Terapeuta{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

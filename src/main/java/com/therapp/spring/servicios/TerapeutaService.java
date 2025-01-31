@@ -38,13 +38,13 @@ public class TerapeutaService {
         terapeutaRepositorio.deleteById(id.intValue());
     }
 
-    public Terapeuta registrarTerapeuta(TerapeutaDTo TerapeutaDTO) {
-        Terapeuta terapeuta = new Terapeuta();
-        terapeuta.setNombre(TerapeutaDTO.getNombre());
-        terapeuta.setEspecialidad(TerapeutaDTO.getEspecialidad());
-        terapeuta.setNombreUsuario(TerapeutaDTO.getNombreUsuario());
-        terapeuta.setEmail(TerapeutaDTO.getEmail());
-        return terapeutaRepositorio.save(terapeuta);
-    }
+    // public Terapeuta registrarTerapeuta(TerapeutaDTo TerapeutaDTO) {
+    //     Terapeuta terapeuta = new Terapeuta();
+    //     terapeuta.setNombre(TerapeutaDTO.getNombre());
+    //     terapeuta.setEspecialidad(TerapeutaDTO.getEspecialidad());
+    //     terapeuta.setNombreUsuario(TerapeutaDTO.getNombreUsuario());
+    //     terapeuta.setEmail(TerapeutaDTO.getEmail());
+    //     return terapeutaRepositorio.save(terapeuta);
+    // }
     
 }
