@@ -6,7 +6,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class LikePublicacion {
 
@@ -15,20 +21,11 @@ public class LikePublicacion {
     private int id;
     private Date fecha;
 
-     // Getters and setters
-     public int getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "usuarioId")
+    private Usuario usuario;
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-}
+    @ManyToOne
+    @JoinColumn(name = "publicacionId")
+    private Publicacion publicacion;
 }

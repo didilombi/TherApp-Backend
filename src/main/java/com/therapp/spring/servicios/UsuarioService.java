@@ -11,43 +11,26 @@ import com.therapp.spring.repositorios.UsuarioRepository;
 @Service
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepositorio;
+    private final UsuarioRepository usuarioRepository;
 
     @Autowired
-    private TerapeutaService terapeutaService;
-    
-    // @Autowired
-    // private BCryptPasswordEncoder passwordEncoder; // Codificador de contraseñas
+    public UsuarioService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public List<Usuario> findAll() {
-        return usuarioRepositorio.findAll();
+        return usuarioRepository.findAll();
     }
 
-    //este metodo guarda un usuario en la base de datos
+    public Usuario findById(Integer id) {
+        return usuarioRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    }
+
     public Usuario save(Usuario usuario) {
-        return usuarioRepositorio.save(usuario);
-    }
-
-    //este metodo se encarga de guardar una lista de usuarios predefinidos en la base de datos
-    public void saveAll(Iterable<Usuario> usuarios) {
-
-        usuarioRepositorio.saveAll(usuarios);
-    }
-
-    public void delete(Usuario u) {
-        terapeutaService.deleteByUsuario(u);
-        usuarioRepositorio.delete(u);
+        return usuarioRepository.save(usuario);
     }
 
     public void deleteById(Integer id) {
-        usuarioRepositorio.deleteById(id);
+        usuarioRepository.deleteById(id);
     }
-
-    public Usuario findByEmail(String email) {
-        return usuarioRepositorio.findByEmail(email);
-        
-    }
-
-   
 }
