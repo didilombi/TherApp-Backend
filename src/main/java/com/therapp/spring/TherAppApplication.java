@@ -19,6 +19,7 @@ import com.therapp.spring.servicios.ComentarioPublicacionService;
 import com.therapp.spring.servicios.LikeComentarioService;
 import com.therapp.spring.servicios.LikePublicacionService;
 import com.therapp.spring.servicios.PublicacionService;
+import com.therapp.spring.servicios.SeguidorService;
 import com.therapp.spring.servicios.UsuarioService;
 
 @SpringBootApplication
@@ -30,7 +31,7 @@ public class TherAppApplication {
 
     @Bean
     @Transactional
-    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService) {
+    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService) {
         return args -> {
             // Crear usuarios
             Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", "password", "Sin Imagen", Rol.ORGANIZACION, "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid", "Biografia de Carlos");
@@ -87,6 +88,10 @@ public class TherAppApplication {
             // Agregar respuestas a los comentarios
             comentarioPublicacionService.agregarRespuesta(comentario1.getId(), usuario2.getId(), "Esta es una respuesta de Ana al comentario de Carlos.");
             comentarioPublicacionService.agregarRespuesta(comentario2.getId(), usuario1.getId(), "Esta es una respuesta de Carlos al comentario de Ana.");
+
+            // Seguir usuarios
+            seguidorService.seguirUsuario(usuario1.getId(), usuario2.getId());
+            seguidorService.seguirUsuario(usuario2.getId(), usuario1.getId());
         };
     }
 }

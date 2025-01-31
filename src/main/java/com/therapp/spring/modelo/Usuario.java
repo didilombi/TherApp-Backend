@@ -50,10 +50,10 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Mensaje> mensajes;
 
-    @OneToMany(mappedBy = "usuarioSeguidor")
+    @OneToMany(mappedBy = "usuarioSeguidor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seguidor> usuariosQueSigo;
 
-    @OneToMany(mappedBy = "usuarioSeguido")
+    @OneToMany(mappedBy = "usuarioSeguido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seguidor> misSeguidores;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
