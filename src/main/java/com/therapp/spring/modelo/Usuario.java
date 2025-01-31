@@ -56,14 +56,14 @@ public class Usuario {
     @OneToMany(mappedBy = "usuarioSeguido")
     private List<Seguidor> misSeguidores;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<UsuarioPublicacion> publicaciones;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikePublicacion> likes;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ComentarioPublicacion> comentarios;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LikePublicacion> likes;
+    private List<LikeComentario> likesComentarios;
 
     public Usuario() {} //constructor vacio
 

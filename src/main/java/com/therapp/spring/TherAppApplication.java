@@ -9,11 +9,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.therapp.spring.modelo.ComentarioPublicacion;
 import com.therapp.spring.modelo.ContenidoPublicacion;
 import com.therapp.spring.modelo.Publicacion;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.RolPublicacion;
 import com.therapp.spring.modelo.Usuario;
+import com.therapp.spring.servicios.ComentarioPublicacionService;
+import com.therapp.spring.servicios.LikeComentarioService;
 import com.therapp.spring.servicios.LikePublicacionService;
 import com.therapp.spring.servicios.PublicacionService;
 import com.therapp.spring.servicios.UsuarioService;
@@ -27,7 +30,7 @@ public class TherAppApplication {
 
     @Bean
     @Transactional
-    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService) {
+    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService) {
         return args -> {
             // Crear usuarios
             Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", "password", "Sin Imagen", Rol.ORGANIZACION, "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid", "Biografia de Carlos");
@@ -72,6 +75,18 @@ public class TherAppApplication {
             // Dar like a la publicación
             likePublicacionService.darLike(publicacion.getId(), usuario1.getId());
             likePublicacionService.darLike(publicacion.getId(), usuario2.getId());
+
+            // Agregar comentarios a la publicación
+            ComentarioPublicacion comentario1 = comentarioPublicacionService.agregarComentario(publicacion.getId(), usuario1.getId(), "Este es un comentario de Carlos.");
+            ComentarioPublicacion comentario2 = comentarioPublicacionService.agregarComentario(publicacion.getId(), usuario2.getId(), "Este es un comentario de Ana.");
+
+            // Dar like a los comentarios
+            likeComentarioService.darLike(comentario1.getId(), usuario2.getId());
+            likeComentarioService.darLike(comentario2.getId(), usuario1.getId());
+
+            // Agregar respuestas a los comentarios
+            comentarioPublicacionService.agregarRespuesta(comentario1.getId(), usuario2.getId(), "Esta es una respuesta de Ana al comentario de Carlos.");
+            comentarioPublicacionService.agregarRespuesta(comentario2.getId(), usuario1.getId(), "Esta es una respuesta de Carlos al comentario de Ana.");
         };
     }
 }

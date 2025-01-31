@@ -30,4 +30,7 @@ public class Publicacion {
 
     @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LikePublicacion> likes;
+
+    @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ComentarioPublicacion> comentarios;
 }
