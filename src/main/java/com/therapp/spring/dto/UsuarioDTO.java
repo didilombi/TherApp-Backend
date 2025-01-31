@@ -9,7 +9,10 @@ import lombok.Setter;
 @Setter
 public class UsuarioDTO {
     private String nombre;
+    private String clave;
     private String nombreUsuario;
     private String email;
     private Rol rol;
+    private String especialidad; //solo para terapeutas
+    private String cif; //solo para organizaciones
 }

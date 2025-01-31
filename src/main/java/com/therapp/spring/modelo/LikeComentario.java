@@ -6,7 +6,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class LikeComentario {
     @Id
@@ -21,38 +25,4 @@ public class LikeComentario {
     @ManyToOne
     @JoinColumn(name = "usuarioId")
     private Usuario usuario;
-
-     // Getters and setters
-     public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public ComentarioPublicacion getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(ComentarioPublicacion comentario) {
-        this.comentario = comentario;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
 }

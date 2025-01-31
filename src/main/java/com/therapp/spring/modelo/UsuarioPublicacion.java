@@ -9,7 +9,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class UsuarioPublicacion {
 
@@ -27,38 +31,4 @@ public class UsuarioPublicacion {
 
     @Enumerated(EnumType.STRING)
     private RolPublicacion rol;
-
-    // Getters and setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Publicacion getPublicacion() {
-        return publicacion;
-    }
-
-    public void setPublicacion(Publicacion publicacion) {
-        this.publicacion = publicacion;
-    }
-
-    public RolPublicacion getRol() {
-        return rol;
-    }
-
-    public void setRol(RolPublicacion rol) {
-        this.rol = rol;
-    }
 }

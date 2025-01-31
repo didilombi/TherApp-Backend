@@ -34,7 +34,7 @@ public class TerapeutaService {
         terapeutaRepositorio.saveAll(terapeutas);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Integer id) {
         terapeutaRepositorio.deleteById(id.intValue());
     }
 

@@ -1,8 +1,8 @@
 package com.therapp.spring.repositorios;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.therapp.spring.modelo.Organizaciones;
+import com.therapp.spring.modelo.Organizacion;
 
-public interface OrganizacionesRepository extends JpaRepository<Organizaciones, Integer> {
+public interface OrganizacionesRepository extends JpaRepository<Organizacion, Integer> {
     
 }

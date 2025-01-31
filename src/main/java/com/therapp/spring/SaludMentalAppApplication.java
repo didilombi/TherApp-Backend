@@ -6,15 +6,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-<<<<<<< HEAD
 import org.springframework.transaction.annotation.Transactional;
 
 import com.therapp.spring.modelo.Publicacion;
-=======
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
->>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.RolPublicacion;
 import com.therapp.spring.modelo.Usuario;
@@ -61,7 +55,6 @@ public class SaludMentalAppApplication {
                 "Biografia de Ana"
             );
 
-<<<<<<< HEAD
             // Guardar los usuarios en la base de datos
             usuarioService.save(usuario1);
             usuarioService.save(usuario2);
@@ -70,23 +63,6 @@ public class SaludMentalAppApplication {
             Publicacion publicacion = new Publicacion();
             publicacion.setTexto("Esta es una nueva publicación");
             publicacion.setFechaPublicacion("2023-10-01");
-=======
-			usuarioService.saveAll(usuarios); //Guardar todos los usuarios en la base de datos
-
-			
-			/* 
-				LOS CAMBIOS QUE HIZO SERGIO
-			
-			
-			
-			
-			Usuario usuarionuevo = usuarioService.findByEmail("paco@gmail.com");
-			usuarioService.transform(usuarionuevo);
-			Terapeuta t = new Terapeuta(usuarionuevo,"numero de colegiado nuevo","Apellido nuevo", "Experiencia en terapia nueva", "Especialidad X nueva", "Español, Inglés nuevo");
-			usuarioService.delete(usuarionuevo);
-			usuarioService.save(t);
-			*/
->>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)
 
             // Guardar la publicación en la base de datos
             publicacion = publicacionService.guardarPublicacion(publicacion);

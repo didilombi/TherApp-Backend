@@ -12,7 +12,6 @@ import java.util.Optional;
 import com.therapp.spring.dto.TerapeutaDTo;
 
 @CrossOrigin(origins = "http://localhost:4200") // Permite solicitudes desde Angular
-@CrossOrigin(origins = "http://localhost:4200") // Permite solicitudes desde Angular
 @RestController
 @RequestMapping("/api/terapeutas")
 @Tag(name = "Terapeutas") //anotacion para detectar el tag de terapeutas
@@ -37,11 +36,6 @@ public class TerapeutaController {
         return terapeutaService.findById(id);
     }
 
-    @GetMapping("/{id}")
-    public Optional<Terapeuta> getTerapeutaById(@PathVariable Integer id) {
-        return terapeutaService.findById(id);
-    }
-
     @PostMapping
     public Terapeuta addTerapeuta(@RequestBody TerapeutaDTo terapeutaDTO) {
         Terapeuta terapeuta = new Terapeuta();
@@ -53,29 +47,8 @@ public class TerapeutaController {
         return terapeutaService.save(terapeuta);
     }
 
-<<<<<<< HEAD
     @DeleteMapping("/{id}")
     public void borrarTerapeuta(@PathVariable Integer id) {
-=======
-    @PutMapping("/{id}")
-    public Terapeuta updateTerapeuta(@PathVariable Integer id, @RequestBody Terapeuta terapeutaDetails) {
-        Optional<Terapeuta> terapeutaList = terapeutaService.findById(id);
-        if (terapeutaList.isEmpty()) {
-            throw new RuntimeException("Terapeuta no encontrado");
-        }
-
-        Terapeuta terapeuta = terapeutaList.get();
-        terapeuta.setNombre(terapeutaDetails.getNombre());
-        terapeuta.setEspecialidad(terapeutaDetails.getEspecialidad());
-        terapeuta.setEmail(terapeutaDetails.getEmail());
-        
-        return terapeutaService.save(terapeuta);
-    }
-
-
-    @DeleteMapping("/{id}")
-    public void deleteTerapeuta(@PathVariable Long id) {
->>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)
         terapeutaService.deleteById(id);
     }
 }

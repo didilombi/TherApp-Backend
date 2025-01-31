@@ -1,19 +1,21 @@
 package com.therapp.spring.servicios;
 
 import java.util.List;
-<<<<<<< HEAD
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import com.therapp.spring.dto.UsuarioDTO;
 import com.therapp.spring.dto.TerapeutaDTo;
 import com.therapp.spring.dto.UsuarioDTO;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Terapeuta;
+import com.therapp.spring.modelo.Organizacion;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.UsuarioRepository;
 import jakarta.transaction.Transactional;
->>>>>>> a77ffc3 (implementacion de los DTO de terapeuta y usuario)
+
 
 @Service
 public class UsuarioService {
@@ -42,10 +44,10 @@ public class UsuarioService {
         usuarioRepositorio.saveAll(usuarios);
     }
 
-    public void delete(Usuario u) {
-        terapeutaService.deleteByUsuario(u);
-        usuarioRepositorio.delete(u);
-    }
+    // public void delete(Usuario u) {
+    //     terapeutaService.deleteByUsuario(u);
+    //     usuarioRepositorio.delete(u);
+    // }
 
     public void deleteById(Integer id) {
         usuarioRepositorio.deleteById(id);
@@ -56,22 +58,31 @@ public class UsuarioService {
         
     }
 
+    //metodo para recibir 
     public Usuario registrarUsuario(UsuarioDTO usuarioDTO) {
-    Usuario usuario = new Usuario();
-    usuario.setNombre(usuarioDTO.getNombre());
-    usuario.setNombreUsuario(usuarioDTO.getNombreUsuario());
-    usuario.setEmail(usuarioDTO.getEmail());
-    usuario.setRol(null); // Asigna el rol predeterminado
-    return usuarioRepositorio.save(usuario);
-}
-    //CODIGO DE SERGIO PARA TRANSFORMAR USUARIO EN TERAPEUTA
-    // @Transactional
-    // public void transform(Usuario usuarionuevo){
+        Usuario usuario;
 
-    //     Terapeuta t = new Terapeuta(usuarionuevo,"numero de colegiado nuevo","Apellido nuevo", "Experiencia en terapia nueva", "Especialidad X nueva", "Español, Inglés nuevo");
-        
-    //     this.save(t);
+        switch (usuarioDTO.getRol().toString().toUpperCase()) {
+            case "null":
+                usuario = new Usuario();
+                break;
+            case "TERAPEUTA":
+                Terapeuta terapeuta = new Terapeuta();
+                terapeuta.setEspecialidad(usuarioDTO.getEspecialidad());
+                usuario = terapeuta;
+                break;
+            case "ORGANIZACION":
+                Organizacion organizacion = new Organizacion();
+                organizacion.setCif(usuarioDTO.getCif());
+                usuario = organizacion;
+                break;
+            default:
+                usuario = new Usuario(); // Usuario genérico
+        }
 
-    // }
-
+        usuario.setNombre(usuarioDTO.getNombre());
+        usuario.setEmail(usuarioDTO.getEmail());
+        usuario.setClave(usuarioDTO.getClave()); // Ojo: Encriptar antes de guardar
+        return usuarioRepositorio.save(usuario);
+    }
 }

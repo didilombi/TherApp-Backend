@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.therapp.spring.modelo.Organizaciones;
+import com.therapp.spring.modelo.Organizacion;
 import com.therapp.spring.servicios.OrganizacionesService;
 
 @RestController
@@ -20,12 +20,12 @@ public class OrganizacionesController {
     }
 
     @GetMapping
-    public List<Organizaciones> getAllOrganizaciones() {
+    public List<Organizacion> getAllOrganizaciones() {
         return organizacionesService.findAll();
     }
 
     @PostMapping
-    public Organizaciones crearOrganizacion(@RequestBody Organizaciones organizacion) {
+    public Organizacion crearOrganizacion(@RequestBody Organizacion organizacion) {
         return organizacionesService.save(organizacion);
     }
 
@@ -35,7 +35,7 @@ public class OrganizacionesController {
     }
 
     @GetMapping("/{id}")
-    public Organizaciones getOrganizacionById(@PathVariable Integer id) {
+    public Organizacion getOrganizacionById(@PathVariable Integer id) {
         return organizacionesService.findById(id);
     }
 }
