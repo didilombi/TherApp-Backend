@@ -20,19 +20,20 @@ import jakarta.transaction.Transactional;
 @Service
 public class UsuarioService {
 
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepositorio;
+   
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
+    public UsuarioService(UsuarioRepository usuarioRepositorio) {
+        this.usuarioRepositorio = usuarioRepositorio;
     }
 
     public List<Usuario> findAll() {
-        return usuarioRepository.findAll();
+        return usuarioRepositorio.findAll();
     }
 
     public Usuario findById(Integer id) {
-        return usuarioRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        return usuarioRepositorio.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
     }
 
     public Usuario save(Usuario usuario) {
@@ -45,19 +46,17 @@ public class UsuarioService {
         usuarioRepositorio.saveAll(usuarios);
     }
 
-    public void delete(Usuario u) {
-        terapeutaService.deleteByUsuario(u);
-        usuarioRepositorio.delete(u);
-    }
+    // public void delete(Usuario u) {
+    //     terapeutaService.deleteByUsuario(u);
+    //     usuarioRepositorio.delete(u);
+    // }
 
     public void deleteById(Integer id) {
-        usuarioRepository.deleteById(id);
+        usuarioRepositorio.deleteById(id);
     }
 
     public Usuario findByEmail(String email) {
         return usuarioRepositorio.findByEmail(email);
         
     }
-
-   
 }
