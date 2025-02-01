@@ -28,9 +28,44 @@ public class Publicacion {
     @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContenidoPublicacion> contenidos;
 
-    @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LikePublicacion> likes;
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
 
-    @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ComentarioPublicacion> comentarios;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTexto() {
+        return texto;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+    public String getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public void setFechaPublicacion(String fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
+    }
+
+    public List<UsuarioPublicacion> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<UsuarioPublicacion> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public List<ContenidoPublicacion> getContenidos() {
+        return contenidos;
+    }
+
+    public void setContenidos(List<ContenidoPublicacion> contenidos) {
+        this.contenidos = contenidos;
+    }
 }

@@ -6,4 +6,5 @@ import com.therapp.spring.modelo.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     public Usuario findByEmail (String email);
+    public boolean existsByEmail(String email);
 }

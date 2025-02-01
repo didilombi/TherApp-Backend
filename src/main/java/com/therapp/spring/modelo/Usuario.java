@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED) //Herencia en JPA
 public class Usuario {
 
     @Id
@@ -45,7 +45,7 @@ public class Usuario {
     private Terapeuta terapeuta;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private Organizaciones organizacion;
+    private Organizacion organizacion;
 
     @OneToMany(mappedBy = "usuario")
     private List<Mensaje> mensajes;
