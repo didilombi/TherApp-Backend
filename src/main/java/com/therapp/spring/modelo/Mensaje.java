@@ -3,6 +3,9 @@ package com.therapp.spring.modelo;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,4 +34,9 @@ public class Mensaje {
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "terapeuta_id")
+    @JsonManagedReference  // Esta anotación evita la recursión infinita en la propiedad 'terapeuta'    
+    private Terapeuta terapeuta;
 }
