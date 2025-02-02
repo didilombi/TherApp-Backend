@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -47,8 +50,16 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Organizacion organizacion;
 
+    // Aquí se está ignorando la lista de mensajes para evitar la recursión infinita
     @OneToMany(mappedBy = "usuario")
+    @JsonBackReference // Esta anotación evita la recursión infinita en la lista de mensajes
     private List<Mensaje> mensajes;
+    // Ignorar la propiedad terapeuta para evitar la recursión infinita
+    @JsonIgnore
+    public Terapeuta getTerapeuta() {
+        return terapeuta;
+    }
+
 
     @OneToMany(mappedBy = "usuarioSeguidor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seguidor> usuariosQueSigo;
