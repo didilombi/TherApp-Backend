@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Organizacion {
+public class Organizacion extends Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +27,6 @@ public class Organizacion {
     private String email;
     private String descripcion;
     private String sitioweb;
-
-    @OneToMany(mappedBy = "organizacion", cascade = CascadeType.ALL)
-    private List<Terapeuta> terapeutas = new ArrayList<>();
 
     public Organizacion() {}
 
@@ -45,4 +42,7 @@ public class Organizacion {
     @OneToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario; 
+    
+    @OneToMany(mappedBy = "organizacion", cascade = CascadeType.ALL)
+    private List<Terapeuta> terapeutas = new ArrayList<>();
 }

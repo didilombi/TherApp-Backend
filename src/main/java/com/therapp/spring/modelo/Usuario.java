@@ -61,21 +61,20 @@ public class Usuario {
     }
 
 
-    @OneToMany(mappedBy = "usuarioSeguidor")
+    @OneToMany(mappedBy = "usuarioSeguidor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seguidor> usuariosQueSigo;
 
-    @OneToMany(mappedBy = "usuarioSeguido")
+    @OneToMany(mappedBy = "usuarioSeguido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Seguidor> misSeguidores;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<UsuarioPublicacion> publicaciones;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikePublicacion> likes;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ComentarioPublicacion> comentarios;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<LikeComentario> likes;
-    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikeComentario> likesComentarios;
 
     public Usuario() {} //constructor vacio
 

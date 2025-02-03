@@ -1,7 +1,9 @@
 package com.therapp.spring.modelo;
 
+import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,11 +18,12 @@ import lombok.Setter;
 @Setter
 @Entity
 public class ComentarioPublicacion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String contenido;
-    private String fecha;
+    private Date fecha;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -30,6 +33,13 @@ public class ComentarioPublicacion {
     @JoinColumn(name = "publicacion_id")
     private Publicacion publicacion;
 
-    @OneToMany(mappedBy = "comentario")
+    @ManyToOne
+    @JoinColumn(name = "comentario_padre_id")
+    private ComentarioPublicacion comentarioPadre;
+
+    @OneToMany(mappedBy = "comentarioPadre", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ComentarioPublicacion> respuestas;
+
+    @OneToMany(mappedBy = "comentario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LikeComentario> likes;
 }

@@ -20,20 +20,22 @@ import jakarta.transaction.Transactional;
 @Service
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepositorio;
+    private final UsuarioRepository usuarioRepositorio;
+   
 
     @Autowired
-    private TerapeutaService terapeutaService;
-    
-    // @Autowired
-    // private BCryptPasswordEncoder passwordEncoder; // Codificador de contraseñas
+    public UsuarioService(UsuarioRepository usuarioRepositorio) {
+        this.usuarioRepositorio = usuarioRepositorio;
+    }
 
     public List<Usuario> findAll() {
         return usuarioRepositorio.findAll();
     }
 
-    //este metodo guarda un usuario en la base de datos
+    public Usuario findById(Integer id) {
+        return usuarioRepositorio.findById(id).orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+    }
+
     public Usuario save(Usuario usuario) {
         return usuarioRepositorio.save(usuario);
     }
@@ -56,12 +58,5 @@ public class UsuarioService {
     public Usuario findByEmail(String email) {
         return usuarioRepositorio.findByEmail(email);
         
-    }
-
-    public Usuario guardarUsuario(Usuario usuario) {
-        if (usuarioRepositorio.existsByEmail(usuario.getEmail())) {
-            throw new RuntimeException("El email ya está registrado.");
-        }
-        return usuarioRepositorio.save(usuario);
     }
 }

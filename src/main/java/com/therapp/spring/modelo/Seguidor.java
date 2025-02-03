@@ -15,17 +15,17 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Seguidor {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "usuarioId", nullable = false)
+    @JoinColumn(name = "usuarioSeguidoId", nullable = false)
     private Usuario usuarioSeguido;
 
     @ManyToOne
-    @JoinColumn(name = "seguidoId", nullable = false)
+    @JoinColumn(name = "usuarioSeguidorId", nullable = false)
     private Usuario usuarioSeguidor;
 
     private Date fechaSeguimiento;

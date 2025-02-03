@@ -17,7 +17,7 @@ public class ContenidoPublicacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String tipo;
+    private String tipo; // "foto" o "video"
     private String url;
 
     @ManyToOne

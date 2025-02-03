@@ -1,5 +1,7 @@
 package com.therapp.spring.modelo;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,16 +15,17 @@ import lombok.Setter;
 @Setter
 @Entity
 public class LikeComentario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String fecha;
-
-    @ManyToOne
-    @JoinColumn(name = "comentarioId")
-    private ComentarioPublicacion comentario;
+    private Date fecha;
 
     @ManyToOne
     @JoinColumn(name = "usuarioId")
     private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "comentarioId")
+    private ComentarioPublicacion comentario;
 }

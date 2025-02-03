@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,4 +20,12 @@ public class LikePublicacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Date fecha;
+
+    @ManyToOne
+    @JoinColumn(name = "usuarioId")
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "publicacionId")
+    private Publicacion publicacion;
 }
