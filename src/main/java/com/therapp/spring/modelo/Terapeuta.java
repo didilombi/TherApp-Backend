@@ -1,5 +1,6 @@
 package com.therapp.spring.modelo;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "terapeutas")
-public class Terapeuta{
+public class Terapeuta extends Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,5 +67,16 @@ public class Terapeuta{
     @JsonIgnore
     public Usuario getUsuario() {
         return usuario;
+    }
+
+    public Terapeuta() {}
+
+    public Terapeuta(String nombre, String nombreUsuario,String email, String clave, String fotoPerfil, Rol rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion, String biografia, String nColegiado, String apellidos, String experiencia, String especialidad, String idiomas) {
+        super(nombre, nombreUsuario, email, clave, fotoPerfil, rol, dni, fechaNacimiento, telefono, ubicacion, biografia);
+        this.nColegiado = nColegiado;
+        this.apellidos = apellidos;
+        this.experiencia = experiencia;
+        this.especialidad = especialidad;
+        this.idiomas = idiomas;
     }
 }
