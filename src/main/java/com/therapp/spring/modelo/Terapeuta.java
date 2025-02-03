@@ -1,6 +1,11 @@
 package com.therapp.spring.modelo;
 
+import java.util.List;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,4 +58,13 @@ public class Terapeuta{
         inverseJoinColumns = @JoinColumn(name = "especialidadId")
     )
     private Set<Especialidad> especialidades;
+
+    @OneToMany(mappedBy = "terapeuta")
+    @JsonBackReference // Esta anotación evita la recursión infinita en la lista de mensajes
+    private List<Mensaje> mensajes;
+    // Ignorar la propiedad 'usuario' para evitar la recursión infinita
+    @JsonIgnore
+    public Usuario getUsuario() {
+        return usuario;
+    }
 }

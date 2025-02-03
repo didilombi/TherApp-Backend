@@ -1,10 +1,15 @@
 package com.therapp.spring.seguridad;
 
+import org.springframework.security.core.userdetails.User;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -14,20 +19,39 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests(authorizeRequests ->
-                authorizeRequests
-                    .requestMatchers(
-                        "/h2-console/**",
-                        "/swagger-ui/**",
-                        "/v3/**",
-                        "/api/**"
-                        ).permitAll() // Permitir acceso a la consola H2
-                    .anyRequest().authenticated()
+        return http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Habilitar CORS
+            .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF
+            .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())) // Permitir H2 Console
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/h2-console/**").permitAll() // Permitir acceso a H2 Console
+                .requestMatchers("/api/**").permitAll() // ⚠️ Puedes cambiar esto si quieres autenticación
+                .anyRequest().permitAll()
             )
-            .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF para la consola H2
-            .headers(headers -> headers.frameOptions().disable()); // Deshabilitar frame options para la consola H2
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .httpBasic(httpBasic -> {}) // Nueva sintaxis para httpBasic()
+            .build();
+    }
 
-        return http.build();
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Permitir frontend
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos permitidos
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.withDefaultPasswordEncoder()
+            .username("admin")
+            .password("admin123")
+            .roles("USER")
+            .build();
+        return new InMemoryUserDetailsManager(user);
     }
 }
