@@ -24,7 +24,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) //Herencia en JPA
 public class Usuario {
 
     @Id

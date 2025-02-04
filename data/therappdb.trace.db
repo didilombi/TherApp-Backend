@@ -1,20 +1,12 @@
-2025-02-02 09:53:27.901100+01:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLDataException: El Subquery escalar contiene mas de una fila
-Scalar subquery contains more than one row; SQL statement:
-INSERT INTO terapeutas (n_colegiado, apellidos, experiencia, especialidad, idiomas, usuario_id)
-VALUES ('12345', 'Gómez', '10 años', 'Psicología', 'Español', (SELECT id FROM usuario WHERE nombre_usuario = 'luis123')) -- ('12345', U&'G\00f3mez', U&'10 a\00f1os', U&'Psicolog\00eda', U&'Espa\00f1ol', (SELECT
-    ID
-FROM PUBLIC.USUARIO
-WHERE NOMBRE_USUARIO = 'luis123')) [90053-232]
-	at org.h2.message.DbException.getJdbcSQLException(DbException.java:658)
+2025-02-04 09:31:28.766534+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Imposible eliminar "USUARIO" debido a que "FKLS5T8KA2S32E55WCA8TTYUA4X, FKT3OE9F3O55X081W23S6VDGBU1, FKFS1U2PJDCRYW9BM4CVEB25UAW, FKG9AIE4EGBR0B26IW84IELPPBJ, FK813LV0DOXFWT8WNNPJ16FP3AG, FKNCV6YSTGF8JAR2VVUTKMLN6OP, FK4DYJW7VJJ7TWBPL7N2548WP5A, FK4WNWG79FR9B90CUGR862PX7U8, FK6R169YM85MFCGMH2SAGPYKIIT, FK8FEAEVVWNDNMKHSS0KNP11HP8" depende de él.
+Cannot drop "USUARIO" because "FKLS5T8KA2S32E55WCA8TTYUA4X, FKT3OE9F3O55X081W23S6VDGBU1, FKFS1U2PJDCRYW9BM4CVEB25UAW, FKG9AIE4EGBR0B26IW84IELPPBJ, FK813LV0DOXFWT8WNNPJ16FP3AG, FKNCV6YSTGF8JAR2VVUTKMLN6OP, FK4DYJW7VJJ7TWBPL7N2548WP5A, FK4WNWG79FR9B90CUGR862PX7U8, FK6R169YM85MFCGMH2SAGPYKIIT, FK8FEAEVVWNDNMKHSS0KNP11HP8" depends on it; SQL statement:
+DROP TABLE USUARIO [90107-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	at org.h2.message.DbException.get(DbException.java:223)
-	at org.h2.message.DbException.get(DbException.java:199)
-	at org.h2.message.DbException.get(DbException.java:188)
-	at org.h2.expression.Subquery.getValue(Subquery.java:53)
-	at org.h2.command.dml.Insert.insertRows(Insert.java:160)
-	at org.h2.command.dml.Insert.update(Insert.java:135)
-	at org.h2.command.dml.DataChangeStatement.update(DataChangeStatement.java:74)
+	at org.h2.command.ddl.DropTable.prepareDrop(DropTable.java:108)
+	at org.h2.command.ddl.DropTable.update(DropTable.java:133)
 	at org.h2.command.CommandContainer.update(CommandContainer.java:139)
 	at org.h2.command.Command.executeUpdate(Command.java:304)
 	at org.h2.command.Command.executeUpdate(Command.java:248)
@@ -112,7 +104,3 @@ WHERE NOMBRE_USUARIO = 'luis123')) [90053-232]
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:1575)
-2025-02-02 09:53:40.296448+01:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]TERAPEUTAS"; se esperaba "TRUNCATE"
-Syntax error in SQL statement "[*]TERAPEUTAS"; expected "TRUNCATE"; SQL statement:
-TERAPEUTAS [42001-232]
