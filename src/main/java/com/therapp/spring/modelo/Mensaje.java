@@ -19,6 +19,7 @@ public class Mensaje {
     private String contenido;
     private Date fechaEnvio;
     private Boolean visto;
+    private String archivoUrl;
 
     // Relación con el usuario que envía el mensaje
     @ManyToOne
