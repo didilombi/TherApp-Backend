@@ -1,5 +1,6 @@
 package com.therapp.spring.servicios;
 
+import com.therapp.spring.dto.MensajeDTO;
 import com.therapp.spring.modelo.Mensaje;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.MensajeRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MensajeService {
@@ -20,11 +22,24 @@ public class MensajeService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    public Mensaje save(Mensaje mensaje) {
+        return mensajeRepository.save(mensaje);
+    }
+
     // Obtener todos los mensajes entre dos usuarios (bidireccional)
-    public List<Mensaje> obtenerChat(Integer userId1, Integer userId2) {
-        List<Mensaje> mensajes = mensajeRepository.findChatBetweenUsers(userId1, userId2);
-        System.out.println("Mensajes recuperados: " + mensajes.size()); // 🔍 Log para verificar que la consulta devuelve mensajes
-        return mensajes;
+    public List<MensajeDTO> obtenerChat(Integer userId1, Integer userId2) {
+    List<Mensaje> mensajes = mensajeRepository.findChatBetweenUsers(userId1, userId2);
+        
+        return mensajes.stream().map(m -> new MensajeDTO(
+            m.getId(),
+            m.getContenido(),
+            m.getFechaEnvio(),
+            m.getVisto(),
+            m.getEmisor().getId(),
+            m.getEmisor().getNombre(),
+            m.getReceptor().getId(),
+            m.getReceptor().getNombre()
+        )).collect(Collectors.toList());
     }
     
 
@@ -32,7 +47,7 @@ public class MensajeService {
     public Mensaje enviarMensaje(Integer emisorId, Integer receptorId, String contenido) {
         Optional<Usuario> emisorOpt = usuarioRepository.findById(emisorId);
         Optional<Usuario> receptorOpt = usuarioRepository.findById(receptorId);
-
+    
         if (emisorOpt.isPresent() && receptorOpt.isPresent()) {
             Mensaje mensaje = new Mensaje();
             mensaje.setContenido(contenido);
@@ -40,14 +55,14 @@ public class MensajeService {
             mensaje.setVisto(false);
             mensaje.setEmisor(emisorOpt.get());
             mensaje.setReceptor(receptorOpt.get());
-
-            return mensajeRepository.save(mensaje);
+    
+            Mensaje mensajeGuardado = mensajeRepository.save(mensaje);
+            System.out.println("✅ Mensaje guardado correctamente: " + mensajeGuardado.getId());
+            return mensajeGuardado;
         }
-
+    
+        System.out.println("❌ Error: Usuario no encontrado.");
         return null;
-    }
+    }    
 
-    public Mensaje save(Mensaje mensaje) {
-        return mensajeRepository.save(mensaje);
-    }
 }

@@ -22,3 +22,17 @@ The connection was not closed by the application and is garbage collected [90018
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 16 more
+2025-02-04 17:08:04.246876+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]""SELECT m FROM Mensaje m "" +\000d\000a   ""WHERE (m.emisor.id = :user1 AND m.receptor.id = :user2) "" +\000d\000a   ""OR (m.emisor.id = :user2 AND m.receptor.id = :user1) "" +\000d\000a   ""ORDER BY m.fechaEnvio ASC"""
+Syntax error in SQL statement "[*]""SELECT m FROM Mensaje m "" +\000d\000a   ""WHERE (m.emisor.id = :user1 AND m.receptor.id = :user2) "" +\000d\000a   ""OR (m.emisor.id = :user2 AND m.receptor.id = :user1) "" +\000d\000a   ""ORDER BY m.fechaEnvio ASC"""; SQL statement:
+"SELECT m FROM Mensaje m " +
+   "WHERE (m.emisor.id = :user1 AND m.receptor.id = :user2) " +
+   "OR (m.emisor.id = :user2 AND m.receptor.id = :user1) " +
+   "ORDER BY m.fechaEnvio ASC" [42000-232]
+2025-02-04 17:08:20.706950+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "SELECT m FROM Mensaje m \000d\000a   WHERE (m.emisor.id = [*]:user1 AND m.receptor.id = :user2) \000d\000a   OR (m.emisor.id = :user2 AND m.receptor.id = :user1) \000d\000a   ORDER BY m.fechaEnvio ASC"; se esperaba "ALL (, ANY (, SOME ("
+Syntax error in SQL statement "SELECT m FROM Mensaje m \000d\000a   WHERE (m.emisor.id = [*]:user1 AND m.receptor.id = :user2) \000d\000a   OR (m.emisor.id = :user2 AND m.receptor.id = :user1) \000d\000a   ORDER BY m.fechaEnvio ASC"; expected "ALL (, ANY (, SOME ("; SQL statement:
+SELECT m FROM Mensaje m 
+   WHERE (m.emisor.id = :user1 AND m.receptor.id = :user2) 
+   OR (m.emisor.id = :user2 AND m.receptor.id = :user1) 
+   ORDER BY m.fechaEnvio ASC [42001-232]

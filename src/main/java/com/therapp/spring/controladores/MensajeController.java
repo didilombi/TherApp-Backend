@@ -19,21 +19,35 @@ public class MensajeController {
 
     // GET: listar mensajes entre 2 usuarios
     @GetMapping("/chat/{id1}/{id2}")
-    public ResponseEntity<List<Mensaje>> obtenerChat(@PathVariable Integer id1, @PathVariable Integer id2) {
-        List<Mensaje> mensajes = mensajeService.obtenerChat(id1, id2);
-
-        if (mensajes == null || mensajes.isEmpty()) {
-            return ResponseEntity.ok(Collections.emptyList()); // ✅ Devuelve una lista vacía en JSON si no hay mensajes
-        }
-
-        return ResponseEntity.ok(mensajes); // ✅ Devuelve la lista de mensajes correctamente
+    public ResponseEntity<List<MensajeDTO>> obtenerChat(@PathVariable Integer id1, @PathVariable Integer id2) {
+        List<MensajeDTO> mensajes = mensajeService.obtenerChat(id1, id2);
+        return ResponseEntity.ok(mensajes);
     }
 
     // POST: enviar mensaje de id1 -> id2
     @PostMapping("/chat/{id1}/{id2}")
-    public Mensaje enviarMensaje(@PathVariable Integer id1,
-                                 @PathVariable Integer id2,
-                                 @RequestBody MensajeDTO dto) {
-        return mensajeService.enviarMensaje(id1, id2, dto.getContenido());
+    public ResponseEntity<MensajeDTO> enviarMensaje(@PathVariable Integer id1,
+                                                    @PathVariable Integer id2,
+                                                    @RequestBody MensajeDTO dto) {
+        Mensaje nuevoMensaje = mensajeService.enviarMensaje(id1, id2, dto.getContenido());
+
+        if (nuevoMensaje == null) {
+            return ResponseEntity.badRequest().build(); //Error 400 si no se pudo guardar
+        }
+
+        // Convertir `Mensaje` a `MensajeDTO` para evitar referencias cíclicas
+        MensajeDTO mensajeDTO = new MensajeDTO(
+            nuevoMensaje.getId(),
+            nuevoMensaje.getContenido(),
+            nuevoMensaje.getFechaEnvio(),
+            nuevoMensaje.getVisto(),
+            nuevoMensaje.getEmisor().getId(),
+            nuevoMensaje.getEmisor().getNombre(),
+            nuevoMensaje.getReceptor().getId(),
+            nuevoMensaje.getReceptor().getNombre()
+        );
+
+        return ResponseEntity.ok(mensajeDTO); //Devuelve el mensaje como JSON válido
     }
+
 }
