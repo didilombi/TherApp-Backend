@@ -38,16 +38,17 @@ public class MensajeService {
             m.getEmisor().getId(),
             m.getEmisor().getNombre(),
             m.getReceptor().getId(),
-            m.getReceptor().getNombre()
+            m.getReceptor().getNombre(),
+            m.getArchivoUrl()
         )).collect(Collectors.toList());
     }
     
 
     // Enviar un nuevo mensaje de userId1 -> userId2
-    public Mensaje enviarMensaje(Integer emisorId, Integer receptorId, String contenido) {
+    public Mensaje enviarMensaje(Integer emisorId, Integer receptorId, String contenido, String archivoUrl) {
         Optional<Usuario> emisorOpt = usuarioRepository.findById(emisorId);
         Optional<Usuario> receptorOpt = usuarioRepository.findById(receptorId);
-    
+
         if (emisorOpt.isPresent() && receptorOpt.isPresent()) {
             Mensaje mensaje = new Mensaje();
             mensaje.setContenido(contenido);
@@ -55,14 +56,11 @@ public class MensajeService {
             mensaje.setVisto(false);
             mensaje.setEmisor(emisorOpt.get());
             mensaje.setReceptor(receptorOpt.get());
-    
-            Mensaje mensajeGuardado = mensajeRepository.save(mensaje);
-            System.out.println("✅ Mensaje guardado correctamente: " + mensajeGuardado.getId());
-            return mensajeGuardado;
-        }
-    
-        System.out.println("❌ Error: Usuario no encontrado.");
-        return null;
-    }    
+            mensaje.setArchivoUrl(archivoUrl); // ✅ Ahora el mensaje puede incluir archivos
 
+            return mensajeRepository.save(mensaje);
+        }
+
+        return null;
+    }
 }

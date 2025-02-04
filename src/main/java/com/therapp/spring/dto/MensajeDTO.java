@@ -17,8 +17,9 @@ public class MensajeDTO {
     private String emisorNombre;
     private int receptorId;
     private String receptorNombre;
+    private String archivoUrl;
 
-    public MensajeDTO(int id, String contenido, Date fechaEnvio, Boolean visto, int emisorId, String emisorNombre, int receptorId, String receptorNombre) {
+    public MensajeDTO(int id, String contenido, Date fechaEnvio, Boolean visto, int emisorId, String emisorNombre, int receptorId, String receptorNombre, String archivoUrl) {
         this.id = id;
         this.contenido = contenido;
         this.fechaEnvio = fechaEnvio;
@@ -26,6 +27,7 @@ public class MensajeDTO {
         this.emisorId = emisorId;
         this.emisorNombre = emisorNombre;
         this.receptorId = receptorId;
-        this.receptorNombre = receptorNombre;
+        this.receptorNombre = receptorNombre;  
+        this.archivoUrl = archivoUrl;
     }
 }
