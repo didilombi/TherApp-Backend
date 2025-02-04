@@ -79,7 +79,7 @@ public class Usuario {
 
     public Usuario() {} //constructor vacio
 
-    public Usuario(String nombre, String nombreUsuario,String email, String clave, String fotoPerfil, Rol rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion, String biografia) {
+    public Usuario(String nombre, String nombreUsuario,String email, String clave, String fotoPerfil, Rol rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
@@ -91,6 +91,5 @@ public class Usuario {
         this.telefono = telefono;
         this.fechaRegistro = LocalDateTime.now();
         this.ubicacion = ubicacion;
-        this.biografia = biografia;
     }
 }
