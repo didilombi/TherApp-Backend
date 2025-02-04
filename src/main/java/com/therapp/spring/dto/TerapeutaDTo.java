@@ -5,6 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TerapeutaDTo extends UsuarioDTO {
+public class TerapeutaDTO {
+    private Integer usuarioId;
+    private String NColegiado;
     private String especialidad;
+    
 }

@@ -14,12 +14,14 @@ import com.therapp.spring.modelo.ContenidoPublicacion;
 import com.therapp.spring.modelo.Publicacion;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.RolPublicacion;
+import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.ComentarioPublicacionService;
 import com.therapp.spring.servicios.LikeComentarioService;
 import com.therapp.spring.servicios.LikePublicacionService;
 import com.therapp.spring.servicios.PublicacionService;
 import com.therapp.spring.servicios.SeguidorService;
+import com.therapp.spring.servicios.TerapeutaService;
 import com.therapp.spring.servicios.UsuarioService;
 
 @SpringBootApplication
@@ -31,7 +33,7 @@ public class TherAppApplication {
 
     @Bean
     @Transactional
-    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService) {
+    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService) {
         return args -> {
             // Crear usuarios
             Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", "password", "Sin Imagen", Rol.ORGANIZACION, "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid", "Biografia de Carlos");
@@ -40,6 +42,18 @@ public class TherAppApplication {
             // Guardar los usuarios en la base de datos
             usuarioService.save(usuario1);
             usuarioService.save(usuario2);
+
+            // Crear terapeuta a partir del usuario Ana
+            Terapeuta terapeutaAna = new Terapeuta();
+            terapeutaAna.setUsuario(usuario2);
+            terapeutaAna.setNColegiado("123456");
+            terapeutaAna.setApellidos("Colab");
+            terapeutaAna.setExperiencia("5 años");
+            terapeutaAna.setEspecialidad("Psicología");
+            terapeutaAna.setIdiomas("Español, Inglés");
+
+            // Guardar el terapeuta en la base de datos
+            terapeutaService.save(terapeutaAna);
 
             // Crear contenidos multimedia
             ContenidoPublicacion foto1 = new ContenidoPublicacion();

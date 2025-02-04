@@ -3,7 +3,7 @@ package com.therapp.spring.servicios;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-import com.therapp.spring.dto.TerapeutaDTo;
+import com.therapp.spring.dto.TerapeutaDTO;
 import com.therapp.spring.modelo.Terapeuta;
 import java.util.Optional;
 import com.therapp.spring.repositorios.TerapeutaRepository;

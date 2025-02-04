@@ -45,7 +45,7 @@ public class PublicacionController {
 
     @PostMapping
     public Publicacion crearPublicacion(@RequestBody Publicacion publicacion, @RequestParam Integer usuarioId, @RequestBody List<ContenidoPublicacion> contenidos) {
-        Usuario usuario = usuarioService.findById(usuarioId);
+        Usuario usuario = usuarioService.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario not found"));
         return publicacionService.crearPublicacion(usuario, publicacion, contenidos, RolPublicacion.AUTOR);
     }
 
@@ -63,14 +63,14 @@ public class PublicacionController {
     @PostMapping("/{id}/colaboradores")
     public void agregarColaborador(@PathVariable Integer id, @RequestParam Integer usuarioId) {
         Publicacion publicacion = publicacionService.findById(id);
-        Usuario usuario = usuarioService.findById(usuarioId);
+        Usuario usuario = usuarioService.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario not found"));
         publicacionService.agregarColaborador(publicacion, usuario);
     }
 
     @DeleteMapping("/{id}/colaboradores")
     public void eliminarColaborador(@PathVariable Integer id, @RequestParam Integer usuarioId) {
         Publicacion publicacion = publicacionService.findById(id);
-        Usuario usuario = usuarioService.findById(usuarioId);
+        Usuario usuario = usuarioService.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario not found"));
         publicacionService.eliminarColaborador(publicacion, usuario);
     }
 
