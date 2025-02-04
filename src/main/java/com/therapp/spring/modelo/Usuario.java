@@ -24,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) //Herencia en JPA
+
 public class Usuario {
 
     @Id
@@ -50,21 +50,22 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Organizacion organizacion;
 
-    // Aquí se está ignorando la lista de mensajes para evitar la recursión infinita
-    @OneToMany(mappedBy = "usuario")
-    @JsonBackReference // Esta anotación evita la recursión infinita en la lista de mensajes
-    private List<Mensaje> mensajes;
-    // Ignorar la propiedad terapeuta para evitar la recursión infinita
-    @JsonIgnore
+    @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mensaje> mensajesEnviados;
+
+    @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mensaje> mensajesRecibidos;
+
     public Terapeuta getTerapeuta() {
         return terapeuta;
     }
 
-
     @OneToMany(mappedBy = "usuarioSeguidor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // Evita la serialización de la lista de seguidores
     private List<Seguidor> usuariosQueSigo;
 
     @OneToMany(mappedBy = "usuarioSeguido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // Evita la serialización de seguidores
     private List<Seguidor> misSeguidores;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)

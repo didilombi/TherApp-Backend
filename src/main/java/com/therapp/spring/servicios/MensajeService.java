@@ -1,19 +1,17 @@
 package com.therapp.spring.servicios;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.therapp.spring.dto.MensajeDTO;
 import com.therapp.spring.modelo.Mensaje;
-import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.MensajeRepository;
-import com.therapp.spring.repositorios.TerapeutaRepository;
 import com.therapp.spring.repositorios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MensajeService {
@@ -24,38 +22,47 @@ public class MensajeService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private TerapeutaRepository terapeutaRepository;
-
-    // Obtener mensajes entre un usuario y un terapeuta
-    public List<Mensaje> obtenerMensajes(Integer usuarioId, Integer terapeutaId) {
-        Optional<Usuario> usuario = usuarioRepository.findById(usuarioId);
-        Optional<Terapeuta> terapeuta = terapeutaRepository.findById(terapeutaId);
-
-        if (usuario.isPresent() && terapeuta.isPresent()) {
-            return mensajeRepository.findByUsuarioAndTerapeuta(usuario.get(), terapeuta.get());
-        }
-        return null; // Si no se encuentran los usuarios, devuelve null
+    public Mensaje save(Mensaje mensaje) {
+        return mensajeRepository.save(mensaje);
     }
 
-
-    public Mensaje enviarMensaje(Integer usuarioId, Integer terapeutaId, String contenido) {
-        Optional<Usuario> usuario = usuarioRepository.findById(usuarioId);
-        Optional<Terapeuta> terapeuta = terapeutaRepository.findById(terapeutaId);
+    // Obtener todos los mensajes entre dos usuarios (bidireccional)
+    public List<MensajeDTO> obtenerChat(Integer userId1, Integer userId2) {
+    List<Mensaje> mensajes = mensajeRepository.findChatBetweenUsers(userId1, userId2);
+        
+        return mensajes.stream().map(m -> new MensajeDTO(
+            m.getId(),
+            m.getContenido(),
+            m.getFechaEnvio(),
+            m.getVisto(),
+            m.getEmisor().getId(),
+            m.getEmisor().getNombre(),
+            m.getReceptor().getId(),
+            m.getReceptor().getNombre()
+        )).collect(Collectors.toList());
+    }
     
-        if (usuario.isPresent() && terapeuta.isPresent()) {
+
+    // Enviar un nuevo mensaje de userId1 -> userId2
+    public Mensaje enviarMensaje(Integer emisorId, Integer receptorId, String contenido) {
+        Optional<Usuario> emisorOpt = usuarioRepository.findById(emisorId);
+        Optional<Usuario> receptorOpt = usuarioRepository.findById(receptorId);
+    
+        if (emisorOpt.isPresent() && receptorOpt.isPresent()) {
             Mensaje mensaje = new Mensaje();
-            mensaje.setContenido(contenido);  // asegurarse de que se guarda como texto
+            mensaje.setContenido(contenido);
             mensaje.setFechaEnvio(new Date());
             mensaje.setVisto(false);
-            mensaje.setUsuario(usuario.get());
-            mensaje.setTerapeuta(terapeuta.get());
+            mensaje.setEmisor(emisorOpt.get());
+            mensaje.setReceptor(receptorOpt.get());
     
-            return mensajeRepository.save(mensaje);  // guarda el mensaje en la base de datos
+            Mensaje mensajeGuardado = mensajeRepository.save(mensaje);
+            System.out.println("✅ Mensaje guardado correctamente: " + mensajeGuardado.getId());
+            return mensajeGuardado;
         }
     
+        System.out.println("❌ Error: Usuario no encontrado.");
         return null;
-    }
-    
+    }    
 
 }

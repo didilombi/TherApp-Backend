@@ -2,25 +2,27 @@ package com.therapp.spring;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.util.Date;
 import com.therapp.spring.modelo.ComentarioPublicacion;
 import com.therapp.spring.modelo.ContenidoPublicacion;
+import com.therapp.spring.modelo.Mensaje;
 import com.therapp.spring.modelo.Publicacion;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.RolPublicacion;
+import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.ComentarioPublicacionService;
 import com.therapp.spring.servicios.LikeComentarioService;
 import com.therapp.spring.servicios.LikePublicacionService;
+import com.therapp.spring.servicios.MensajeService;
 import com.therapp.spring.servicios.PublicacionService;
 import com.therapp.spring.servicios.SeguidorService;
 import com.therapp.spring.servicios.UsuarioService;
+import com.therapp.spring.servicios.TerapeutaService;
 
 @SpringBootApplication
 public class TherAppApplication {
@@ -30,8 +32,7 @@ public class TherAppApplication {
     }
 
     @Bean
-    @Transactional
-    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService) {
+    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService) {
         return args -> {
             // Crear usuarios
             Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", "password", "Sin Imagen", Rol.ORGANIZACION, "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid", "Biografia de Carlos");
@@ -92,6 +93,52 @@ public class TherAppApplication {
             // Seguir usuarios
             seguidorService.seguirUsuario(usuario1.getId(), usuario2.getId());
             seguidorService.seguirUsuario(usuario2.getId(), usuario1.getId());
+
+            // Crear un Usuario
+            Usuario usuario = new Usuario();
+            usuario.setNombre("Juan Pérez");
+            usuario.setNombreUsuario("juanperez");
+            usuario.setEmail("juan.perez@example.com");
+            usuario.setClave("123456");
+            usuario.setRol(Rol.USUARIO);
+            usuario.setDni("12345678A");
+            usuario.setFechaNacimiento(LocalDate.of(1990, 5, 20));
+            usuario.setTelefono("123456789");
+            usuario.setUbicacion("Ciudad Ejemplo");
+            usuario.setBiografia("Usuario de prueba para chat");
+
+            // Guardar el usuario en la BD
+            usuarioService.save(usuario);
+
+            // Crear un Terapeuta relacionado con el usuario
+            Terapeuta terapeuta = new Terapeuta();
+            terapeuta.setNColegiado("COLEGIADO-1234");
+            terapeuta.setApellidos("Gómez López");
+            terapeuta.setExperiencia("5 años de experiencia en psicoterapia");
+            terapeuta.setEspecialidad("Psicología Clínica");
+            terapeuta.setIdiomas("Español, Inglés");
+            terapeuta.setUsuario(usuario);  // Relacionamos al usuario
+
+            // Guardar el terapeuta en la BD
+            terapeutaService.save(terapeuta);
+
+            // Enviar un mensaje de prueba
+            // usuario1 (Carlos) envía un mensaje a "usuario" (Juan Pérez)
+            Mensaje mensaje = new Mensaje();
+            mensaje.setContenido("Hola, este es un mensaje de prueba.");
+            mensaje.setFechaEnvio(new Date());
+            mensaje.setVisto(false);
+
+            // Emisor = usuario1 (Carlos, ID=1)
+            mensaje.setEmisor(usuario1);
+            // Receptor = usuario (Juan Pérez, ID=?)
+            mensaje.setReceptor(usuario);
+
+            // Guardar el mensaje en la BD
+            mensajeService.save(mensaje);
+
+            System.out.println("Datos de prueba insertados correctamente.");
         };
     }
 }
+
