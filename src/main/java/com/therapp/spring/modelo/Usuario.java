@@ -19,6 +19,7 @@ import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @Entity
@@ -47,11 +48,10 @@ public class Usuario {
     private String ubicacion;
     private String biografia;
 
-    //RELACIONES
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Terapeuta terapeuta;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Organizacion organizacion;
 
     @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -73,7 +73,7 @@ public class Usuario {
     private List<Seguidor> misSeguidores;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LikePublicacion> likes;
+    private List<LikePublicacion> likesPublicaciones;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ComentarioPublicacion> comentarios;
