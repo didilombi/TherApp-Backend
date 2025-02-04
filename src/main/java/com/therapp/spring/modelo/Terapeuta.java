@@ -1,22 +1,7 @@
 package com.therapp.spring.modelo;
 
-import java.util.List;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "terapeutas")
-public class Terapeuta{
+public class Terapeuta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +21,7 @@ public class Terapeuta{
     private String idiomas;
 
     @OneToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "usuario_id") // Relaciona con Usuario
     private Usuario usuario;
 
     @ManyToOne
@@ -59,11 +44,6 @@ public class Terapeuta{
     )
     private Set<Especialidad> especialidades;
 
-    @OneToMany(mappedBy = "terapeuta")
-    @JsonBackReference // Esta anotación evita la recursión infinita en la lista de mensajes
-    private List<Mensaje> mensajes;
-    // Ignorar la propiedad 'usuario' para evitar la recursión infinita
-    @JsonIgnore
     public Usuario getUsuario() {
         return usuario;
     }

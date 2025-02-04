@@ -1,18 +1,10 @@
 package com.therapp.spring.modelo;
 
 import java.util.Date;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,15 +20,15 @@ public class Mensaje {
     private Date fechaEnvio;
     private Boolean visto;
 
-    @OneToMany(mappedBy = "mensaje")
-    private List<MultimediaMensaje> multimediaMensajes;
-
+    // Relación con el usuario que envía el mensaje
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JoinColumn(name = "emisor_id")
+    @JsonIgnoreProperties({"mensajesEnviados", "mensajesRecibidos"}) // 🔥 Evita bucles infinitos
+    private Usuario emisor;
 
+    // Relación con el usuario que recibe el mensaje
     @ManyToOne
-    @JoinColumn(name = "terapeuta_id")
-    @JsonManagedReference  // Esta anotación evita la recursión infinita en la propiedad 'terapeuta'    
-    private Terapeuta terapeuta;
+    @JoinColumn(name = "receptor_id")
+    @JsonIgnoreProperties({"mensajesEnviados", "mensajesRecibidos"})
+    private Usuario receptor;
 }
