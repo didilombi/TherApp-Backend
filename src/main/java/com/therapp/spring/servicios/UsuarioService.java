@@ -1,20 +1,10 @@
 package com.therapp.spring.servicios;
 
 import java.util.List;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import com.therapp.spring.dto.UsuarioDTO;
-import com.therapp.spring.dto.TerapeutaDTo;
-import com.therapp.spring.dto.UsuarioDTO;
-import com.therapp.spring.modelo.Rol;
-import com.therapp.spring.modelo.Terapeuta;
-import com.therapp.spring.modelo.Organizacion;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.UsuarioRepository;
-import jakarta.transaction.Transactional;
 
 
 @Service
