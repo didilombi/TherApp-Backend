@@ -7,7 +7,7 @@ import com.therapp.spring.modelo.Usuario;
 
 import java.util.Optional;
 
-public interface TerapeutaRepository extends JpaRepository<Terapeuta, Integer> {
+public interface TerapeutaRepository extends JpaRepository<Terapeuta, Long> {
     Optional<Terapeuta> findByUsuario(Usuario usuario);
 
     

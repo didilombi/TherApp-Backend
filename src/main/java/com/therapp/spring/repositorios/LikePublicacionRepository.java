@@ -7,6 +7,6 @@ import com.therapp.spring.modelo.Usuario;
 
 import java.util.Optional;
 
-public interface LikePublicacionRepository extends JpaRepository<LikePublicacion, Integer> {
+public interface LikePublicacionRepository extends JpaRepository<LikePublicacion, Long> {
     Optional<LikePublicacion> findByUsuarioAndPublicacion(Usuario usuario, Publicacion publicacion);
 }

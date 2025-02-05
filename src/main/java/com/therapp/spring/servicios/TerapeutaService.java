@@ -22,7 +22,7 @@ public class TerapeutaService {
         return terapeutaRepositorio.findAll();
     }
 
-    public Optional<Terapeuta> findById(Integer id) {
+    public Optional<Terapeuta> findById(Long id) {
         return terapeutaRepositorio.findById(id);
     }
     
@@ -35,8 +35,8 @@ public class TerapeutaService {
         terapeutaRepositorio.saveAll(terapeutas);
     }
 
-    public void deleteById(Integer id) {
-        terapeutaRepositorio.deleteById(id.intValue());
+    public void deleteById(Long id) {
+        terapeutaRepositorio.deleteById(id.longValue());
     }
 
     // public Terapeuta registrarTerapeuta(TerapeutaDTo TerapeutaDTO) {

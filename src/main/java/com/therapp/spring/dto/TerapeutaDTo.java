@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TerapeutaDTo {
-    private Integer usuarioId;
+    private Long usuarioId;
     private String NColegiado;
     private String especialidad;
     

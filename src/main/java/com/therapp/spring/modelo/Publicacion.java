@@ -18,7 +18,7 @@ public class Publicacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String texto;
     private String fechaPublicacion;
 
@@ -29,11 +29,11 @@ public class Publicacion {
     private List<ContenidoPublicacion> contenidos;
 
     // Getters and setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

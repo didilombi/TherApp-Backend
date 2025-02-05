@@ -2,7 +2,13 @@ package com.therapp.spring.modelo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,15 +34,23 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String nombre;
     private String nombreUsuario;
     private String email;
     private String clave;
     private String fotoPerfil;
     
-    @Enumerated(EnumType.STRING)
-    private Rol rol;
+    @Enumerated(EnumType.STRING) // Para que sea un String
+	private Set<Rol> rol;
+
+    // @Override
+	// public Collection<? extends GrantedAuthority> getAuthorities() {
+	// 	return roles
+	// 			.stream()
+	// 			.map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name()))
+	// 						.collect(Collectors.toList());
+	// }
 
     private String dni;
     private LocalDate fechaNacimiento;
@@ -83,7 +97,7 @@ public class Usuario {
 
     public Usuario() {} //constructor vacio
 
-    public Usuario(String nombre, String nombreUsuario,String email, String clave, String fotoPerfil, Rol rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
+    public Usuario(String nombre, String nombreUsuario,String email, String clave, String fotoPerfil, Set<Rol> rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.email = email;

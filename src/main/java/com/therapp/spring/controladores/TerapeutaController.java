@@ -41,7 +41,7 @@ public class TerapeutaController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Terapeuta> getTerapeutaById(@PathVariable Integer id) {
+    public Optional<Terapeuta> getTerapeutaById(@PathVariable Long id) {
         return terapeutaService.findById(id);
     }
     @PostMapping
@@ -53,7 +53,7 @@ public class TerapeutaController {
         return terapeutaService.save(terapeuta);
     }
     @DeleteMapping("/{id}")
-    public void borrarTerapeuta(@PathVariable Integer id) {
+    public void borrarTerapeuta(@PathVariable Long id) {
         terapeutaService.deleteById(id);
     }
 }

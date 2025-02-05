@@ -15,7 +15,7 @@ public class Mensaje {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String contenido;
     private Date fechaEnvio;
     private Boolean visto;

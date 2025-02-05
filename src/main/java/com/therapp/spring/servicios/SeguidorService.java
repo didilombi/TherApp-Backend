@@ -22,7 +22,7 @@ public class SeguidorService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public void seguirUsuario(Integer seguidorId, Integer seguidoId) {
+    public void seguirUsuario(Long seguidorId, Long seguidoId) {
         Usuario seguidor = usuarioRepository.findById(seguidorId)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario seguidor no encontrado"));
         Usuario seguido = usuarioRepository.findById(seguidoId)
@@ -39,7 +39,7 @@ public class SeguidorService {
         seguidorRepository.save(seguidorEntity);
     }
 
-    public void dejarDeSeguirUsuario(Integer seguidorId, Integer seguidoId) {
+    public void dejarDeSeguirUsuario(Long seguidorId, Long seguidoId) {
         Usuario seguidor = usuarioRepository.findById(seguidorId)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario seguidor no encontrado"));
         Usuario seguido = usuarioRepository.findById(seguidoId)

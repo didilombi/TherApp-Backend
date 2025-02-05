@@ -17,7 +17,7 @@ import lombok.Setter;
 public class MultimediaMensaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String tipoContenido;
     private String url;
     private Date fechaEnvio;

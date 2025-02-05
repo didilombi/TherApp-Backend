@@ -1,7 +1,10 @@
 package com.therapp.spring.controladores;
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
+
 import org.springframework.http.ResponseEntity;
+
 import com.therapp.spring.dto.UsuarioDTO;
 import com.therapp.spring.servicios.UsuarioService;
 import com.therapp.spring.servicios.TerapeutaService;
@@ -34,7 +39,9 @@ public class UsuarioController {
         try {
             // Asignar el rol por defecto si no viene en la petición
             if (usuario.getRol() == null) {
-                usuario.setRol(Rol.USUARIO);
+                Set<Rol> roles = new HashSet<>();
+                roles.add(Rol.USUARIO);
+                usuario.setRol(roles);
             }
 
             Usuario nuevoUsuario = usuarioService.save(usuario);
@@ -46,7 +53,7 @@ public class UsuarioController {
 
 
     @DeleteMapping("/{id}")
-    public void borrarUsuario(@PathVariable Integer id) {
+    public void borrarUsuario(@PathVariable Long id) {
         usuarioService.deleteById(id);
     }
 }
