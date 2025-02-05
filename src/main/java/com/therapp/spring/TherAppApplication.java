@@ -17,7 +17,6 @@ import com.therapp.spring.modelo.Publicacion;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.RolPublicacion;
 import com.therapp.spring.modelo.Terapeuta;
-import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.ComentarioPublicacionService;
 import com.therapp.spring.servicios.LikeComentarioService;
