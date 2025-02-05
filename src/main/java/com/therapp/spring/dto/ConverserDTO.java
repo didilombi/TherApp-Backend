@@ -1,9 +1,7 @@
 package com.therapp.spring.dto;
 
 import com.therapp.spring.modelo.Rol;
-import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
-import com.therapp.spring.dto.TerapeutaDTo;
 
 public class ConverserDTO {
     //convierte una Entidad a un DTO

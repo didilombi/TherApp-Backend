@@ -1,14 +1,6 @@
 #FileLock
-<<<<<<< HEAD
-#Mon Feb 03 17:14:09 CET 2025
-hostName=DESKTOP-6TC6J5P
-id=194cc97356da363063a9fadef5266d922d2274ad454
+#Wed Feb 05 09:40:12 CET 2025
+hostName=A214PC32
+id=194d54437aa1b072319c7a41fd35433a2c36e10e32d
 method=file
-server=192.168.1.37\:58219
-=======
-#Tue Feb 04 21:43:32 CET 2025
-hostName=DESKTOP-6TC6J5P
-id=194d2b429a2e67421d2c2f218ce480b631689d43d68
-method=file
-server=192.168.1.37\:49335
->>>>>>> Miguel2
+server=192.168.56.1\:54390
