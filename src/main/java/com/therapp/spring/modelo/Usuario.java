@@ -4,18 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
@@ -24,6 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+
 public class Usuario {
 
     @Id
@@ -34,36 +33,43 @@ public class Usuario {
     private String email;
     private String clave;
     private String fotoPerfil;
+    
     @Enumerated(EnumType.STRING)
     private Rol rol;
+
     private String dni;
     private LocalDate fechaNacimiento;
     private String telefono;
-    private LocalDateTime fechaRegistro;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime fechaRegistro = LocalDateTime.now();
+    
     private String ubicacion;
     private String biografia;
 
+    //RELACIONES
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Terapeuta terapeuta;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Organizacion organizacion;
 
-    // Aquí se está ignorando la lista de mensajes para evitar la recursión infinita
-    @OneToMany(mappedBy = "usuario")
-    @JsonBackReference // Esta anotación evita la recursión infinita en la lista de mensajes
-    private List<Mensaje> mensajes;
-    // Ignorar la propiedad terapeuta para evitar la recursión infinita
-    @JsonIgnore
+    @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mensaje> mensajesEnviados;
+
+    @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mensaje> mensajesRecibidos;
+
     public Terapeuta getTerapeuta() {
         return terapeuta;
     }
 
-
     @OneToMany(mappedBy = "usuarioSeguidor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // Evita la serialización de la lista de seguidores
     private List<Seguidor> usuariosQueSigo;
 
     @OneToMany(mappedBy = "usuarioSeguido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // Evita la serialización de seguidores
     private List<Seguidor> misSeguidores;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -77,7 +83,7 @@ public class Usuario {
 
     public Usuario() {} //constructor vacio
 
-    public Usuario(String nombre, String nombreUsuario,String email, String clave, String fotoPerfil, Rol rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion, String biografia) {
+    public Usuario(String nombre, String nombreUsuario,String email, String clave, String fotoPerfil, Rol rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
@@ -89,6 +95,5 @@ public class Usuario {
         this.telefono = telefono;
         this.fechaRegistro = LocalDateTime.now();
         this.ubicacion = ubicacion;
-        this.biografia = biografia;
     }
 }

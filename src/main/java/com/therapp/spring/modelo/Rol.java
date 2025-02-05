@@ -4,6 +4,5 @@ public enum Rol {
 	USUARIO,
 	TERAPEUTA,
     ORGANIZACION,
-	PACIENTE,
  	ADMIN
 }
