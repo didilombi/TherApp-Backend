@@ -1,14 +1,6 @@
 #FileLock
-<<<<<<< HEAD
-#Wed Feb 05 11:47:00 CET 2025
-hostName=A214PC32
-id=194d5b850579b2d46701fc4c7f8bf8c68d36c39a2ee
+#Wed Feb 05 16:16:58 CET 2025
+hostName=DESKTOP-6TC6J5P
+id=194d6af8b186d256a7e234f6852a24e9e96aaf3802b
 method=file
-server=192.168.56.1\:56553
-=======
-#Wed Feb 05 11:53:24 CET 2025
-hostName=A214PC32
-id=194d5be2b14ac3b305d43c79872a2f2f3c1e5c68a15
-method=file
-server=192.168.56.1\:56954
->>>>>>> d3ec31e7e2206dcd833e6f65d8b88d815ccc7a70
+server=192.168.1.37\:51629
