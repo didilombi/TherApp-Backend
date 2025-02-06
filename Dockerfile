@@ -1,14 +1,14 @@
-# Usa una imagen oficial de OpenJDK 17
+# Usa la imagen de OpenJDK 17
 FROM openjdk:17-jdk-slim
 
-# Establece el directorio de trabajo dentro del contenedor
+# Define el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el archivo JAR generado por Maven
+# Copia el JAR generado en el contenedor
 COPY target/TherApp-1.jar app.jar
 
-# Expone el puerto 9000 para el backend
+# Expone el puerto donde se ejecutará la aplicación
 EXPOSE 9000
 
-# Comando para ejecutar la aplicación
+# Comando para ejecutar la aplicación Spring Boot
 ENTRYPOINT ["java", "-jar", "app.jar"]
