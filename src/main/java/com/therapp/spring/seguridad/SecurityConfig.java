@@ -27,8 +27,7 @@ public class SecurityConfig {
             .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())) // Permitir H2 Console
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/h2-console/**").permitAll() // Permitir acceso a H2 Console
-                .requestMatchers("/api/**").permitAll()
-                .requestMatchers("/ws/**").permitAll()
+                .requestMatchers("/api/**").permitAll() // ⚠️ Puedes cambiar esto si quieres autenticación
                 .anyRequest().permitAll()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
