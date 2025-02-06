@@ -9,14 +9,17 @@ import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,8 +32,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,16 +43,17 @@ public class Usuario {
     private String clave;
     private String fotoPerfil;
     
-    @Enumerated(EnumType.STRING) // Para que sea un String
+    @ElementCollection(fetch = FetchType.EAGER)
+	@Enumerated(EnumType.STRING) // Para que sea un String
 	private Set<Rol> rol;
 
-    // @Override
-	// public Collection<? extends GrantedAuthority> getAuthorities() {
-	// 	return roles
-	// 			.stream()
-	// 			.map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name()))
-	// 						.collect(Collectors.toList());
-	// }
+    @Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return rol
+				.stream()
+				.map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name()))
+							.collect(Collectors.toList());
+	}
 
     private String dni;
     private LocalDate fechaNacimiento;
@@ -94,6 +97,38 @@ public class Usuario {
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LikeComentario> likesComentarios;
+
+    
+
+    @Override
+    public String getUsername() {
+        return nombreUsuario;
+    }
+
+    @Override
+    public String getPassword() {
+        return clave;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     public Usuario() {} //constructor vacio
 

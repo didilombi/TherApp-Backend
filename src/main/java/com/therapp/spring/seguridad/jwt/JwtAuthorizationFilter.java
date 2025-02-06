@@ -11,7 +11,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.CustomUserDetailsService;
-import com.therapp.spring.servicios.UsuarioService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

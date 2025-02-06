@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
 
@@ -27,7 +28,6 @@ import com.therapp.spring.servicios.PublicacionService;
 import com.therapp.spring.servicios.SeguidorService;
 import com.therapp.spring.servicios.TerapeutaService;
 import com.therapp.spring.servicios.UsuarioService;
-import com.therapp.spring.servicios.TerapeutaService;
 
 import jakarta.transaction.Transactional;
 
@@ -40,11 +40,11 @@ public class TherAppApplication {
 
     @Bean
     @Transactional
-    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService) {
+    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService, PasswordEncoder passwordEncoder) {
         return args -> {
             // Crear usuarios
-            Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", "password", "Sin Imagen", Set.of(Rol.ORGANIZACION), "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid");
-            Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", "password", "Sin Imagen", Set.of(Rol.USUARIO), "12345678X", LocalDate.of(1990, 8, 20), "987654321", "Barcelona");
+            Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.ORGANIZACION), "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid");
+            Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USUARIO), "12345678X", LocalDate.of(1990, 8, 20), "987654321", "Barcelona");
 
             // Guardar los usuarios en la base de datos
             usuarioService.save(usuario1);
@@ -119,7 +119,7 @@ public class TherAppApplication {
             usuario.setNombre("Juan Pérez");
             usuario.setNombreUsuario("juanperez");
             usuario.setEmail("juan.perez@example.com");
-            usuario.setClave("123456");
+            usuario.setClave(passwordEncoder.encode("123456"));
             usuario.setRol(Set.of(Rol.USUARIO));
             usuario.setDni("12345678A");
             usuario.setFechaNacimiento(LocalDate.of(1990, 5, 20));
@@ -161,4 +161,3 @@ public class TherAppApplication {
         };
     }
 }
-

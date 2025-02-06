@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,15 +17,17 @@ import com.therapp.spring.repositorios.UsuarioPublicacionRepository;
 import com.therapp.spring.repositorios.UsuarioRepository;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepositorio;
     private final UsuarioPublicacionRepository usuarioPublicacionRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepositorio, UsuarioPublicacionRepository usuarioPublicacionRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepositorio, UsuarioPublicacionRepository usuarioPublicacionRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.usuarioPublicacionRepository = usuarioPublicacionRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Usuario> findAll() {
@@ -36,11 +39,14 @@ public class UsuarioService {
     }
 
     public Usuario save(Usuario usuario) {
+        // Codificar la contraseña antes de guardar
+        usuario.setClave(passwordEncoder.encode(usuario.getClave()));
         return usuarioRepositorio.save(usuario);
     }
 
     //este metodo se encarga de guardar una lista de usuarios predefinidos en la base de datos
     public void saveAll(Iterable<Usuario> usuarios) {
+        usuarios.forEach(usuario -> usuario.setClave(passwordEncoder.encode(usuario.getClave())));
         usuarioRepositorio.saveAll(usuarios);
     }
 
@@ -64,5 +70,12 @@ public class UsuarioService {
         return usuarioRepositorio.findByNombreUsuario(username);
     }
 
-
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepositorio.findByEmail(username);
+        if (usuario == null) {
+            throw new UsernameNotFoundException("Usuario no encontrado con el email: " + username);
+        }
+        return new org.springframework.security.core.userdetails.User(usuario.getEmail(), usuario.getClave(), new ArrayList<>());
+    }
 }
