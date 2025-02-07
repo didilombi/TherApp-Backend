@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copia el JAR generado en el contenedor
-COPY target/TherApp-1.jar app.jar
+COPY target/TherApp-3.4.1.jar app.jar
 
 # Expone el puerto donde se ejecutará la aplicación
 EXPOSE 9000
