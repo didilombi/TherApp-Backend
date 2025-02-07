@@ -22,6 +22,9 @@ public class Terapeuta {
     private String experiencia;
     private String especialidad;
     private String idiomas;
+    private int precio;
+    private boolean premium;
+    
 
     @OneToOne
     @JoinColumn(name = "usuario_id") // Relaciona con Usuario
