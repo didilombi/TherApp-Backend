@@ -129,6 +129,17 @@ public class TherAppApplication {
             // // Guardar el usuario en la BD
             // usuarioService.save(usuario);
 
+            // Crear un Terapeuta relacionado con el usuario
+            Terapeuta terapeuta = new Terapeuta();
+            terapeuta.setNColegiado("COLEGIADO-1234");
+            terapeuta.setApellidos("Gómez López");
+            terapeuta.setExperiencia("5 años de experiencia en psicoterapia");
+            terapeuta.setEspecialidad("Psicología Clínica");
+            terapeuta.setIdiomas("Español, Inglés");
+            terapeuta.setUsuario(usuario);  // Relacionamos al usuario
+            terapeuta.setPrecio(50);
+            terapeuta.setPremium(true);
+    
             // // Crear un Terapeuta relacionado con el usuario
             // Terapeuta terapeuta = new Terapeuta();
             // terapeuta.setNColegiado("COLEGIADO-1234");
