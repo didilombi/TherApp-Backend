@@ -176,12 +176,12 @@ public class TherAppApplication {
 
             terapeutaService.save(terapeuta3);
 
-            // // Enviar un mensaje de prueba
-            // // usuario1 (Carlos) envía un mensaje a "usuario" (Juan Pérez)
-            // Mensaje mensaje = new Mensaje();
-            // mensaje.setContenido("Hola, este es un mensaje de prueba.");
-            // mensaje.setFechaEnvio(new Date());
-            // mensaje.setVisto(false);
+            // Enviar un mensaje de prueba
+            // usuario1 (Carlos) envía un mensaje a "usuario" (Juan Pérez)
+            Mensaje mensaje = new Mensaje();
+            mensaje.setContenido("Hola, este es un mensaje de prueba.");
+            mensaje.setFechaEnvio(new Date());
+            mensaje.setVisto(false);
 
             // // Emisor = usuario1 (Carlos, ID=1)
             // mensaje.setEmisor(usuario1);
