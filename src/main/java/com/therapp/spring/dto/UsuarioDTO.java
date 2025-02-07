@@ -1,12 +1,14 @@
 package com.therapp.spring.dto;
 
 import com.therapp.spring.modelo.Rol;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsuarioDTO {
     private String nombre;
     private String clave;

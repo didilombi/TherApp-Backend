@@ -10,11 +10,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
-@Getter
-@Setter
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Organizacion {
 
@@ -30,8 +33,6 @@ public class Organizacion {
 
     @OneToMany(mappedBy = "organizacion", cascade = CascadeType.ALL)
     private List<Terapeuta> terapeutas = new ArrayList<>();
-
-    public Organizacion() {}
 
     public Organizacion(String cif, String direccion, String telefono, String email, String descripcion, String sitioweb) {
         this.cif = cif;

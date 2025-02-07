@@ -8,11 +8,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
-@Getter
-@Setter
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Publicacion {
 
@@ -27,45 +30,4 @@ public class Publicacion {
 
     @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ContenidoPublicacion> contenidos;
-
-    // Getters and setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTexto() {
-        return texto;
-    }
-
-    public void setTexto(String texto) {
-        this.texto = texto;
-    }
-
-    public String getFechaPublicacion() {
-        return fechaPublicacion;
-    }
-
-    public void setFechaPublicacion(String fechaPublicacion) {
-        this.fechaPublicacion = fechaPublicacion;
-    }
-
-    public List<UsuarioPublicacion> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<UsuarioPublicacion> usuarios) {
-        this.usuarios = usuarios;
-    }
-
-    public List<ContenidoPublicacion> getContenidos() {
-        return contenidos;
-    }
-
-    public void setContenidos(List<ContenidoPublicacion> contenidos) {
-        this.contenidos = contenidos;
-    }
 }
