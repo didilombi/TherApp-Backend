@@ -118,10 +118,44 @@ public class TherAppApplication {
             terapeuta.setEspecialidad("Psicología Clínica");
             terapeuta.setIdiomas("Español, Inglés");
             terapeuta.setUsuario(usuario);  // Relacionamos al usuario
+            terapeuta.setPrecio(50);
+            terapeuta.setPremium(true);
     
 
             // Guardar el terapeuta en la BD
             terapeutaService.save(terapeuta);
+
+            Usuario usuario4 = new Usuario("Manolo", "Manoloeldelbombo", "manolo@bombo.com", "12345678", "Sin Imagen", Rol.USUARIO, "12345678X", LocalDate.of(1955, 8, 20), "987654321", "Madrid");
+
+            usuarioService.save(usuario4);
+
+            Terapeuta terapeuta2 = new Terapeuta();
+            terapeuta2.setNColegiado("COLEGIADO-1111");
+            terapeuta2.setApellidos("Cabeza de Huevo");
+            terapeuta2.setExperiencia("20 años trabajando en las clínicas más reputadas de España");
+            terapeuta2.setEspecialidad("Trastornos de la conducta alimentaria, Psicología clínica");
+            terapeuta2.setIdiomas("Español, Francés");
+            terapeuta2.setUsuario(usuario4);
+            terapeuta2.setPrecio(65);
+            terapeuta2.setPremium(true);
+
+            terapeutaService.save(terapeuta2);
+
+            Usuario usuario5 = new Usuario("Carla", "carla211", "carla211@gmail.com", "12345678", "Sin Imagen", Rol.USUARIO, "12345678X", LocalDate.of(1999, 8, 20), "987654321", "Bilbao");
+
+            usuarioService.save(usuario4);
+
+            Terapeuta terapeuta3 = new Terapeuta();
+            terapeuta3.setNColegiado("COLEGIADO-7651");
+            terapeuta3.setApellidos("García López");
+            terapeuta3.setExperiencia("Recién graduada, 6 meses de prácticas en clínica");
+            terapeuta3.setEspecialidad("Dependencia emocional, maltrato en pareja, violencia de género");
+            terapeuta3.setIdiomas("Español, Inglés, Alemán");
+            terapeuta3.setUsuario(usuario5);
+            terapeuta3.setPrecio(40);
+            terapeuta3.setPremium(false);
+
+            terapeutaService.save(terapeuta3);
 
             // Enviar un mensaje de prueba
             // usuario1 (Carlos) envía un mensaje a "usuario" (Juan Pérez)
