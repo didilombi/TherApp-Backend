@@ -118,6 +118,7 @@ public class TherAppApplication {
             terapeuta.setEspecialidad("Psicología Clínica");
             terapeuta.setIdiomas("Español, Inglés");
             terapeuta.setUsuario(usuario);  // Relacionamos al usuario
+    
 
             // Guardar el terapeuta en la BD
             terapeutaService.save(terapeuta);
