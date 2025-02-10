@@ -22,7 +22,7 @@ public class MultimediaMensaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String tipoContenido;
-    private String url;
+    private String url; 
     private Date fechaEnvio;
 
     @ManyToOne
