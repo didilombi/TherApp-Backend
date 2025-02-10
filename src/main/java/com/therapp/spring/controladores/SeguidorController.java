@@ -22,12 +22,12 @@ public class SeguidorController {
     }
 
     @PostMapping("/{seguidoId}/seguir")
-    public void seguirUsuario(@PathVariable Integer seguidoId, @RequestParam Integer seguidorId) {
+    public void seguirUsuario(@PathVariable Long seguidoId, @RequestParam Long seguidorId) {
         seguidorService.seguirUsuario(seguidorId, seguidoId);
     }
 
     @DeleteMapping("/{seguidoId}/dejarDeSeguir")
-    public void dejarDeSeguirUsuario(@PathVariable Integer seguidoId, @RequestParam Integer seguidorId) {
+    public void dejarDeSeguirUsuario(@PathVariable Long seguidoId, @RequestParam Long seguidorId) {
         seguidorService.dejarDeSeguirUsuario(seguidorId, seguidoId);
     }
 }

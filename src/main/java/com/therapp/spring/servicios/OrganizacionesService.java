@@ -22,11 +22,11 @@ public class OrganizacionesService {
         return organizacionesRepositorio.save(organizacion);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         organizacionesRepositorio.deleteById(id);
     }
 
-    public Organizacion findById(Integer id) {
+    public Organizacion findById(Long id) {
         return organizacionesRepositorio.findById(id).orElse(null);
     }
 }

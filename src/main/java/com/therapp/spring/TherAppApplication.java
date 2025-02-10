@@ -2,11 +2,15 @@ package com.therapp.spring;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Set;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import java.util.Date;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.therapp.spring.modelo.ComentarioPublicacion;
 import com.therapp.spring.modelo.ContenidoPublicacion;
 import com.therapp.spring.modelo.Mensaje;
@@ -21,8 +25,10 @@ import com.therapp.spring.servicios.LikePublicacionService;
 import com.therapp.spring.servicios.MensajeService;
 import com.therapp.spring.servicios.PublicacionService;
 import com.therapp.spring.servicios.SeguidorService;
-import com.therapp.spring.servicios.UsuarioService;
 import com.therapp.spring.servicios.TerapeutaService;
+import com.therapp.spring.servicios.UsuarioService;
+
+import jakarta.transaction.Transactional;
 
 @SpringBootApplication
 public class TherAppApplication {
@@ -32,15 +38,28 @@ public class TherAppApplication {
     }
 
     @Bean
-    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService) {
+    @Transactional
+    CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService, PasswordEncoder passwordEncoder) {
         return args -> {
             // Crear usuarios
-            Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", "password", "Sin Imagen", Rol.ORGANIZACION, "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid");
-            Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", "password", "Sin Imagen", Rol.USUARIO, "12345678X", LocalDate.of(1990, 8, 20), "987654321", "Barcelona");
+            Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid");
+            Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "12345678X", LocalDate.of(1990, 8, 20), "987654321", "Barcelona");
 
             // Guardar los usuarios en la base de datos
             usuarioService.save(usuario1);
             usuarioService.save(usuario2);
+
+            // Crear terapeuta a partir del usuario Ana
+            Terapeuta terapeutaAna = new Terapeuta();
+            terapeutaAna.setUsuario(usuario2);
+            terapeutaAna.setNColegiado("123456");
+            terapeutaAna.setApellidos("Colab");
+            terapeutaAna.setExperiencia("5 años");
+            terapeutaAna.setEspecialidad("Psicología");
+            terapeutaAna.setIdiomas("Español, Inglés");
+
+            // Guardar el terapeuta en la base de datos
+            terapeutaService.save(terapeutaAna);
 
             // Crear contenidos multimedia
             ContenidoPublicacion foto1 = new ContenidoPublicacion();
@@ -97,10 +116,10 @@ public class TherAppApplication {
             // Crear un Usuario
             Usuario usuario = new Usuario();
             usuario.setNombre("Juan Pérez");
-            usuario.setNombreUsuario("juanperez");
+            usuario.setUsername("juanperez");
             usuario.setEmail("juan.perez@example.com");
-            usuario.setClave("123456");
-            usuario.setRol(Rol.USUARIO);
+            usuario.setClave(passwordEncoder.encode("123456"));
+            usuario.setRol(Set.of(Rol.USER));
             usuario.setDni("12345678A");
             usuario.setFechaNacimiento(LocalDate.of(1990, 5, 20));
             usuario.setTelefono("123456789");
@@ -143,4 +162,3 @@ public class TherAppApplication {
         };
     }
 }
-

@@ -39,43 +39,43 @@ public class PublicacionController {
     }
 
     @GetMapping("/{id}")
-    public Publicacion getPublicacionById(@PathVariable Integer id) {
+    public Publicacion getPublicacionById(@PathVariable Long id) {
         return publicacionService.findById(id);
     }
 
     @PostMapping
-    public Publicacion crearPublicacion(@RequestBody Publicacion publicacion, @RequestParam Integer usuarioId, @RequestBody List<ContenidoPublicacion> contenidos) {
-        Usuario usuario = usuarioService.findById(usuarioId);
+    public Publicacion crearPublicacion(@RequestBody Publicacion publicacion, @RequestParam Long usuarioId, @RequestBody List<ContenidoPublicacion> contenidos) {
+        Usuario usuario = usuarioService.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario not found"));
         return publicacionService.crearPublicacion(usuario, publicacion, contenidos, RolPublicacion.AUTOR);
     }
 
     @PutMapping("/{id}")
-    public Publicacion actualizarPublicacion(@PathVariable Integer id, @RequestBody Publicacion publicacion) {
+    public Publicacion actualizarPublicacion(@PathVariable Long id, @RequestBody Publicacion publicacion) {
         publicacion.setId(id);
         return publicacionService.update(publicacion);
     }
 
     @DeleteMapping("/{id}")
-    public void borrarPublicacion(@PathVariable Integer id) {
+    public void borrarPublicacion(@PathVariable Long id) {
         publicacionService.deleteById(id);
     }
 
     @PostMapping("/{id}/colaboradores")
-    public void agregarColaborador(@PathVariable Integer id, @RequestParam Integer usuarioId) {
+    public void agregarColaborador(@PathVariable Long id, @RequestParam Long usuarioId) {
         Publicacion publicacion = publicacionService.findById(id);
-        Usuario usuario = usuarioService.findById(usuarioId);
+        Usuario usuario = usuarioService.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario not found"));
         publicacionService.agregarColaborador(publicacion, usuario);
     }
 
     @DeleteMapping("/{id}/colaboradores")
-    public void eliminarColaborador(@PathVariable Integer id, @RequestParam Integer usuarioId) {
+    public void eliminarColaborador(@PathVariable Long id, @RequestParam Long usuarioId) {
         Publicacion publicacion = publicacionService.findById(id);
-        Usuario usuario = usuarioService.findById(usuarioId);
+        Usuario usuario = usuarioService.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario not found"));
         publicacionService.eliminarColaborador(publicacion, usuario);
     }
 
     @PostMapping("/{id}/contenidos")
-    public void agregarContenido(@PathVariable Integer id, @RequestBody ContenidoPublicacion contenido) {
+    public void agregarContenido(@PathVariable Long id, @RequestBody ContenidoPublicacion contenido) {
         Publicacion publicacion = publicacionService.findById(id);
         publicacionService.agregarContenido(publicacion, contenido);
     }

@@ -17,7 +17,7 @@ public class Localizacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String pais;
     private String ciudad;
     private String provincia;

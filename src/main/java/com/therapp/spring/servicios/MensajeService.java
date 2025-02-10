@@ -27,7 +27,7 @@ public class MensajeService {
     }
 
     // Obtener todos los mensajes entre dos usuarios (bidireccional)
-    public List<MensajeDTO> obtenerChat(Integer userId1, Integer userId2) {
+    public List<MensajeDTO> obtenerChat(Long userId1, Long userId2) {
     List<Mensaje> mensajes = mensajeRepository.findChatBetweenUsers(userId1, userId2);
         
         return mensajes.stream().map(m -> new MensajeDTO(
@@ -45,7 +45,7 @@ public class MensajeService {
     
 
     // Enviar un nuevo mensaje de userId1 -> userId2
-    public Mensaje enviarMensaje(Integer emisorId, Integer receptorId, String contenido, String archivoUrl) {
+    public Mensaje enviarMensaje(Long emisorId, Long receptorId, String contenido, String archivoUrl) {
         Optional<Usuario> emisorOpt = usuarioRepository.findById(emisorId);
         Optional<Usuario> receptorOpt = usuarioRepository.findById(receptorId);
 

@@ -13,4 +13,5 @@ public interface UsuarioPublicacionRepository extends JpaRepository<UsuarioPubli
     List<UsuarioPublicacion> findByUsuario(Usuario usuario);
     List<UsuarioPublicacion> findByPublicacion(Publicacion publicacion);
     Optional<UsuarioPublicacion> findByPublicacionAndUsuario(Publicacion publicacion, Usuario usuario);
+    void deleteByUsuarioId(Long usuarioId);
 }

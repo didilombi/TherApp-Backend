@@ -10,4 +10,5 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TerapeutaDTo extends UsuarioDTO {
     private String especialidad;
+    
 }

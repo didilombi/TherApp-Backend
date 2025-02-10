@@ -24,17 +24,17 @@ public class ComentarioPublicacionController {
     }
 
     @PostMapping("/{publicacionId}/comentarios")
-    public ComentarioPublicacion agregarComentario(@PathVariable Integer publicacionId, @RequestParam Integer usuarioId, @RequestBody String contenido) {
+    public ComentarioPublicacion agregarComentario(@PathVariable Long publicacionId, @RequestParam Long usuarioId, @RequestBody String contenido) {
         return comentarioPublicacionService.agregarComentario(publicacionId, usuarioId, contenido);
     }
 
     @PostMapping("/comentarios/{comentarioPadreId}/respuestas")
-    public ComentarioPublicacion agregarRespuesta(@PathVariable Integer comentarioPadreId, @RequestParam Integer usuarioId, @RequestBody String contenido) {
+    public ComentarioPublicacion agregarRespuesta(@PathVariable Long comentarioPadreId, @RequestParam Long usuarioId, @RequestBody String contenido) {
         return comentarioPublicacionService.agregarRespuesta(comentarioPadreId, usuarioId, contenido);
     }
 
     @DeleteMapping("/comentarios/{comentarioId}")
-    public void eliminarComentario(@PathVariable Integer comentarioId) {
+    public void eliminarComentario(@PathVariable Long comentarioId) {
         comentarioPublicacionService.eliminarComentario(comentarioId);
     }
 }

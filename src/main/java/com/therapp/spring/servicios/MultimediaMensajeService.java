@@ -30,7 +30,7 @@ public class MultimediaMensajeService {
     private MensajeRepository mensajeRepository;
 
     // Guardar archivo en el servidor y la base de datos
-    public MultimediaMensaje saveFile(MultipartFile file, int mensajeId) {
+    public MultimediaMensaje saveFile(MultipartFile file, Long mensajeId) {
         try {
             if (!Files.exists(rootLocation)) {
                 Files.createDirectories(rootLocation);

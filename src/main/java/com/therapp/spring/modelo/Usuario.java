@@ -2,40 +2,65 @@ package com.therapp.spring.modelo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
+
+@Getter
+@Setter
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String nombre;
-    private String nombreUsuario;
+    private String username;
     private String email;
     private String clave;
     private String fotoPerfil;
     
-    @Enumerated(EnumType.STRING)
-    private Rol rol;
+    @ElementCollection(fetch = FetchType.EAGER)
+	@Enumerated(EnumType.STRING) // Para que sea un String
+	private Set<Rol> rol;
+
+    @Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return rol
+				.stream()
+				.map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name()))
+							.collect(Collectors.toList());
+	}
 
     private String dni;
     private LocalDate fechaNacimiento;
@@ -47,11 +72,10 @@ public class Usuario {
     private String ubicacion;
     private String biografia;
 
-    //RELACIONES
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Terapeuta terapeuta;
 
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Organizacion organizacion;
 
     @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -73,7 +97,7 @@ public class Usuario {
     private List<Seguidor> misSeguidores;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LikePublicacion> likes;
+    private List<LikePublicacion> likesPublicaciones;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ComentarioPublicacion> comentarios;
@@ -81,9 +105,41 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LikeComentario> likesComentarios;
 
-    public Usuario(String nombre, String nombreUsuario,String email, String clave, String fotoPerfil, Rol rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
+    
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public String getPassword() {
+        return clave;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public Usuario(String nombre, String username,String email, String clave, String fotoPerfil, Set<Rol> rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
         this.nombre = nombre;
-        this.nombreUsuario = nombreUsuario;
+        this.username = username;
         this.email = email;
         this.clave = clave;
         this.fotoPerfil = fotoPerfil;

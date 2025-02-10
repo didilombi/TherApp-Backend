@@ -35,7 +35,7 @@ public class PublicacionService {
         return publicacionRepository.findAll();
     }
 
-    public Publicacion findById(Integer id) {
+    public Publicacion findById(Long id) {
         return publicacionRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Publicación no encontrada"));
     }
 
@@ -69,7 +69,7 @@ public class PublicacionService {
         return publicacionRepository.save(publicacion);
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         publicacionRepository.deleteById(id);
     }
 
@@ -113,7 +113,7 @@ public class PublicacionService {
         contenidoPublicacionRepository.save(contenido);
     }
 
-    public void eliminarContenido(Publicacion publicacion, Integer contenidoId) {
+    public void eliminarContenido(Publicacion publicacion, Long contenidoId) {
         ContenidoPublicacion contenido = contenidoPublicacionRepository.findById(contenidoId)
                 .orElseThrow(() -> new IllegalArgumentException("Contenido no encontrado"));
 

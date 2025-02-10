@@ -1,19 +1,26 @@
 package com.therapp.spring.controladores;
 
 
+import java.util.HashSet;
+import java.util.Set;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+
+import com.therapp.spring.dto.CreateUsuarioDTO;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
-import org.springframework.http.ResponseEntity;
 import com.therapp.spring.servicios.UsuarioService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -22,17 +29,26 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
+    private final PasswordEncoder passwordEncoder;
 
+    public UsuarioController(UsuarioService usuarioService, PasswordEncoder passwordEncoder) {
+        this.usuarioService = usuarioService;
+        this.passwordEncoder = passwordEncoder;
+    }
     @PostMapping("/registro")
-    public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> crearUsuario(@Valid @RequestBody CreateUsuarioDTO createUsuarioDTO) {
         try {
-            // Asignar el rol por defecto si no viene en la petición
-            if (usuario.getRol() == null) {
-                usuario.setRol(Rol.USUARIO);
-            }
+            Usuario usuario = new Usuario();
+            usuario.setNombre(createUsuarioDTO.getNombre());
+            usuario.setUsername(createUsuarioDTO.getUsername());
+            usuario.setEmail(createUsuarioDTO.getEmail());
+            usuario.setClave(createUsuarioDTO.getClave());
+            usuario.setRol(createUsuarioDTO.getRol() != null ? createUsuarioDTO.getRol() : Set.of(Rol.USER));
+            usuario.setDni(createUsuarioDTO.getDni());
+            usuario.setFechaNacimiento(createUsuarioDTO.getFechaNacimiento());
+            usuario.setTelefono(createUsuarioDTO.getTelefono());
+            usuario.setUbicacion(createUsuarioDTO.getUbicacion());
+            usuario.setBiografia(createUsuarioDTO.getBiografia());
 
             Usuario nuevoUsuario = usuarioService.save(usuario);
             return ResponseEntity.ok(nuevoUsuario);
@@ -43,7 +59,7 @@ public class UsuarioController {
 
 
     @DeleteMapping("/{id}")
-    public void borrarUsuario(@PathVariable Integer id) {
+    public void borrarUsuario(@PathVariable Long id) {
         usuarioService.deleteById(id);
     }
 }
