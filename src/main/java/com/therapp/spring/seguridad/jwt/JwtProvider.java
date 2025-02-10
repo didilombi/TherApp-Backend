@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.modelo.Rol;
+import com.therapp.spring.modelo.Usuario;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -42,7 +42,7 @@ public class JwtProvider {
 				.subject(Long.toString(usuario.getId()))
 				.issuedAt(new Date())
 				.expiration(tokenExpirationDate)
-				.claim("fullname", usuario.getNombreUsuario())
+				.claim("fullname", usuario.getNombre())
 				// Esto develve los roles en String. Ejemplo [ADMIN, USER] --> "ADMIN, USER"
 				.claim("roles", usuario.getRol().stream()
 									.map(Rol::name)

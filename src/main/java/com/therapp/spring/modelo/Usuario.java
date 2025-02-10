@@ -38,7 +38,7 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String nombreUsuario;
+    private String username;
     private String email;
     private String clave;
     private String fotoPerfil;
@@ -102,7 +102,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nombreUsuario;
+        return username;
     }
 
     @Override
@@ -132,9 +132,9 @@ public class Usuario implements UserDetails {
 
     public Usuario() {} //constructor vacio
 
-    public Usuario(String nombre, String nombreUsuario,String email, String clave, String fotoPerfil, Set<Rol> rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
+    public Usuario(String nombre, String username,String email, String clave, String fotoPerfil, Set<Rol> rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
         this.nombre = nombre;
-        this.nombreUsuario = nombreUsuario;
+        this.username = username;
         this.email = email;
         this.clave = clave;
         this.fotoPerfil = fotoPerfil;

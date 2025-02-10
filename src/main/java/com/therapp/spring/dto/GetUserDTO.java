@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class GetUserDTO {
 
-	private String nombreUsuario;
+	private String username;
 	private String fotoPerfil;
 	private Set<String> rol;
 }

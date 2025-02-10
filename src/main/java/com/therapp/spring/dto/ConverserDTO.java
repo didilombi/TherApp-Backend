@@ -12,7 +12,7 @@
 //     public static UsuarioDTO convertUsuarioToUsuarioDTO(Usuario usuario) {
 //         UsuarioDTO dto = new UsuarioDTO();
 //         dto.setNombre(usuario.getNombre());
-//         dto.setNombreUsuario(usuario.getNombreUsuario());
+//         dto.setUsername(usuario.getUsername());
 //         dto.setEmail(usuario.getEmail());
 //         return dto;
 //     }
@@ -21,7 +21,7 @@
 //     public static TerapeutaDTO convertUsuarioToTerapeutaDTO(UsuarioDTO usuarioDTO) {
 //         TerapeutaDTO terapeutaDTO = new TerapeutaDTO();
 //         terapeutaDTO.setNombre(usuarioDTO.getNombre());
-//         terapeutaDTO.setNombreUsuario(usuarioDTO.getNombreUsuario());
+//         terapeutaDTO.setUsername(usuarioDTO.getUsername());
 //         terapeutaDTO.setEmail(usuarioDTO.getEmail());
 //         terapeutaDTO.setRol(Rol.TERAPEUTA); // Asigna el rol correcto
 //         return terapeutaDTO;

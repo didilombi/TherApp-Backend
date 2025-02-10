@@ -1,23 +1,22 @@
 package com.therapp.spring.servicios;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.therapp.spring.dto.CreateUsuarioDTO;
+import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.UsuarioPublicacionRepository;
 import com.therapp.spring.repositorios.UsuarioRepository;
 
 @Service
-public class UsuarioService implements UserDetailsService {
+public class UsuarioService {
 
     private final UsuarioRepository usuarioRepositorio;
     private final UsuarioPublicacionRepository usuarioPublicacionRepository;
@@ -67,15 +66,23 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Optional<Usuario> findByUsername(String username) {
-        return usuarioRepositorio.findByNombreUsuario(username);
+        Optional<Usuario> user = usuarioRepositorio.findByUsername(username);
+        return user;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepositorio.findByEmail(username);
-        if (usuario == null) {
-            throw new UsernameNotFoundException("Usuario no encontrado con el email: " + username);
-        }
-        return new org.springframework.security.core.userdetails.User(usuario.getEmail(), usuario.getClave(), new ArrayList<>());
+    public Usuario createUsuarioFromDTO(CreateUsuarioDTO createUsuarioDTO) {
+        Usuario usuario = new Usuario();
+        usuario.setNombre(createUsuarioDTO.getNombre());
+        usuario.setUsername(createUsuarioDTO.getUsername());
+        usuario.setEmail(createUsuarioDTO.getEmail());
+        usuario.setClave(passwordEncoder.encode(createUsuarioDTO.getClave()));
+        usuario.setRol(createUsuarioDTO.getRol() != null ? createUsuarioDTO.getRol() : Set.of(Rol.USER));
+        usuario.setDni(createUsuarioDTO.getDni());
+        usuario.setFechaNacimiento(createUsuarioDTO.getFechaNacimiento());
+        usuario.setTelefono(createUsuarioDTO.getTelefono());
+        usuario.setUbicacion(createUsuarioDTO.getUbicacion());
+        usuario.setBiografia(createUsuarioDTO.getBiografia());
+        return usuario;
     }
+
 }

@@ -13,7 +13,7 @@ public class UserDtoConverter {
 
 	public GetUserDTO convertUserEntityToGetUserDto(Usuario usuario) {
 		return GetUserDTO.builder()
-				.nombreUsuario(usuario.getNombreUsuario())
+				.username(usuario.getUsername())
 				.fotoPerfil(usuario.getFotoPerfil())
 				.rol(usuario.getRol().stream()
 							.map(Rol::name)

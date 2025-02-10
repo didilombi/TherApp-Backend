@@ -2,6 +2,7 @@ package com.therapp.spring;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Set;
 
 import org.springframework.boot.CommandLineRunner;
@@ -9,8 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Date;
 
 import com.therapp.spring.modelo.ComentarioPublicacion;
 import com.therapp.spring.modelo.ContenidoPublicacion;
@@ -43,8 +42,8 @@ public class TherAppApplication {
     CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService, PasswordEncoder passwordEncoder) {
         return args -> {
             // Crear usuarios
-            Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.ORGANIZACION), "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid");
-            Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USUARIO), "12345678X", LocalDate.of(1990, 8, 20), "987654321", "Barcelona");
+            Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid");
+            Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "12345678X", LocalDate.of(1990, 8, 20), "987654321", "Barcelona");
 
             // Guardar los usuarios en la base de datos
             usuarioService.save(usuario1);
@@ -117,10 +116,10 @@ public class TherAppApplication {
             // Crear un Usuario
             Usuario usuario = new Usuario();
             usuario.setNombre("Juan Pérez");
-            usuario.setNombreUsuario("juanperez");
+            usuario.setUsername("juanperez");
             usuario.setEmail("juan.perez@example.com");
             usuario.setClave(passwordEncoder.encode("123456"));
-            usuario.setRol(Set.of(Rol.USUARIO));
+            usuario.setRol(Set.of(Rol.USER));
             usuario.setDni("12345678A");
             usuario.setFechaNacimiento(LocalDate.of(1990, 5, 20));
             usuario.setTelefono("123456789");

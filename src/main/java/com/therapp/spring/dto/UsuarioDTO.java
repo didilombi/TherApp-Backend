@@ -14,7 +14,7 @@ import lombok.Setter;
 public class UsuarioDTO {
     private String nombre;
     private String clave;
-    private String nombreUsuario;
+    private String username;
     private String email;
     private Rol rol;
     private String especialidad; //solo para terapeutas

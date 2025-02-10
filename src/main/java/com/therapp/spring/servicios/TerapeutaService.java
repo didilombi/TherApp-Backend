@@ -43,7 +43,7 @@ public class TerapeutaService {
     //     Terapeuta terapeuta = new Terapeuta();
     //     terapeuta.setNombre(TerapeutaDTO.getNombre());
     //     terapeuta.setEspecialidad(TerapeutaDTO.getEspecialidad());
-    //     terapeuta.setNombreUsuario(TerapeutaDTO.getNombreUsuario());
+    //     terapeuta.setUsername(TerapeutaDTO.getUsername());
     //     terapeuta.setEmail(TerapeutaDTO.getEmail());
     //     return terapeutaRepositorio.save(terapeuta);
     // }
