@@ -2,6 +2,8 @@ package com.therapp.spring.servicios;
 
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,10 +32,7 @@ import com.therapp.spring.repositorios.UsuarioRepository;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepositorio;
-   // 1️⃣ Ruta base donde se almacenarán los archivos
-   private static final Path rootLocation = Paths.get("uploads");
-   // 1️⃣ Ruta base donde se almacenarán los archivos
-   private static final Path rootLocation = Paths.get("uploads");
+   
 
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepositorio, UsuarioPublicacionRepository usuarioPublicacionRepository, ConfirmationTokenRepository confirmationTokenRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
@@ -76,27 +75,31 @@ public class UsuarioService {
     //     usuarioRepositorio.delete(u);
     // }
 
-     // Endpoint para cambiar foto:
-    public void guardarFoto(Integer id, MultipartFile file) throws Exception {
+     // 2️⃣ Método para guardar foto: 
+     public void guardarFoto(Integer id, MultipartFile file) throws Exception {
         Usuario usuario = usuarioRepositorio.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con id: " + id));
 
+        // 3️⃣ Creamos la carpeta "uploads" si no existe
         if (!Files.exists(rootLocation)) {
             Files.createDirectories(rootLocation);
         }
 
-        // Generamos un nombre único para la foto
+        // 4️⃣ Generamos un nombre de archivo
         String filename = "usuario_" + id + "_" + file.getOriginalFilename();
+
+        // 5️⃣ Resolvemos la ruta final y normalizamos
         Path destinationFile = rootLocation.resolve(filename).normalize();
 
-        // Copiamos el contenido del archivo subido
+        // 6️⃣ Copiamos el contenido del MultipartFile (InputStream) al archivo
         Files.copy(
             file.getInputStream(),
             destinationFile,
             StandardCopyOption.REPLACE_EXISTING
         );
 
-        // Guardamos la ruta en la DB (ej. "uploads/usuario_5_foto.jpg")
+        // 7️⃣ Guardamos la ruta en la DB, p. ej. "uploads/usuario_5_foto.jpg"
+        // Esto asume que en la entidad Usuario existe un campo "fotoRuta"
         usuario.setFotoPerfil(destinationFile.toString());
         usuarioRepositorio.save(usuario);
     }

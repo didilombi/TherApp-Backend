@@ -12,6 +12,18 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.MediaType;
+
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.MediaType;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.EmailService;
@@ -67,18 +79,6 @@ public class UsuarioController {
         }
     }
 
-    @PostMapping(value = "/{id}/foto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> subirFoto(
-        @PathVariable Integer id,
-        @RequestParam("foto") MultipartFile foto
-    ) {
-        try {
-            usuarioService.guardarFoto(id, foto);
-            return ResponseEntity.ok("Foto subida correctamente.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al subir la foto: " + e.getMessage());
-        }
-    }
 
     @DeleteMapping("/{id}")
     public void borrarUsuario(@PathVariable Long id) {
