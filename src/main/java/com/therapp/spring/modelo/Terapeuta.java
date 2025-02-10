@@ -1,6 +1,10 @@
 package com.therapp.spring.modelo;
 
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +32,7 @@ public class Terapeuta {
 
     @OneToOne
     @JoinColumn(name = "usuario_id") // Relaciona con Usuario
+    @JsonBackReference
     private Usuario usuario;
 
     @ManyToOne

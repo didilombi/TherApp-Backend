@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,6 +51,7 @@ public class Usuario {
 
     //RELACIONES
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Terapeuta terapeuta;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)

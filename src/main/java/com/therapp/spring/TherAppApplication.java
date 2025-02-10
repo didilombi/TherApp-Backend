@@ -94,7 +94,7 @@ public class TherAppApplication {
             seguidorService.seguirUsuario(usuario1.getId(), usuario2.getId());
             seguidorService.seguirUsuario(usuario2.getId(), usuario1.getId());
 
-            // Crear un Usuario
+            //Crear un Usuario
             Usuario usuario = new Usuario();
             usuario.setNombre("Juan Pérez");
             usuario.setNombreUsuario("juanperez");
@@ -102,6 +102,7 @@ public class TherAppApplication {
             usuario.setClave("123456");
             usuario.setRol(Rol.USUARIO);
             usuario.setDni("12345678A");
+            usuario.setFotoPerfil("assets/terapeuta1.jpg");
             usuario.setFechaNacimiento(LocalDate.of(1990, 5, 20));
             usuario.setTelefono("123456789");
             usuario.setUbicacion("Ciudad Ejemplo");
@@ -125,7 +126,7 @@ public class TherAppApplication {
             // Guardar el terapeuta en la BD
             terapeutaService.save(terapeuta);
 
-            Usuario usuario4 = new Usuario("Manolo", "Manoloeldelbombo", "manolo@bombo.com", "12345678", "Sin Imagen", Rol.USUARIO, "12345678X", LocalDate.of(1955, 8, 20), "987654321", "Madrid");
+            Usuario usuario4 = new Usuario("Manolo", "Manoloeldelbombo", "manolo@bombo.com", "12345678", "assets/terapeuta2.jpg", Rol.USUARIO, "12345678X", LocalDate.of(1955, 8, 20), "987654321", "Madrid");
 
             usuarioService.save(usuario4);
 
@@ -141,9 +142,9 @@ public class TherAppApplication {
 
             terapeutaService.save(terapeuta2);
 
-            Usuario usuario5 = new Usuario("Carla", "carla211", "carla211@gmail.com", "12345678", "Sin Imagen", Rol.USUARIO, "12345678X", LocalDate.of(1999, 8, 20), "987654321", "Bilbao");
+            Usuario usuario5 = new Usuario("Carla", "carla211", "carla211@gmail.com", "12345678", "assets/terapeuta3.jpg", Rol.USUARIO, "12345678X", LocalDate.of(1999, 8, 20), "987654321", "Bilbao");
 
-            usuarioService.save(usuario4);
+            usuarioService.save(usuario5);
 
             Terapeuta terapeuta3 = new Terapeuta();
             terapeuta3.setNColegiado("COLEGIADO-7651");
@@ -157,6 +158,37 @@ public class TherAppApplication {
 
             terapeutaService.save(terapeuta3);
 
+            Usuario usuario6 = new Usuario("Rosa", "RosaSP", "rosaterapeuta@gmail.com", "12345678", "assets/terapeuta3.jpg", Rol.USUARIO, "66677788D", LocalDate.of(1997,1,2), "666777888", "Alicante");
+
+            usuarioService.save(usuario6);
+
+            Terapeuta terapeuta4 = new Terapeuta();
+            terapeuta4.setNColegiado("COLEGIADO-4433");
+            terapeuta4.setApellidos("García Candela");
+            terapeuta4.setExperiencia("3 años de experiencia en clínica propia");
+            terapeuta4.setEspecialidad("Estrés en exámenes, ansiedad generalizada");
+            terapeuta4.setIdiomas("Español, Francés, Inglés");
+            terapeuta4.setUsuario(usuario6);
+            terapeuta4.setPrecio(50);
+            terapeuta4.setPremium(true);
+
+            terapeutaService.save(terapeuta4);
+
+            Usuario usuario7 = new Usuario("Manel", "usuariomanel", "manelterapeuta@gmail.com", "12345678", "assets/terapeuta4.jpg", Rol.USUARIO, "66677788D", LocalDate.of(1992,1,2), "666777888", "Alicante");
+
+            usuarioService.save(usuario7);
+
+            Terapeuta terapeuta5 = new Terapeuta();
+            terapeuta5.setNColegiado("COLEGIADO-0001");
+            terapeuta5.setApellidos("Roca Díaz");
+            terapeuta5.setExperiencia("15 años de psicólogo en el ejército");
+            terapeuta5.setEspecialidad("Estres post traumático, Despersonalización");
+            terapeuta5.setIdiomas("Español, Chino, Inglés");
+            terapeuta5.setUsuario(usuario7);
+            terapeuta5.setPrecio(55);
+            terapeuta5.setPremium(true);
+
+            terapeutaService.save(terapeuta5);
             // Enviar un mensaje de prueba
             // usuario1 (Carlos) envía un mensaje a "usuario" (Juan Pérez)
             Mensaje mensaje = new Mensaje();
