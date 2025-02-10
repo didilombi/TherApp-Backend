@@ -1,15 +1,17 @@
 package com.therapp.spring.controladores;
 
-import java.util.Optional;
-import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
 
-import com.therapp.spring.dto.CreateUsuarioDTO;
-import com.therapp.spring.modelo.ConfirmationToken;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.MediaType;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.EmailService;
@@ -56,17 +58,6 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/confirmar")
-    public ResponseEntity<?> confirmarUsuario(@RequestParam String token) {
-        Optional<Usuario> usuarioOpt = usuarioService.findByToken(token);
-        if (usuarioOpt.isPresent()) {
-            Usuario usuario = usuarioOpt.get();
-            usuarioService.confirmUsuario(usuario);
-            return ResponseEntity.ok("Correo electrónico confirmado exitosamente.");
-        } else {
-            return ResponseEntity.badRequest().body("Token de confirmación inválido.");
-        }
-    }
 
     @DeleteMapping("/{id}")
     public void borrarUsuario(@PathVariable Long id) {
