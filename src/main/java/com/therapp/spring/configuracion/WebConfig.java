@@ -9,6 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // "uploads/**" se mapeará a la carpeta física "uploads/"
         registry
             .addResourceHandler("/uploads/**")
             .addResourceLocations("file:uploads/");
