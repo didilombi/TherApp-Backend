@@ -1,5 +1,7 @@
 package com.therapp.spring.servicios;
 
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -7,11 +9,11 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.therapp.spring.dto.CreateUsuarioDTO;
-import com.therapp.spring.modelo.ConfirmationToken;
-import com.therapp.spring.modelo.Rol;
+import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.ConfirmationTokenRepository;
 import com.therapp.spring.repositorios.UsuarioPublicacionRepository;
@@ -21,10 +23,7 @@ import com.therapp.spring.repositorios.UsuarioRepository;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepositorio;
-    private final UsuarioPublicacionRepository usuarioPublicacionRepository;
-    private final ConfirmationTokenRepository confirmationTokenRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final EmailService emailService;
+   
 
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepositorio, UsuarioPublicacionRepository usuarioPublicacionRepository, ConfirmationTokenRepository confirmationTokenRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
@@ -58,8 +57,38 @@ public class UsuarioService {
         usuarioRepositorio.saveAll(usuarios);
     }
 
-    public void delete(Usuario u) {
-        usuarioRepositorio.delete(u);
+    // public void delete(Usuario u) {
+    //     terapeutaService.deleteByUsuario(u);
+    //     usuarioRepositorio.delete(u);
+    // }
+
+     // 2️⃣ Método para guardar foto: 
+     public void guardarFoto(Integer id, MultipartFile file) throws Exception {
+        Usuario usuario = usuarioRepositorio.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con id: " + id));
+
+        // 3️⃣ Creamos la carpeta "uploads" si no existe
+        if (!Files.exists(rootLocation)) {
+            Files.createDirectories(rootLocation);
+        }
+
+        // 4️⃣ Generamos un nombre de archivo
+        String filename = "usuario_" + id + "_" + file.getOriginalFilename();
+
+        // 5️⃣ Resolvemos la ruta final y normalizamos
+        Path destinationFile = rootLocation.resolve(filename).normalize();
+
+        // 6️⃣ Copiamos el contenido del MultipartFile (InputStream) al archivo
+        Files.copy(
+            file.getInputStream(),
+            destinationFile,
+            StandardCopyOption.REPLACE_EXISTING
+        );
+
+        // 7️⃣ Guardamos la ruta en la DB, p. ej. "uploads/usuario_5_foto.jpg"
+        // Esto asume que en la entidad Usuario existe un campo "fotoRuta"
+        usuario.setFotoPerfil(destinationFile.toString());
+        usuarioRepositorio.save(usuario);
     }
 
     @Transactional

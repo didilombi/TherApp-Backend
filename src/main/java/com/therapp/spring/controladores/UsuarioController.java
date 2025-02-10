@@ -1,34 +1,17 @@
 package com.therapp.spring.controladores;
 
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.therapp.spring.dto.CreateUsuarioDTO;
-import com.therapp.spring.dto.PerfilDTO;
-import com.therapp.spring.modelo.ConfirmationToken;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.MediaType;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.EmailService;
@@ -85,11 +68,6 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/get/{nombre}")
-    public PerfilDTO getPerfilDTO(@PathVariable String nombre) {
-        PerfilDTO perfilDTO = new PerfilDTO(usuarioService.findByUsername(nombre));
-        return perfilDTO;
-    }    
     @GetMapping("/confirmar")
     public ResponseEntity<?> confirmarUsuario(@RequestParam String token) {
         Optional<Usuario> usuarioOpt = usuarioService.findByToken(token);
