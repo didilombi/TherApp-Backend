@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.therapp.spring.dto.GetUserDTO;
@@ -26,6 +27,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
@@ -38,14 +40,14 @@ public class AuthenticationController {
 
         Authentication authentication = null;
 
-        try{
+        try {
             authentication =
                     authenticationManager.authenticate(
                             new UsernamePasswordAuthenticationToken(
                                     loginRequest.getUsername(),
                                     loginRequest.getPassword()
                             ));
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("e.getMessage() = " + e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -59,6 +61,11 @@ public class AuthenticationController {
                 .body(convertUserEntityAndTokenToJwtUserResponse(usuario, jwtToken));
     }
 
+    @GetMapping("/user/me")
+    public GetUserDTO me(@AuthenticationPrincipal Usuario usuario) {
+        return converter.convertUserEntityToGetUserDto(usuario);
+    }
+
     private JwtUserResponse convertUserEntityAndTokenToJwtUserResponse(Usuario usuario, String jwtToken) {
         return JwtUserResponse.jwtUserResponseBuilder()
                 .username(usuario.getUsername())
@@ -66,10 +73,5 @@ public class AuthenticationController {
                 .rol(usuario.getRol().stream().map(Rol::name).collect(Collectors.toSet()))
                 .token(jwtToken)
                 .build();
-    }
-
-    @GetMapping("/user/me")
-    public GetUserDTO me(@AuthenticationPrincipal Usuario usuario) {
-        return converter.convertUserEntityToGetUserDto(usuario);
     }
 }
