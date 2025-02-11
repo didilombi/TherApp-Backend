@@ -44,7 +44,7 @@ public class AuthenticationController {
             authentication =
                     authenticationManager.authenticate(
                             new UsernamePasswordAuthenticationToken(
-                                    loginRequest.getUsername(),
+                                    loginRequest.getIdentifier(),
                                     loginRequest.getPassword()
                             ));
         } catch (Exception e) {

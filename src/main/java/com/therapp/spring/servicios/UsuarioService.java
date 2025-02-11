@@ -61,12 +61,23 @@ public class UsuarioService {
         usuarioRepositorio.deleteById(id);
     }
 
-    public Usuario findByEmail(String email) {
+    public Optional<Usuario> findByEmail(String email) {
         return usuarioRepositorio.findByEmail(email);
     }
 
     public Optional<Usuario> findByUsername(String username) {
         Optional<Usuario> user = usuarioRepositorio.findByUsername(username);
+        return user;
+    }
+
+    public Optional<Usuario> findByIdentifier(String identifier) {
+        Optional<Usuario> user = usuarioRepositorio.findByEmail(identifier);
+        if (user.isEmpty()) {
+            user = usuarioRepositorio.findByUsername(identifier);
+        }
+        if (user.isEmpty()) {
+            user = usuarioRepositorio.findByTelefono(identifier);
+        }
         return user;
     }
 
