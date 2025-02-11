@@ -49,16 +49,8 @@ public class Usuario implements UserDetails {
     private String fotoPerfil;
 
     @ElementCollection(fetch = FetchType.EAGER)
-	@Enumerated(EnumType.STRING) // Para que sea un String
-	private Set<Rol> rol;
-
-    @Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return rol
-				.stream()
-				.map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name()))
-							.collect(Collectors.toList());
-	}
+    @Enumerated(EnumType.STRING)
+    private Set<Rol> rol;
 
     private LocalDate fechaNacimiento;
     private String telefono;
@@ -76,6 +68,13 @@ public class Usuario implements UserDetails {
     private Organizacion organizacion;
 
     private boolean confirmado = false;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return rol.stream()
+                .map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name()))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public String getUsername() {
