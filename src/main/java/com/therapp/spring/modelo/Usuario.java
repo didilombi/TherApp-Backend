@@ -31,8 +31,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
 @Getter
 @Setter
 @Entity
@@ -49,7 +47,7 @@ public class Usuario implements UserDetails {
     private String email;
     private String clave;
     private String fotoPerfil;
-    
+
     @ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING) // Para que sea un String
 	private Set<Rol> rol;
@@ -67,7 +65,7 @@ public class Usuario implements UserDetails {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime fechaRegistro = LocalDateTime.now();
-    
+
     private String ubicacion;
     private String biografia;
 
@@ -77,34 +75,7 @@ public class Usuario implements UserDetails {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Organizacion organizacion;
 
-    @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Mensaje> mensajesEnviados;
-
-    @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Mensaje> mensajesRecibidos;
-
-    public Terapeuta getTerapeuta() {
-        return terapeuta;
-    }
-
-    @OneToMany(mappedBy = "usuarioSeguidor", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore // Evita la serialización de la lista de seguidores
-    private List<Seguidor> usuariosQueSigo;
-
-    @OneToMany(mappedBy = "usuarioSeguido", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore // Evita la serialización de seguidores
-    private List<Seguidor> misSeguidores;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LikePublicacion> likesPublicaciones;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ComentarioPublicacion> comentarios;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LikeComentario> likesComentarios;
-
-    
+    private boolean confirmado = false;
 
     @Override
     public String getUsername() {
@@ -133,19 +104,6 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
-    }
-
-    public Usuario(String nombre, String username,String email, String clave, String fotoPerfil, Set<Rol> rol,LocalDate fechaNacimiento,String telefono, String ubicacion) {
-        this.nombre = nombre;
-        this.username = username;
-        this.email = email;
-        this.clave = clave;
-        this.fotoPerfil = fotoPerfil;
-        this.rol = rol;
-        this.fechaNacimiento = fechaNacimiento;
-        this.telefono = telefono;
-        this.fechaRegistro = LocalDateTime.now();
-        this.ubicacion = ubicacion;
+        return confirmado;
     }
 }
