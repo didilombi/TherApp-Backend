@@ -70,7 +70,6 @@ public class UsuarioController {
         @RequestParam("foto") MultipartFile foto
     ) {
         try {
-            // Llamamos al servicio para guardar la foto
             usuarioService.guardarFoto(id, foto);
             return ResponseEntity.ok("Foto subida correctamente.");
         } catch (Exception e) {
