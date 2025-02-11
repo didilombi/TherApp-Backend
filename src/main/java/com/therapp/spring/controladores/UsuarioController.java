@@ -31,11 +31,11 @@ public class UsuarioController {
     @PostMapping("/registro")
     public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario) {
         try {
-            // Asignar el rol por defecto si no viene en la petición
+            // Si no traen rol, le ponemos el rol USUARIO
             if (usuario.getRol() == null) {
                 usuario.setRol(Rol.USUARIO);
             }
-
+            // 🔥 Aquí no forzamos foto, se hará en usuarioService.save()
             Usuario nuevoUsuario = usuarioService.save(usuario);
             return ResponseEntity.ok(nuevoUsuario);
         } catch (Exception e) {
@@ -49,7 +49,6 @@ public class UsuarioController {
         @RequestParam("foto") MultipartFile foto
     ) {
         try {
-            // Llamamos al servicio para guardar la foto
             usuarioService.guardarFoto(id, foto);
             return ResponseEntity.ok("Foto subida correctamente.");
         } catch (Exception e) {
