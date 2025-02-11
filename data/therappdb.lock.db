@@ -1,6 +1,7 @@
 #FileLock
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #Tue Feb 11 14:38:43 CET 2025
 hostName=A214PC25
 id=194f53bb30a3255011511f65fff4ccf4c154c6fca48
@@ -20,3 +21,10 @@ server=192.168.56.1\:52156
 =======
 server=192.168.56.1\:59564
 >>>>>>> 49155a5 (modificacion de registro)
+=======
+#Tue Feb 11 10:20:20 CET 2025
+hostName=A214PC32
+id=194f44f1f92e9d337ef53f2a66c4abe1703ca1e3958
+method=file
+server=192.168.56.1\:59564
+>>>>>>> 49155a5d6d661072c79b0e31fe9deaab12a8661f
