@@ -43,12 +43,11 @@ public class UsuarioController {
             usuario.setUsername(createUsuarioDTO.getUsername());
             usuario.setEmail(createUsuarioDTO.getEmail());
             usuario.setClave(createUsuarioDTO.getClave());
-            usuario.setRol(createUsuarioDTO.getRol() != null ? createUsuarioDTO.getRol() : Set.of(Rol.USER));
-            usuario.setDni(createUsuarioDTO.getDni());
+            usuario.setRol(Set.of(Rol.USER));
             usuario.setFechaNacimiento(createUsuarioDTO.getFechaNacimiento());
             usuario.setTelefono(createUsuarioDTO.getTelefono());
             usuario.setUbicacion(createUsuarioDTO.getUbicacion());
-            usuario.setBiografia(createUsuarioDTO.getBiografia());
+            usuario.setBiografia(null);
 
             Usuario nuevoUsuario = usuarioService.save(usuario);
             return ResponseEntity.ok(nuevoUsuario);

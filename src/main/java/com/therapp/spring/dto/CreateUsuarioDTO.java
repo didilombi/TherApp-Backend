@@ -27,19 +27,10 @@ public class CreateUsuarioDTO {
     private String clave;
 
     @NotNull
-    private Set<Rol> rol;
-
-    @NotBlank
-    private String dni;
-
-    @NotNull
     private LocalDate fechaNacimiento;
 
     @NotBlank
     private String telefono;
 
-    @NotBlank
     private String ubicacion;
-
-    private String biografia;
 }

@@ -62,7 +62,6 @@ public class Usuario implements UserDetails {
 							.collect(Collectors.toList());
 	}
 
-    private String dni;
     private LocalDate fechaNacimiento;
     private String telefono;
 
@@ -137,14 +136,13 @@ public class Usuario implements UserDetails {
         return true;
     }
 
-    public Usuario(String nombre, String username,String email, String clave, String fotoPerfil, Set<Rol> rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
+    public Usuario(String nombre, String username,String email, String clave, String fotoPerfil, Set<Rol> rol,LocalDate fechaNacimiento,String telefono, String ubicacion) {
         this.nombre = nombre;
         this.username = username;
         this.email = email;
         this.clave = clave;
         this.fotoPerfil = fotoPerfil;
         this.rol = rol;
-        this.dni = dni;
         this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.fechaRegistro = LocalDateTime.now();
