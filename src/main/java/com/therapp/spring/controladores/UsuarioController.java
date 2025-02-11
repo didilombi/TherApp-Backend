@@ -2,11 +2,13 @@ package com.therapp.spring.controladores;
 
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,8 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/usuarios")
 @CrossOrigin(origins = "http://localhost:4200") //esto es para permitir que angular se comunique con este controlador
 public class UsuarioController {
+
+    
 
     private final UsuarioService usuarioService;
 
@@ -57,6 +61,15 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Usuario>> getUsuarioById(@PathVariable Long id) {
+        Optional<Usuario> usuario = usuarioService.findById(id);
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping("/{id}")
     public void borrarUsuario(@PathVariable Long id) {

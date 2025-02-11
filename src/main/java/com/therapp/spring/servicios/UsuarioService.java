@@ -37,6 +37,7 @@ public class UsuarioService {
         return usuarioRepositorio.findById(id);
     }
 
+
     public Usuario save(Usuario usuario) {
         // Codificar la contraseña antes de guardar
         usuario.setClave(passwordEncoder.encode(usuario.getClave()));
