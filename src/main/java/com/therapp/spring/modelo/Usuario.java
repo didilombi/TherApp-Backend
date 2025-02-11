@@ -69,40 +69,41 @@ public class Usuario implements UserDetails {
 
     private boolean confirmado = false;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return rol.stream()
-                .map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.name()))
-                .collect(Collectors.toList());
+    @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mensaje> mensajesRecibidos;
+
+    public Terapeuta getTerapeuta() {
+        return terapeuta;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
+    @OneToMany(mappedBy = "usuarioSeguidor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // Evita la serialización de la lista de seguidores
+    private List<Seguidor> usuariosQueSigo;
 
-    @Override
-    public String getPassword() {
-        return clave;
-    }
+    @OneToMany(mappedBy = "usuarioSeguido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // Evita la serialización de seguidores
+    private List<Seguidor> misSeguidores;
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikePublicacion> likes;
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ComentarioPublicacion> comentarios;
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikeComentario> likesComentarios;
 
-    @Override
-    public boolean isEnabled() {
-        return confirmado;
+    public Usuario(String nombre, String nombreUsuario,String email, String clave, Rol rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
+        this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.email = email;
+        this.clave = clave;
+        this.fotoPerfil = "../src/main/resources/Imagenes/Perfil-inicial.jpg";
+        this.rol = rol;
+        this.dni = dni;
+        this.fechaNacimiento = fechaNacimiento;
+        this.telefono = telefono;
+        this.fechaRegistro = LocalDateTime.now();
+        this.ubicacion = ubicacion;
     }
 }

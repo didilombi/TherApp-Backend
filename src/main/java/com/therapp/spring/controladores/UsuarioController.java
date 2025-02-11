@@ -38,8 +38,11 @@ public class UsuarioController {
     @PostMapping("/registro")
     public ResponseEntity<?> crearUsuario(@Valid @RequestBody CreateUsuarioDTO createUsuarioDTO) {
         try {
-            Usuario usuario = usuarioService.createUsuarioFromDTO(createUsuarioDTO);
-
+            // Si no traen rol, le ponemos el rol USUARIO
+            if (usuario.getRol() == null) {
+                usuario.setRol(Rol.USUARIO);
+            }
+            // 🔥 Aquí no forzamos foto, se hará en usuarioService.save()
             Usuario nuevoUsuario = usuarioService.save(usuario);
 
             // Generar token de confirmación
@@ -58,6 +61,18 @@ public class UsuarioController {
         }
     }
 
+    @PostMapping(value = "/{id}/foto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> subirFoto(
+        @PathVariable Integer id,
+        @RequestParam("foto") MultipartFile foto
+    ) {
+        try {
+            usuarioService.guardarFoto(id, foto);
+            return ResponseEntity.ok("Foto subida correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al subir la foto: " + e.getMessage());
+        }
+    }
 
     @DeleteMapping("/{id}")
     public void borrarUsuario(@PathVariable Long id) {
