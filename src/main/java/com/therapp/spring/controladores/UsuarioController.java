@@ -29,25 +29,13 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    private final PasswordEncoder passwordEncoder;
-
-    public UsuarioController(UsuarioService usuarioService, PasswordEncoder passwordEncoder) {
+    public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
-        this.passwordEncoder = passwordEncoder;
     }
     @PostMapping("/registro")
     public ResponseEntity<?> crearUsuario(@Valid @RequestBody CreateUsuarioDTO createUsuarioDTO) {
         try {
-            Usuario usuario = new Usuario();
-            usuario.setNombre(createUsuarioDTO.getNombre());
-            usuario.setUsername(createUsuarioDTO.getUsername());
-            usuario.setEmail(createUsuarioDTO.getEmail());
-            usuario.setClave(createUsuarioDTO.getClave());
-            usuario.setRol(Set.of(Rol.USER));
-            usuario.setFechaNacimiento(createUsuarioDTO.getFechaNacimiento());
-            usuario.setTelefono(createUsuarioDTO.getTelefono());
-            usuario.setUbicacion(createUsuarioDTO.getUbicacion());
-            usuario.setBiografia(null);
+            Usuario usuario = usuarioService.createUsuarioFromDTO(createUsuarioDTO);
 
             Usuario nuevoUsuario = usuarioService.save(usuario);
             return ResponseEntity.ok(nuevoUsuario);
