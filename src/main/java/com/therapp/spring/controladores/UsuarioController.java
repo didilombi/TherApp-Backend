@@ -79,6 +79,18 @@ public class UsuarioController {
         }
     }
 
+    @PostMapping(value = "/{id}/foto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> subirFoto(
+        @PathVariable Integer id,
+        @RequestParam("foto") MultipartFile foto
+    ) {
+        try {
+            usuarioService.guardarFoto(id, foto);
+            return ResponseEntity.ok("Foto subida correctamente.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al subir la foto: " + e.getMessage());
+        }
+    }
 
     @DeleteMapping("/{id}")
     public void borrarUsuario(@PathVariable Long id) {

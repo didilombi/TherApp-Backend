@@ -75,31 +75,27 @@ public class UsuarioService {
     //     usuarioRepositorio.delete(u);
     // }
 
-     // 2️⃣ Método para guardar foto: 
-     public void guardarFoto(Integer id, MultipartFile file) throws Exception {
+     // Endpoint para cambiar foto:
+    public void guardarFoto(Integer id, MultipartFile file) throws Exception {
         Usuario usuario = usuarioRepositorio.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con id: " + id));
 
-        // 3️⃣ Creamos la carpeta "uploads" si no existe
         if (!Files.exists(rootLocation)) {
             Files.createDirectories(rootLocation);
         }
 
-        // 4️⃣ Generamos un nombre de archivo
+        // Generamos un nombre único para la foto
         String filename = "usuario_" + id + "_" + file.getOriginalFilename();
-
-        // 5️⃣ Resolvemos la ruta final y normalizamos
         Path destinationFile = rootLocation.resolve(filename).normalize();
 
-        // 6️⃣ Copiamos el contenido del MultipartFile (InputStream) al archivo
+        // Copiamos el contenido del archivo subido
         Files.copy(
             file.getInputStream(),
             destinationFile,
             StandardCopyOption.REPLACE_EXISTING
         );
 
-        // 7️⃣ Guardamos la ruta en la DB, p. ej. "uploads/usuario_5_foto.jpg"
-        // Esto asume que en la entidad Usuario existe un campo "fotoRuta"
+        // Guardamos la ruta en la DB (ej. "uploads/usuario_5_foto.jpg")
         usuario.setFotoPerfil(destinationFile.toString());
         usuarioRepositorio.save(usuario);
     }
