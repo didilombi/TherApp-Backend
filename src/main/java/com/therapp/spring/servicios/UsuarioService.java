@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.therapp.spring.dto.CreateUsuarioDTO;
+import com.therapp.spring.modelo.ConfirmationToken;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
+import com.therapp.spring.repositorios.ConfirmationTokenRepository;
 import com.therapp.spring.repositorios.UsuarioPublicacionRepository;
 import com.therapp.spring.repositorios.UsuarioRepository;
 
@@ -20,13 +22,17 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepositorio;
     private final UsuarioPublicacionRepository usuarioPublicacionRepository;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepositorio, UsuarioPublicacionRepository usuarioPublicacionRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository usuarioRepositorio, UsuarioPublicacionRepository usuarioPublicacionRepository, ConfirmationTokenRepository confirmationTokenRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.usuarioPublicacionRepository = usuarioPublicacionRepository;
+        this.confirmationTokenRepository = confirmationTokenRepository;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
 
     public List<Usuario> findAll() {
@@ -38,9 +44,11 @@ public class UsuarioService {
     }
 
     public Usuario save(Usuario usuario) {
-        // Codificar la contraseña antes de guardar
-        usuario.setClave(passwordEncoder.encode(usuario.getClave()));
         return usuarioRepositorio.save(usuario);
+    }
+
+    public void saveConfirmationToken(ConfirmationToken confirmationToken) {
+        confirmationTokenRepository.save(confirmationToken);
     }
 
     //este metodo se encarga de guardar una lista de usuarios predefinidos en la base de datos
@@ -79,6 +87,15 @@ public class UsuarioService {
             user = usuarioRepositorio.findByTelefono(identifier);
         }
         return user;
+    }
+
+    public Optional<Usuario> findByToken(String token) {
+        return confirmationTokenRepository.findByToken(token).map(ConfirmationToken::getUsuario);
+    }
+
+    public void confirmUsuario(Usuario usuario) {
+        usuario.setConfirmado(true);
+        usuarioRepositorio.save(usuario);
     }
 
     public Usuario createUsuarioFromDTO(CreateUsuarioDTO createUsuarioDTO) {
