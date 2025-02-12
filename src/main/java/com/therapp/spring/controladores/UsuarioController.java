@@ -2,6 +2,7 @@ package com.therapp.spring.controladores;
 
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 import com.therapp.spring.dto.CreateUsuarioDTO;
+import com.therapp.spring.dto.PerfilDTO;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.UsuarioService;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -44,11 +49,10 @@ public class UsuarioController {
             usuario.setEmail(createUsuarioDTO.getEmail());
             usuario.setClave(createUsuarioDTO.getClave());
             usuario.setRol(createUsuarioDTO.getRol() != null ? createUsuarioDTO.getRol() : Set.of(Rol.USER));
-            usuario.setDni(createUsuarioDTO.getDni());
             usuario.setFechaNacimiento(createUsuarioDTO.getFechaNacimiento());
             usuario.setTelefono(createUsuarioDTO.getTelefono());
             usuario.setUbicacion(createUsuarioDTO.getUbicacion());
-            usuario.setBiografia(createUsuarioDTO.getBiografia());
+            usuario.setBiografia(null);
 
             Usuario nuevoUsuario = usuarioService.save(usuario);
             return ResponseEntity.ok(nuevoUsuario);
@@ -57,6 +61,11 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/get/{nombre}")
+    public PerfilDTO getPerfilDTO(@PathVariable String nombre) {
+        PerfilDTO perfilDTO = new PerfilDTO(usuarioService.findByUsername(nombre));
+        return perfilDTO;
+    }    
 
     @DeleteMapping("/{id}")
     public void borrarUsuario(@PathVariable Long id) {

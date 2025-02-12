@@ -29,9 +29,6 @@ public class CreateUsuarioDTO {
     @NotNull
     private Set<Rol> rol;
 
-    @NotBlank
-    private String dni;
-
     @NotNull
     private LocalDate fechaNacimiento;
 

@@ -88,7 +88,6 @@ public class UsuarioService {
         usuario.setEmail(createUsuarioDTO.getEmail());
         usuario.setClave(passwordEncoder.encode(createUsuarioDTO.getClave()));
         usuario.setRol(createUsuarioDTO.getRol() != null ? createUsuarioDTO.getRol() : Set.of(Rol.USER));
-        usuario.setDni(createUsuarioDTO.getDni());
         usuario.setFechaNacimiento(createUsuarioDTO.getFechaNacimiento());
         usuario.setTelefono(createUsuarioDTO.getTelefono());
         usuario.setUbicacion(createUsuarioDTO.getUbicacion());

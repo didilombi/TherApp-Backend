@@ -42,8 +42,8 @@ public class TherAppApplication {
     CommandLineRunner initData(UsuarioService usuarioService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService, PasswordEncoder passwordEncoder) {
         return args -> {
             // Crear usuarios
-            Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid");
-            Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "12345678X", LocalDate.of(1990, 8, 20), "987654321", "Barcelona");
+            Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "87654321X", LocalDate.of(1985, 5, 15), "123456780", "Madrid");
+            Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "12345678X", LocalDate.of(1990, 8, 20), "987654356", "Barcelona");
 
             // Guardar los usuarios en la base de datos
             usuarioService.save(usuario1);
