@@ -35,8 +35,5 @@ public class CreateUsuarioDTO {
     @NotBlank
     private String telefono;
 
-    @NotBlank
     private String ubicacion;
-
-    private String biografia;
 }

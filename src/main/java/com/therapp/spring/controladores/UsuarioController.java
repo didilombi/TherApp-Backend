@@ -5,21 +5,17 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.web.bind.annotation.*;
 
 import com.therapp.spring.dto.CreateUsuarioDTO;
 import com.therapp.spring.dto.PerfilDTO;
+import com.therapp.spring.modelo.ConfirmationToken;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
+import com.therapp.spring.servicios.EmailService;
 import com.therapp.spring.servicios.UsuarioService;
 
 import jakarta.validation.Valid;
@@ -33,28 +29,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
-
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
-    public UsuarioController(UsuarioService usuarioService, PasswordEncoder passwordEncoder) {
+    @Autowired
+    public UsuarioController(UsuarioService usuarioService, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.usuarioService = usuarioService;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
     }
+
     @PostMapping("/registro")
     public ResponseEntity<?> crearUsuario(@Valid @RequestBody CreateUsuarioDTO createUsuarioDTO) {
         try {
-            Usuario usuario = new Usuario();
-            usuario.setNombre(createUsuarioDTO.getNombre());
-            usuario.setUsername(createUsuarioDTO.getUsername());
-            usuario.setEmail(createUsuarioDTO.getEmail());
-            usuario.setClave(createUsuarioDTO.getClave());
-            usuario.setRol(createUsuarioDTO.getRol() != null ? createUsuarioDTO.getRol() : Set.of(Rol.USER));
-            usuario.setFechaNacimiento(createUsuarioDTO.getFechaNacimiento());
-            usuario.setTelefono(createUsuarioDTO.getTelefono());
-            usuario.setUbicacion(createUsuarioDTO.getUbicacion());
-            usuario.setBiografia(null);
+            Usuario usuario = usuarioService.createUsuarioFromDTO(createUsuarioDTO);
 
             Usuario nuevoUsuario = usuarioService.save(usuario);
+
+            // Generar token de confirmación
+            ConfirmationToken confirmationToken = new ConfirmationToken(nuevoUsuario);
+            usuarioService.saveConfirmationToken(confirmationToken);
+
+            // Enviar correo de confirmación
+            String subject = "Confirmación de Registro";
+            String text = "Hola " + usuario.getNombre() + ",\n\nGracias por registrarte en nuestra aplicación. Por favor, confirma tu correo electrónico haciendo clic en el siguiente enlace:\n"
+                    + "http://localhost:9000/api/usuarios/confirmar?token=" + confirmationToken.getToken();
+            emailService.sendEmail(usuario.getEmail(), subject, text);
+
             return ResponseEntity.ok(nuevoUsuario);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -66,6 +67,17 @@ public class UsuarioController {
         PerfilDTO perfilDTO = new PerfilDTO(usuarioService.findByUsername(nombre));
         return perfilDTO;
     }    
+    @GetMapping("/confirmar")
+    public ResponseEntity<?> confirmarUsuario(@RequestParam String token) {
+        Optional<Usuario> usuarioOpt = usuarioService.findByToken(token);
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            usuarioService.confirmUsuario(usuario);
+            return ResponseEntity.ok("Correo electrónico confirmado exitosamente.");
+        } else {
+            return ResponseEntity.badRequest().body("Token de confirmación inválido.");
+        }
+    }
 
     @DeleteMapping("/{id}")
     public void borrarUsuario(@PathVariable Long id) {
