@@ -103,6 +103,7 @@ public class UsuarioService {
         usuario.setNombre(createUsuarioDTO.getNombre());
         usuario.setUsername(createUsuarioDTO.getUsername());
         usuario.setEmail(createUsuarioDTO.getEmail());
+        usuario.setConfirmado(false);
         usuario.setClave(passwordEncoder.encode(createUsuarioDTO.getClave()));
         usuario.setRol(Set.of(Rol.USER));
         usuario.setFechaNacimiento(createUsuarioDTO.getFechaNacimiento());
