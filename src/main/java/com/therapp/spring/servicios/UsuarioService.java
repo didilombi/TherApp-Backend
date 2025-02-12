@@ -105,6 +105,56 @@ public class UsuarioService {
         usuarioRepositorio.save(usuario);
     }
 
+     // Endpoint para cambiar foto:
+    public void guardarFoto(Integer id, MultipartFile file) throws Exception {
+        Usuario usuario = usuarioRepositorio.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con id: " + id));
+
+        if (!Files.exists(rootLocation)) {
+            Files.createDirectories(rootLocation);
+        }
+
+        // Generamos un nombre único para la foto
+        String filename = "usuario_" + id + "_" + file.getOriginalFilename();
+        Path destinationFile = rootLocation.resolve(filename).normalize();
+
+        // Copiamos el contenido del archivo subido
+        Files.copy(
+            file.getInputStream(),
+            destinationFile,
+            StandardCopyOption.REPLACE_EXISTING
+        );
+
+        // Guardamos la ruta en la DB (ej. "uploads/usuario_5_foto.jpg")
+        usuario.setFotoPerfil(destinationFile.toString());
+        usuarioRepositorio.save(usuario);
+    }
+
+     // Endpoint para cambiar foto:
+    public void guardarFoto(Integer id, MultipartFile file) throws Exception {
+        Usuario usuario = usuarioRepositorio.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con id: " + id));
+
+        if (!Files.exists(rootLocation)) {
+            Files.createDirectories(rootLocation);
+        }
+
+        // Generamos un nombre único para la foto
+        String filename = "usuario_" + id + "_" + file.getOriginalFilename();
+        Path destinationFile = rootLocation.resolve(filename).normalize();
+
+        // Copiamos el contenido del archivo subido
+        Files.copy(
+            file.getInputStream(),
+            destinationFile,
+            StandardCopyOption.REPLACE_EXISTING
+        );
+
+        // Guardamos la ruta en la DB (ej. "uploads/usuario_5_foto.jpg")
+        usuario.setFotoPerfil(destinationFile.toString());
+        usuarioRepositorio.save(usuario);
+    }
+
     public void deleteById(Integer id) {
         usuarioRepositorio.deleteById(id);
     }
