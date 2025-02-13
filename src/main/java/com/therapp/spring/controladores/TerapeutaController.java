@@ -1,5 +1,6 @@
 package com.therapp.spring.controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.therapp.spring.dto.TerapeutaMostrarDTO;
 import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.TerapeutaService;
 import com.therapp.spring.servicios.UsuarioService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @CrossOrigin(origins = "http://localhost:4200") // Permite solicitudes desde Angular
 @RestController
@@ -56,4 +60,16 @@ public class TerapeutaController {
     public void borrarTerapeuta(@PathVariable Long id) {
         terapeutaService.deleteById(id);
     }
+
+    @GetMapping("/terapeutas")
+    public List<TerapeutaMostrarDTO> getTerapeutasDTO() {
+        List<Terapeuta> terapeutas = getAllTerapeutas();
+        List<TerapeutaMostrarDTO> terapeutasParaPasar = new ArrayList<>();
+
+        for(int i =0; i < terapeutas.size(); i++){
+            terapeutasParaPasar.add(new TerapeutaMostrarDTO(terapeutas.get(i)));
+        }
+        return terapeutasParaPasar;
+    }
+    
 }
