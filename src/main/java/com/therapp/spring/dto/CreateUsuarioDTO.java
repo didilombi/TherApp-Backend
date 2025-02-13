@@ -26,7 +26,6 @@ public class CreateUsuarioDTO {
     @NotBlank
     private String clave;
 
-    @NotNull
     private Set<Rol> rol;
 
     @NotNull
@@ -35,7 +34,6 @@ public class CreateUsuarioDTO {
     @NotBlank
     private String telefono;
 
-    @NotBlank
     private String ubicacion;
 
     private String biografia;
