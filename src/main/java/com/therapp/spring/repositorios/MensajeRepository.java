@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.therapp.spring.modelo.Mensaje;
 import com.therapp.spring.modelo.Usuario;
-import com.therapp.spring.modelo.Usuario;
 
 public interface MensajeRepository extends JpaRepository<Mensaje, Long> {
 
@@ -18,5 +17,8 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Long> {
        "ORDER BY m.fechaEnvio ASC")
     List<Mensaje> findChatBetweenUsers(@Param("user1") Long user1, @Param("user2") Long user2);
 
+    @Query("SELECT emisor.id FROM Mensaje WHERE (Mensaje.)"
+    List<Usuario> findUsuariosConversaciones();
 
+    )
 }
