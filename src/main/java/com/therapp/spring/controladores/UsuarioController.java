@@ -14,6 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.therapp.spring.dto.ConversacionDTO;
 import com.therapp.spring.dto.CreateUsuarioDTO;
@@ -82,23 +91,20 @@ public class UsuarioController {
         return conversacionDTO;
     }
 
-    @GetMapping("/conversaciones/{id}")
-    public ConversacionDTO getConversaciones(@PathVariable Long id) {
-        Usuario usuario = usuarioService.findById(id).get();
-        ConversacionDTO conversacionDTO = new ConversacionDTO(usuario);
-        return conversacionDTO;
-    }
-
-    @PostMapping(value = "/{id}/foto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> subirFoto(
-        @PathVariable Integer id,
-        @RequestParam("foto") MultipartFile foto
-    ) {
-        try {
-            usuarioService.guardarFoto(id, foto);
-            return ResponseEntity.ok("Foto subida correctamente.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al subir la foto: " + e.getMessage());
+    @GetMapping("/get/{nombre}")
+    public PerfilDTO getPerfilDTO(@PathVariable String nombre) {
+        PerfilDTO perfilDTO = new PerfilDTO(usuarioService.findByUsername(nombre));
+        return perfilDTO;
+    }    
+    @GetMapping("/confirmar")
+    public ResponseEntity<?> confirmarUsuario(@RequestParam String token) {
+        Optional<Usuario> usuarioOpt = usuarioService.findByToken(token);
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            usuarioService.confirmUsuario(usuario);
+            return ResponseEntity.ok("Correo electrónico confirmado exitosamente.");
+        } else {
+            return ResponseEntity.badRequest().body("Token de confirmación inválido.");
         }
     }
 
