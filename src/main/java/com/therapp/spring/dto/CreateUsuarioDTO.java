@@ -26,7 +26,6 @@ public class CreateUsuarioDTO {
     @NotBlank
     private String clave;
 
-    @NotNull
     private Set<Rol> rol;
 
     @NotNull
