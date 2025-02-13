@@ -43,6 +43,7 @@ public class UsuarioService {
         return usuarioRepositorio.findById(id);
     }
 
+
     public Usuario save(Usuario usuario) {
         return usuarioRepositorio.save(usuario);
     }
