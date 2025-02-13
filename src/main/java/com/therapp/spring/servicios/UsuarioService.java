@@ -2,9 +2,16 @@ package com.therapp.spring.servicios;
 
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,8 +37,6 @@ import com.therapp.spring.repositorios.UsuarioRepository;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepositorio;
-   // 1️⃣ Ruta base donde se almacenarán los archivos
-   private static final Path rootLocation = Paths.get("uploads");
    // 1️⃣ Ruta base donde se almacenarán los archivos
    private static final Path rootLocation = Paths.get("uploads");
 
@@ -74,6 +79,56 @@ public class UsuarioService {
     //     terapeutaService.deleteByUsuario(u);
     //     usuarioRepositorio.delete(u);
     // }
+
+     // Endpoint para cambiar foto:
+    public void guardarFoto(Integer id, MultipartFile file) throws Exception {
+        Usuario usuario = usuarioRepositorio.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con id: " + id));
+
+        if (!Files.exists(rootLocation)) {
+            Files.createDirectories(rootLocation);
+        }
+
+        // Generamos un nombre único para la foto
+        String filename = "usuario_" + id + "_" + file.getOriginalFilename();
+        Path destinationFile = rootLocation.resolve(filename).normalize();
+
+        // Copiamos el contenido del archivo subido
+        Files.copy(
+            file.getInputStream(),
+            destinationFile,
+            StandardCopyOption.REPLACE_EXISTING
+        );
+
+        // Guardamos la ruta en la DB (ej. "uploads/usuario_5_foto.jpg")
+        usuario.setFotoPerfil(destinationFile.toString());
+        usuarioRepositorio.save(usuario);
+    }
+
+     // Endpoint para cambiar foto:
+    public void guardarFoto(Integer id, MultipartFile file) throws Exception {
+        Usuario usuario = usuarioRepositorio.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con id: " + id));
+
+        if (!Files.exists(rootLocation)) {
+            Files.createDirectories(rootLocation);
+        }
+
+        // Generamos un nombre único para la foto
+        String filename = "usuario_" + id + "_" + file.getOriginalFilename();
+        Path destinationFile = rootLocation.resolve(filename).normalize();
+
+        // Copiamos el contenido del archivo subido
+        Files.copy(
+            file.getInputStream(),
+            destinationFile,
+            StandardCopyOption.REPLACE_EXISTING
+        );
+
+        // Guardamos la ruta en la DB (ej. "uploads/usuario_5_foto.jpg")
+        usuario.setFotoPerfil(destinationFile.toString());
+        usuarioRepositorio.save(usuario);
+    }
 
      // Endpoint para cambiar foto:
     public void guardarFoto(Integer id, MultipartFile file) throws Exception {
