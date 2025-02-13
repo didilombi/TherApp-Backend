@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import com.therapp.spring.modelo.Rol;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,7 +27,6 @@ public class CreateUsuarioDTO {
     @NotBlank
     private String clave;
 
-    @NotNull
     private Set<Rol> rol;
 
     @NotNull
