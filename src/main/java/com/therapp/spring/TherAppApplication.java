@@ -44,12 +44,7 @@ public class TherAppApplication {
             // Crear usuarios
             // Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid");
             // Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "12345678X", LocalDate.of(1990, 8, 20), "987654321", "Barcelona");
-            // Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid");
-            // Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", passwordEncoder.encode("password"), "Sin Imagen", Set.of(Rol.USER), "12345678X", LocalDate.of(1990, 8, 20), "987654321", "Barcelona");
 
-            // // Guardar los usuarios en la base de datos
-            // usuarioService.save(usuario1);
-            // usuarioService.save(usuario2);
             // // Guardar los usuarios en la base de datos
             // usuarioService.save(usuario1);
             // usuarioService.save(usuario2);
@@ -62,24 +57,10 @@ public class TherAppApplication {
             // terapeutaAna.setExperiencia("5 años");
             // terapeutaAna.setEspecialidad("Psicología");
             // terapeutaAna.setIdiomas("Español, Inglés");
-            // // Crear terapeuta a partir del usuario Ana
-            // Terapeuta terapeutaAna = new Terapeuta();
-            // terapeutaAna.setUsuario(usuario2);
-            // terapeutaAna.setNColegiado("123456");
-            // terapeutaAna.setApellidos("Colab");
-            // terapeutaAna.setExperiencia("5 años");
-            // terapeutaAna.setEspecialidad("Psicología");
-            // terapeutaAna.setIdiomas("Español, Inglés");
 
             // // Guardar el terapeuta en la base de datos
             // terapeutaService.save(terapeutaAna);
-            // // Guardar el terapeuta en la base de datos
-            // terapeutaService.save(terapeutaAna);
 
-            // // Crear contenidos multimedia
-            // ContenidoPublicacion foto1 = new ContenidoPublicacion();
-            // foto1.setTipo("foto");
-            // foto1.setUrl("http://example.com/foto1.jpg");
             // // Crear contenidos multimedia
             // ContenidoPublicacion foto1 = new ContenidoPublicacion();
             // foto1.setTipo("foto");
@@ -88,13 +69,7 @@ public class TherAppApplication {
             // ContenidoPublicacion foto2 = new ContenidoPublicacion();
             // foto2.setTipo("foto");
             // foto2.setUrl("http://example.com/foto2.jpg");
-            // ContenidoPublicacion foto2 = new ContenidoPublicacion();
-            // foto2.setTipo("foto");
-            // foto2.setUrl("http://example.com/foto2.jpg");
 
-            // ContenidoPublicacion foto3 = new ContenidoPublicacion();
-            // foto3.setTipo("foto");
-            // foto3.setUrl("http://example.com/foto3.jpg");
             // ContenidoPublicacion foto3 = new ContenidoPublicacion();
             // foto3.setTipo("foto");
             // foto3.setUrl("http://example.com/foto3.jpg");
@@ -102,13 +77,7 @@ public class TherAppApplication {
             // ContenidoPublicacion foto4 = new ContenidoPublicacion();
             // foto4.setTipo("foto");
             // foto4.setUrl("http://example.com/foto4.jpg");
-            // ContenidoPublicacion foto4 = new ContenidoPublicacion();
-            // foto4.setTipo("foto");
-            // foto4.setUrl("http://example.com/foto4.jpg");
 
-            // ContenidoPublicacion video = new ContenidoPublicacion();
-            // video.setTipo("video");
-            // video.setUrl("http://example.com/video.mp4");
             // ContenidoPublicacion video = new ContenidoPublicacion();
             // video.setTipo("video");
             // video.setUrl("http://example.com/video.mp4");
@@ -117,24 +86,13 @@ public class TherAppApplication {
             // Publicacion publicacion = new Publicacion();
             // publicacion.setTexto("Esta es una nueva publicación con fotos y video");
             // publicacion.setFechaPublicacion("2023-10-01");
-            // // Crear una nueva publicación
-            // Publicacion publicacion = new Publicacion();
-            // publicacion.setTexto("Esta es una nueva publicación con fotos y video");
-            // publicacion.setFechaPublicacion("2023-10-01");
 
-            // // Guardar la publicación en la base de datos y asignar los contenidos multimedia
-            // publicacion = publicacionService.crearPublicacion(usuario1, publicacion, Arrays.asList(foto1, foto2, foto3, foto4, video), RolPublicacion.AUTOR);
             // // Guardar la publicación en la base de datos y asignar los contenidos multimedia
             // publicacion = publicacionService.crearPublicacion(usuario1, publicacion, Arrays.asList(foto1, foto2, foto3, foto4, video), RolPublicacion.AUTOR);
 
             // // Añadir un colaborador a la publicación
             // publicacionService.agregarColaborador(publicacion, usuario2);
-            // // Añadir un colaborador a la publicación
-            // publicacionService.agregarColaborador(publicacion, usuario2);
 
-            // // Dar like a la publicación
-            // likePublicacionService.darLike(publicacion.getId(), usuario1.getId());
-            // likePublicacionService.darLike(publicacion.getId(), usuario2.getId());
             // // Dar like a la publicación
             // likePublicacionService.darLike(publicacion.getId(), usuario1.getId());
             // likePublicacionService.darLike(publicacion.getId(), usuario2.getId());
@@ -142,13 +100,7 @@ public class TherAppApplication {
             // // Agregar comentarios a la publicación
             // ComentarioPublicacion comentario1 = comentarioPublicacionService.agregarComentario(publicacion.getId(), usuario1.getId(), "Este es un comentario de Carlos.");
             // ComentarioPublicacion comentario2 = comentarioPublicacionService.agregarComentario(publicacion.getId(), usuario2.getId(), "Este es un comentario de Ana.");
-            // // Agregar comentarios a la publicación
-            // ComentarioPublicacion comentario1 = comentarioPublicacionService.agregarComentario(publicacion.getId(), usuario1.getId(), "Este es un comentario de Carlos.");
-            // ComentarioPublicacion comentario2 = comentarioPublicacionService.agregarComentario(publicacion.getId(), usuario2.getId(), "Este es un comentario de Ana.");
 
-            // // Dar like a los comentarios
-            // likeComentarioService.darLike(comentario1.getId(), usuario2.getId());
-            // likeComentarioService.darLike(comentario2.getId(), usuario1.getId());
             // // Dar like a los comentarios
             // likeComentarioService.darLike(comentario1.getId(), usuario2.getId());
             // likeComentarioService.darLike(comentario2.getId(), usuario1.getId());
@@ -156,13 +108,7 @@ public class TherAppApplication {
             // // Agregar respuestas a los comentarios
             // comentarioPublicacionService.agregarRespuesta(comentario1.getId(), usuario2.getId(), "Esta es una respuesta de Ana al comentario de Carlos.");
             // comentarioPublicacionService.agregarRespuesta(comentario2.getId(), usuario1.getId(), "Esta es una respuesta de Carlos al comentario de Ana.");
-            // // Agregar respuestas a los comentarios
-            // comentarioPublicacionService.agregarRespuesta(comentario1.getId(), usuario2.getId(), "Esta es una respuesta de Ana al comentario de Carlos.");
-            // comentarioPublicacionService.agregarRespuesta(comentario2.getId(), usuario1.getId(), "Esta es una respuesta de Carlos al comentario de Ana.");
 
-            // // Seguir usuarios
-            // seguidorService.seguirUsuario(usuario1.getId(), usuario2.getId());
-            // seguidorService.seguirUsuario(usuario2.getId(), usuario1.getId());
             // // Seguir usuarios
             // seguidorService.seguirUsuario(usuario1.getId(), usuario2.getId());
             // seguidorService.seguirUsuario(usuario2.getId(), usuario1.getId());
@@ -181,8 +127,6 @@ public class TherAppApplication {
             // usuario.setUbicacion("Ciudad Ejemplo");
             // usuario.setBiografia("Usuario de prueba para chat");
 
-            // // Guardar el usuario en la BD
-            // usuarioService.save(usuario);
             // // Guardar el usuario en la BD
             // usuarioService.save(usuario);
 

@@ -3,7 +3,6 @@ package com.therapp.spring.controladores;
 
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
