@@ -16,16 +16,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor @AllArgsConstructor @Builder
 public class PerfilDTO {
-    public PerfilDTO(Optional<Usuario> byId) {
-        id = byId.get().getId();
-        fotoPerfil = byId.get().getFotoPerfil();
-        username = byId.get().getUsername();
-        nombre = byId.get().getNombre();
-        email = byId.get().getEmail();
-        telefono = byId.get().getTelefono();
-        fechaNacimiento = byId.get().getFechaNacimiento();
-        biografia = byId.get().getBiografia();
-        ubicacion = byId.get().getUbicacion();
+    public PerfilDTO(Optional<Usuario> usuario) {
+        id = usuario.get().getId();
+        fotoPerfil = usuario.get().getFotoPerfil();
+        username = usuario.get().getUsername();
+        nombre = usuario.get().getNombre();
+        email = usuario.get().getEmail();
+        telefono = usuario.get().getTelefono();
+        fechaNacimiento = usuario.get().getFechaNacimiento();
+        biografia = usuario.get().getBiografia();
+        ubicacion = usuario.get().getUbicacion();
     }
     private Long id;
     private String fotoPerfil;

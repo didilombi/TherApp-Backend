@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.therapp.spring.modelo.Mensaje;
+import com.therapp.spring.modelo.Usuario;
 
 public interface MensajeRepository extends JpaRepository<Mensaje, Long> {
 
