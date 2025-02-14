@@ -1,6 +1,8 @@
 package com.therapp.spring.servicios;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,5 +51,14 @@ public class SeguidorService {
                 .orElseThrow(() -> new IllegalArgumentException("El usuario no sigue a este usuario"));
 
         seguidorRepository.delete(seguidorEntity);
+    }
+
+    public List<Usuario> obtenerSeguidoresComunes(Long usuarioId, Long buscadoId) {
+        List<Usuario> seguidosUsuario = seguidorRepository.findSeguidosByUsuarioId(usuarioId);
+        List<Usuario> seguidoresBuscado = seguidorRepository.findSeguidoresByUsuarioId(buscadoId);
+
+        return seguidosUsuario.stream()
+                .filter(seguidoresBuscado::contains)
+                .collect(Collectors.toList());
     }
 }
