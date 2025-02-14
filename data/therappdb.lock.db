@@ -15,6 +15,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 58f5ba7 (cambiando utimas cosas del registro para cambiar fotos y pefil)
 =======
@@ -169,3 +170,10 @@ hostName=DESKTOP-IP97UN0
 method=file
 id=1950fa63514369c15584aa6a0af9ae51298737f8ba9
 >>>>>>> 47150bf (Filtrado de conversaciones)
+=======
+#Fri Feb 14 10:23:20 CET 2025
+hostName=A214PC25
+id=19503c4ef4f0d9bf86e21e34591398333668dd921c3
+method=file
+server=192.168.56.1\:55593
+>>>>>>> a86ad80 (Muestra usuarios con los que tienes conversaciones)
