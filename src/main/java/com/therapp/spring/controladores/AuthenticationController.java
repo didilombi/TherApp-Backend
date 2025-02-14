@@ -68,6 +68,7 @@ public class AuthenticationController {
 
     private JwtUserResponse convertUserEntityAndTokenToJwtUserResponse(Usuario usuario, String jwtToken) {
         return JwtUserResponse.jwtUserResponseBuilder()
+                .id(usuario.getId())
                 .username(usuario.getUsername())
                 .fotoPerfil(usuario.getFotoPerfil())
                 .rol(usuario.getRol().stream().map(Rol::name).collect(Collectors.toSet()))
