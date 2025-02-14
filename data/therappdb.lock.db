@@ -1,14 +1,6 @@
 #FileLock
-<<<<<<< HEAD
-#Sun Feb 16 17:45:23 CET 2025
-server=192.168.56.1\:51709
-hostName=DESKTOP-IP97UN0
-method=file
-id=1950fa63514369c15584aa6a0af9ae51298737f8ba9
-=======
 #Thu Feb 13 14:32:02 CET 2025
 hostName=A214PC26
-id=194ff745e0edbc5c9c106778fcbd4283e9afdf520e3
+id=195035fd37e4a246cf732ce42e5db738706dde36bc4
 method=file
 server=192.168.56.1\:56196
->>>>>>> 69931c0 (conversaciones algo)
