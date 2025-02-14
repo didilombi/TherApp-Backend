@@ -12,6 +12,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 58f5ba7 (cambiando utimas cosas del registro para cambiar fotos y pefil)
 =======
@@ -145,3 +146,10 @@ server=192.168.56.1\:59564
 >>>>>>> 49155a5d6d661072c79b0e31fe9deaab12a8661f
 >>>>>>> d90b9e701c6db267da7c8c0ac0d35f7b7468d783
 >>>>>>> ca89281c710ed43acd05f0c2acd6e85c89f338f3
+=======
+#Fri Feb 14 10:23:20 CET 2025
+hostName=A214PC25
+id=19503c4ef4f0d9bf86e21e34591398333668dd921c3
+method=file
+server=192.168.56.1\:55593
+>>>>>>> 7fe109c (Muestra usuarios con los que tienes conversaciones)

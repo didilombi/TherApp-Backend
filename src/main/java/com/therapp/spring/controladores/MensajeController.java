@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.therapp.spring.dto.MensajeDTO;
 import com.therapp.spring.modelo.Mensaje;
+import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.MensajeService;
 import com.therapp.spring.servicios.MultimediaMensajeService;
 
@@ -71,5 +72,11 @@ public class MensajeController {
         );
 
         return ResponseEntity.ok(mensajeDTO);
+    }
+
+    @GetMapping("/conversaciones/{usuarioId}")
+    public ResponseEntity<List<Usuario>> obtenerConversaciones(@PathVariable Long usuarioId) {
+        List<Usuario> conversaciones = mensajeService.obtenerConversaciones(usuarioId);
+        return ResponseEntity.ok(conversaciones);
     }
 }

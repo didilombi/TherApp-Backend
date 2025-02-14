@@ -63,4 +63,9 @@ public class MensajeService {
 
         return null;
     }
+
+    public List<Usuario> obtenerConversaciones(Long usuarioId) {
+        List<Long> usuarioIds = mensajeRepository.findConversacionesByUsuarioId(usuarioId);
+        return usuarioRepository.findAllById(usuarioIds);
+    }
 }
