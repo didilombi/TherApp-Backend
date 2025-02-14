@@ -11,6 +11,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 58f5ba7 (cambiando utimas cosas del registro para cambiar fotos y pefil)
 =======
@@ -19,6 +20,10 @@
 >>>>>>> 4c0e0ba (cambiando utimas cosas del registro para cambiar fotos y pefil)
 =======
 >>>>>>> e392365 (modificacion de registro)
+=======
+=======
+>>>>>>> d90b9e701c6db267da7c8c0ac0d35f7b7468d783
+>>>>>>> ca89281c710ed43acd05f0c2acd6e85c89f338f3
 #Tue Feb 11 14:38:43 CET 2025
 hostName=A214PC25
 id=194f53bb30a3255011511f65fff4ccf4c154c6fca48
@@ -28,6 +33,9 @@ server=192.168.56.1\:51173
 #Mon Feb 10 14:29:13 CET 2025
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ca89281c710ed43acd05f0c2acd6e85c89f338f3
 =======
 #Tue Feb 11 10:20:20 CET 2025
 >>>>>>> 49155a5 (modificacion de registro)
@@ -55,6 +63,7 @@ server=192.168.56.1\:52156
 server=192.168.56.1\:59564
 >>>>>>> 49155a5 (modificacion de registro)
 =======
+<<<<<<< HEAD
 #Mon Feb 10 14:29:13 CET 2025
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -109,6 +118,9 @@ server=192.168.56.1\:59564
 >>>>>>> 49155a5 (modificacion de registro)
 >>>>>>> e392365 (modificacion de registro)
 =======
+=======
+<<<<<<< HEAD
+>>>>>>> ca89281c710ed43acd05f0c2acd6e85c89f338f3
 #Mon Feb 10 14:29:13 CET 2025
 =======
 #Tue Feb 11 10:20:20 CET 2025
@@ -122,3 +134,14 @@ server=192.168.56.1\:52156
 =======
 server=192.168.56.1\:59564
 >>>>>>> 49155a5 (modificacion de registro)
+<<<<<<< HEAD
+=======
+=======
+#Tue Feb 11 10:20:20 CET 2025
+hostName=A214PC32
+id=194f44f1f92e9d337ef53f2a66c4abe1703ca1e3958
+method=file
+server=192.168.56.1\:59564
+>>>>>>> 49155a5d6d661072c79b0e31fe9deaab12a8661f
+>>>>>>> d90b9e701c6db267da7c8c0ac0d35f7b7468d783
+>>>>>>> ca89281c710ed43acd05f0c2acd6e85c89f338f3

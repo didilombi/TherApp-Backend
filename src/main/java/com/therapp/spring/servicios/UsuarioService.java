@@ -21,6 +21,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.ConfirmationTokenRepository;
 import com.therapp.spring.repositorios.UsuarioPublicacionRepository;
@@ -30,6 +35,8 @@ import com.therapp.spring.repositorios.UsuarioRepository;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepositorio;
+   // 1️⃣ Ruta base donde se almacenarán los archivos
+   private static final Path rootLocation = Paths.get("uploads");
    // 1️⃣ Ruta base donde se almacenarán los archivos
    private static final Path rootLocation = Paths.get("uploads");
    // 1️⃣ Ruta base donde se almacenarán los archivos
@@ -54,6 +61,10 @@ public class UsuarioService {
 
 
     public Usuario save(Usuario usuario) {
+        //Si el usuario NO trae foto, le ponemos la ruta por defecto
+        if (usuario.getFotoPerfil() == null || usuario.getFotoPerfil().isEmpty()) {
+            usuario.setFotoPerfil("/imagenes/Perfil-inicial.jpg");
+        }
         //Si el usuario NO trae foto, le ponemos la ruta por defecto
         if (usuario.getFotoPerfil() == null || usuario.getFotoPerfil().isEmpty()) {
             usuario.setFotoPerfil("/imagenes/Perfil-inicial.jpg");
