@@ -28,7 +28,7 @@ public class Video {
     private String titulo;
     private String descripcion;
     private LocalDateTime fechaPublicacion;
-    private String ruta;
+    private String url;
 
     @ManyToMany
     @JoinTable(
