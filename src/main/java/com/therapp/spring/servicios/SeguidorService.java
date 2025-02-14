@@ -15,8 +15,8 @@ import com.therapp.spring.repositorios.UsuarioRepository;
 @Service
 public class SeguidorService {
 
-    private final SeguidorRepository seguidorRepository;
-    private final UsuarioRepository usuarioRepository;
+        private final SeguidorRepository seguidorRepository;
+        private final UsuarioRepository usuarioRepository;
 
     @Autowired
     public SeguidorService(SeguidorRepository seguidorRepository, UsuarioRepository usuarioRepository) {
@@ -60,5 +60,14 @@ public class SeguidorService {
         return seguidosUsuario.stream()
                 .filter(seguidoresBuscado::contains)
                 .collect(Collectors.toList());
+    }
+
+    public Boolean estaSiguiendo(Long seguidorId, Long seguidoId) {
+        Usuario seguidor = usuarioRepository.findById(seguidorId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario seguidor no encontrado"));
+        Usuario seguido = usuarioRepository.findById(seguidoId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario seguido no encontrado"));
+
+        return seguidorRepository.findByUsuarioSeguidorAndUsuarioSeguido(seguidor, seguido).isPresent();
     }
 }
