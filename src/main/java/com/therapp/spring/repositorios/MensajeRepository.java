@@ -17,5 +17,4 @@ public interface MensajeRepository extends JpaRepository<Mensaje, Long> {
        "ORDER BY m.fechaEnvio ASC")
     List<Mensaje> findChatBetweenUsers(@Param("user1") Long user1, @Param("user2") Long user2);
 
-
 }
