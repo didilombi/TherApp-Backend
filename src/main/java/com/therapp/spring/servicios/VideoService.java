@@ -17,7 +17,7 @@ public class VideoService {
     VideoRepository videoRepository;
 
     public List<Video> filtrarPorCategoria(CategoriaVideos cat){
-        return videoRepository.findByCategoriaVideos(cat);
+        return videoRepository.findByCategorias(cat);
     }
 
     public Optional<Video> buscarPorTitulo(String titulo){
