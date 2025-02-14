@@ -27,6 +27,7 @@ public class PerfilDTO {
         biografia = usuario.get().getBiografia();
         ubicacion = usuario.get().getUbicacion();
     }
+    
     private Long id;
     private String fotoPerfil;
     private String username;
