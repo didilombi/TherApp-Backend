@@ -96,17 +96,4 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LikeComentario> likesComentarios;
 
-    public Usuario(String nombre, String nombreUsuario,String email, String clave, Rol rol,String dni,LocalDate fechaNacimiento,String telefono, String ubicacion) {
-        this.nombre = nombre;
-        // this.nombreUsuario = nombreUsuario;
-        this.email = email;
-        this.clave = clave;
-        this.fotoPerfil = "../src/main/resources/Imagenes/Perfil-inicial.jpg";
-        // this.rol = rol;
-        // this.dni = dni;
-        this.fechaNacimiento = fechaNacimiento;
-        this.telefono = telefono;
-        this.fechaRegistro = LocalDateTime.now();
-        this.ubicacion = ubicacion;
-    }
 }
