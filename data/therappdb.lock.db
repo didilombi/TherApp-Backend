@@ -13,6 +13,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 58f5ba7 (cambiando utimas cosas del registro para cambiar fotos y pefil)
 =======
@@ -153,3 +154,10 @@ id=19503c4ef4f0d9bf86e21e34591398333668dd921c3
 method=file
 server=192.168.56.1\:55593
 >>>>>>> 7fe109c (Muestra usuarios con los que tienes conversaciones)
+=======
+#Sat Feb 15 21:37:41 CET 2025
+server=192.168.56.1\:60865
+hostName=DESKTOP-IP97UN0
+method=file
+id=1950b548522e468015f86a99e85121d773552b218de
+>>>>>>> 4067ecc (Usuarios con los que no has intercambiado mensajes)

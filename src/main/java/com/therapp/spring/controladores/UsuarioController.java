@@ -117,4 +117,10 @@ public class UsuarioController {
         List<Usuario> seguidoresComunes = seguidorService.obtenerSeguidoresComunes(usuarioId, buscadoId);
         return ResponseEntity.ok(seguidoresComunes);
     }
+
+    @GetMapping("/seguidos-sin-conversacion")
+    public ResponseEntity<List<Usuario>> obtenerUsuariosSeguidosSinConversacion(@RequestParam Long usuarioId) {
+        List<Usuario> usuarios = usuarioService.obtenerUsuariosSeguidosSinConversacion(usuarioId);
+        return ResponseEntity.ok(usuarios);
+    }
 }
