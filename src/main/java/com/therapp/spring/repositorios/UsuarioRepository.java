@@ -19,8 +19,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("SELECT u FROM Usuario u WHERE u.id IN (SELECT s.usuarioSeguido.id FROM Seguidor s WHERE s.usuarioSeguidor.id = :usuarioId) " +
            "AND u.id NOT IN (SELECT DISTINCT CASE WHEN m.emisor.id = :usuarioId THEN m.receptor.id ELSE m.emisor.id END FROM Mensaje m WHERE m.emisor.id = :usuarioId OR m.receptor.id = :usuarioId)")
     List<Usuario> findUsuariosSeguidosSinConversacion(@Param("usuarioId") Long usuarioId);
-
-    @Query("SELECT u FROM Usuario u WHERE u.id NOT IN (SELECT s.usuarioSeguido.id FROM Seguidor s WHERE s.usuarioSeguidor.id = :usuarioId) " +
-           "AND u.id NOT IN (SELECT DISTINCT CASE WHEN m.emisor.id = :usuarioId THEN m.receptor.id ELSE m.emisor.id END FROM Mensaje m WHERE m.emisor.id = :usuarioId OR m.receptor.id = :usuarioId)")
-    List<Usuario> findMasEnTherApp(@Param("usuarioId") Long usuarioId);
 }

@@ -99,10 +99,4 @@ public class UsuarioController {
         List<Usuario> usuarios = usuarioService.obtenerUsuariosSeguidosSinConversacion(usuarioId);
         return ResponseEntity.ok(usuarios);
     }
-
-    @GetMapping("/mas-en-therapp")
-    public ResponseEntity<List<Usuario>> obtenerMasEnTherApp(@RequestParam Long usuarioId) {
-        List<Usuario> usuarios = usuarioService.obtenerMasEnTherApp(usuarioId);
-        return ResponseEntity.ok(usuarios);
-    }
 }
