@@ -6,32 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.http.MediaType;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
@@ -121,6 +97,12 @@ public class UsuarioController {
     @GetMapping("/seguidos-sin-conversacion")
     public ResponseEntity<List<Usuario>> obtenerUsuariosSeguidosSinConversacion(@RequestParam Long usuarioId) {
         List<Usuario> usuarios = usuarioService.obtenerUsuariosSeguidosSinConversacion(usuarioId);
+        return ResponseEntity.ok(usuarios);
+    }
+
+    @GetMapping("/mas-en-therapp")
+    public ResponseEntity<List<Usuario>> obtenerMasEnTherApp(@RequestParam Long usuarioId) {
+        List<Usuario> usuarios = usuarioService.obtenerMasEnTherApp(usuarioId);
         return ResponseEntity.ok(usuarios);
     }
 }

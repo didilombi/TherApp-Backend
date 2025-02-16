@@ -14,6 +14,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 58f5ba7 (cambiando utimas cosas del registro para cambiar fotos y pefil)
 =======
@@ -161,3 +162,10 @@ hostName=DESKTOP-IP97UN0
 method=file
 id=1950b548522e468015f86a99e85121d773552b218de
 >>>>>>> 4067ecc (Usuarios con los que no has intercambiado mensajes)
+=======
+#Sun Feb 16 17:45:23 CET 2025
+server=192.168.56.1\:51709
+hostName=DESKTOP-IP97UN0
+method=file
+id=1950fa63514369c15584aa6a0af9ae51298737f8ba9
+>>>>>>> 47150bf (Filtrado de conversaciones)
