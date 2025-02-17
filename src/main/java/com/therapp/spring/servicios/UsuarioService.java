@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.therapp.spring.dto.CreateUsuarioDTO;
 import com.therapp.spring.modelo.ConfirmationToken;
@@ -118,12 +119,11 @@ public class UsuarioService {
         return usuarioRepositorio.findByNombreContainingIgnoreCaseOrUsernameContainingIgnoreCase(query, query);
     }
 
-    public List<Usuario> obtenerUsuariosSeguidosSinConversacion(Long usuarioId) {
+    public List<Usuario> obtenerUsuariosSeguidosSinConversacion(@RequestParam Long usuarioId) {
         return usuarioRepositorio.findUsuariosSeguidosSinConversacion(usuarioId);
     }
 
-    public List<Usuario> obtenerMasEnTherApp(Long usuarioId) {
+    public List<Usuario> obtenerUsuariosMasEnTherApp(@RequestParam Long usuarioId) {
         return usuarioRepositorio.findMasEnTherApp(usuarioId);
     }
-
 }
