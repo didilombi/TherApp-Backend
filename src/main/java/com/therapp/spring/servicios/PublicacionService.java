@@ -1,5 +1,6 @@
 package com.therapp.spring.servicios;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,8 @@ public class PublicacionService {
         if (contenidos.size() > 10) {
             throw new IllegalStateException("La publicación no puede tener más de 10 contenidos multimedia.");
         }
+
+        publicacion.setFechaPublicacion(LocalDateTime.now()); // Asignar la fecha y hora actual
 
         Publicacion nuevaPublicacion = publicacionRepository.saveAndFlush(publicacion);
 
