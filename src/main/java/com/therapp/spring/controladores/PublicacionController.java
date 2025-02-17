@@ -3,7 +3,6 @@ package com.therapp.spring.controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,14 +40,16 @@ public class PublicacionController {
     }
 
     @PostMapping
-    public Publicacion crearPublicacion(@RequestParam Long usuarioId, @RequestParam("texto") String texto, @RequestParam("archivos") List<MultipartFile> archivos) {
+    public Publicacion crearPublicacion(@RequestParam Long usuarioId, @RequestParam("texto") String texto, @RequestParam(value = "archivos", required = false) List<MultipartFile> archivos) {
         Usuario usuario = usuarioService.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         Publicacion publicacion = new Publicacion();
         publicacion.setTexto(texto);
         Publicacion nuevaPublicacion = publicacionService.crearPublicacion(usuario, publicacion, List.of(), RolPublicacion.AUTOR);
 
-        for (MultipartFile archivo : archivos) {
-            contenidoPublicacionService.saveFile(archivo, nuevaPublicacion.getId());
+        if (archivos != null) {
+            for (MultipartFile archivo : archivos) {
+                contenidoPublicacionService.saveFile(archivo, nuevaPublicacion.getId());
+            }
         }
 
         return nuevaPublicacion;
