@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.therapp.spring.dto.MensajeDTO;
 import com.therapp.spring.modelo.Mensaje;
+import com.therapp.spring.modelo.MultimediaMensaje;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.MensajeService;
 import com.therapp.spring.servicios.MultimediaMensajeService;
@@ -45,19 +46,38 @@ public class MensajeController {
 
     // POST: enviar mensaje de id1 -> id2
     @PostMapping(value = "/chat/{id1}/{id2}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<MensajeDTO> enviarMensaje(
-        @PathVariable Long id1,
-        @PathVariable Long id2,
+    public ResponseEntity<?> enviarMensaje(
+        @PathVariable("id1") Long id1,  // 👈 Asegurarse de que los nombres sean explícitos
+        @PathVariable("id2") Long id2,
         @RequestParam(value = "contenido", required = false) String contenido,
         @RequestParam(value = "archivo", required = false) MultipartFile archivo) {
 
-        String archivoUrl = null;
+        System.out.println("📩 Enviando mensaje...");
+        System.out.println("🆔 ID Emisor: " + id1);
+        System.out.println("🆔 ID Receptor: " + id2);
+        System.out.println("📝 Contenido: " + contenido);
+        System.out.println("📂 Archivo: " + (archivo != null ? archivo.getOriginalFilename() : "Ninguno"));            
 
-        if (archivo != null && !archivo.isEmpty()) {
-            archivoUrl = multimediaMensajeService.saveFile(archivo, id1).getUrl(); // ✅ Guardar archivo y obtener la URL
+        // 1️⃣ Primero, guardar el mensaje sin archivo
+        Mensaje nuevoMensaje = mensajeService.enviarMensaje(id1, id2, contenido, null);
+
+        if (nuevoMensaje == null) {
+            System.out.println("❌ Error: El mensaje no se creó correctamente.");
+            return ResponseEntity.status(500).body("Error al crear el mensaje");
         }
 
-        Mensaje nuevoMensaje = mensajeService.enviarMensaje(id1, id2, contenido, archivoUrl);
+        // 2️⃣ Ahora, guardar el archivo multimedia si existe
+        if (archivo != null && !archivo.isEmpty()) {
+            try {
+                MultimediaMensaje multimediaMensaje = multimediaMensajeService.saveFile(archivo, nuevoMensaje.getId());
+                nuevoMensaje.setArchivoUrl(multimediaMensaje.getUrl());  // Actualizar el mensaje con la URL del archivo
+                mensajeService.save(nuevoMensaje); // Guardar el mensaje actualizado con la URL
+                System.out.println("✅ Archivo guardado en: " + multimediaMensaje.getUrl());
+            } catch (Exception e) {
+                System.out.println("❌ Error al guardar el archivo: " + e.getMessage());
+                return ResponseEntity.status(500).body("Error al guardar el archivo");
+            }
+        }
 
         MensajeDTO mensajeDTO = new MensajeDTO(
             nuevoMensaje.getId(),
@@ -71,12 +91,17 @@ public class MensajeController {
             nuevoMensaje.getArchivoUrl()
         );
 
+        System.out.println("📨 Mensaje enviado con éxito: " + mensajeDTO);
         return ResponseEntity.ok(mensajeDTO);
     }
 
-    @GetMapping("/conversaciones/{usuarioId}")
-    public ResponseEntity<List<Usuario>> obtenerConversaciones(@PathVariable Long usuarioId) {
-        List<Usuario> conversaciones = mensajeService.obtenerConversaciones(usuarioId);
-        return ResponseEntity.ok(conversaciones);
+    @GetMapping("/conversacion")
+    public ResponseEntity<List<Mensaje>> obtenerMensajes(
+            @RequestParam(name = "usuarioId") Long usuarioId,
+            @RequestParam(name = "receptorId") Long receptorId) {
+        
+        List<Mensaje> mensajes = mensajeService.obtenerMensajes(usuarioId, receptorId);
+        return ResponseEntity.ok(mensajes);
     }
+
 }

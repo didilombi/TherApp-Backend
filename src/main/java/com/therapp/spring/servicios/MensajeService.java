@@ -64,8 +64,10 @@ public class MensajeService {
         return null;
     }
 
-    public List<Usuario> obtenerConversaciones(Long usuarioId) {
-        List<Long> usuarioIds = mensajeRepository.findConversacionesByUsuarioId(usuarioId);
-        return usuarioRepository.findAllById(usuarioIds);
-    }
+    public List<Mensaje> obtenerMensajes(Long usuarioId, Long receptorId) {
+        if (usuarioId == null || receptorId == null || usuarioId <= 0 || receptorId <= 0) {
+            throw new IllegalArgumentException("IDs de usuario no válidos");
+        }
+        return mensajeRepository.obtenerConversacion(usuarioId, receptorId);
+    } 
 }

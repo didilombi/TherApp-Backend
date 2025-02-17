@@ -24,11 +24,11 @@ public class Seguidor {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "usuarioSeguidoId", nullable = false)
+    @JoinColumn(name = "USUARIO_SEGUIDO_ID", nullable = false)
     private Usuario usuarioSeguido;
 
     @ManyToOne
-    @JoinColumn(name = "usuarioSeguidorId", nullable = false)
+    @JoinColumn(name = "USUARIO_SEGUIDOR_ID", nullable = false)
     private Usuario usuarioSeguidor;
 
     private Date fechaSeguimiento;
