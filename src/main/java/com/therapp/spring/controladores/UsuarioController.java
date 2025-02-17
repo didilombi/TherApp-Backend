@@ -2,6 +2,7 @@ package com.therapp.spring.controladores;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -123,9 +124,10 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/haceradmin")
-    public void hacerAdmin(@RequestParam String email){
-        Optional<Usuario> u = usuarioService.findByEmail(email);
+    @PostMapping("/haceradmin")
+    public void hacerAdmin(@RequestBody Map<String, String> email){
+        System.out.println(email);
+        Optional<Usuario> u = usuarioService.findByEmail(email.get("email"));
         u.ifPresent(usuario -> usuario.setRol(Set.of(Rol.ADMIN)));
     }
 }
