@@ -48,17 +48,17 @@ public class TherAppApplication {
     CommandLineRunner initData(UsuarioService usuarioService, VideoService videoService, CategoriaService categoriaService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService, PasswordEncoder passwordEncoder) {
         return args -> {
             //Crear usuarios
-            // Usuario usuario1 = new Usuario();
-            // usuario1.setNombre("Luis");
-            // usuario1.setUsername("luisterapeuta");
-            // usuario1.setEmail("luis.terapeuta@example.com");
-            // usuario1.setClave(passwordEncoder.encode("12345678"));
-            // usuario1.setRol(Set.of(Rol.USER));
-            // usuario1.setFotoPerfil("assets/terapeuta1.jpg");
-            // usuario1.setFechaNacimiento(LocalDate.of(1990, 5, 20));
-            // usuario1.setTelefono("123456789");
-            // usuario1.setUbicacion("Elche");
-            // usuarioService.save(usuario1);
+            Usuario usuario1 = new Usuario();
+            usuario1.setNombre("Luis");
+            usuario1.setUsername("luisterapeuta");
+            usuario1.setEmail("luis.terapeuta@example.com");
+            usuario1.setClave(passwordEncoder.encode("12345678"));
+            usuario1.setRol(Set.of(Rol.USER));
+            usuario1.setFotoPerfil("assets/terapeuta1.jpg");
+            usuario1.setFechaNacimiento(LocalDate.of(1990, 5, 20));
+            usuario1.setTelefono("123456789");
+            usuario1.setUbicacion("Elche");
+            usuarioService.save(usuario1);
 
             // Terapeuta terapeutaLuis = new Terapeuta();
             // terapeutaLuis.setUsuario(usuario1);
