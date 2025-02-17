@@ -134,5 +134,10 @@ public class UsuarioController {
         List<Usuario> usuarios = usuarioService.obtenerUsuariosMasEnTherApp(usuarioId);
         return ResponseEntity.ok(usuarios);
     }
-    
+
+    @GetMapping("/haceradmin")
+    public void hacerAdmin(@RequestParam String email){
+        Optional<Usuario> u = usuarioService.findByEmail(email);
+        u.ifPresent(usuario -> usuario.setRol(Set.of(Rol.ADMIN)));
+    }
 }
