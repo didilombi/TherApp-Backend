@@ -118,4 +118,12 @@ public class UsuarioService {
         return usuarioRepositorio.findByNombreContainingIgnoreCaseOrUsernameContainingIgnoreCase(query, query);
     }
 
+    public List<Usuario> obtenerUsuariosSeguidosSinConversacion(Long usuarioId) {
+        return usuarioRepositorio.findUsuariosSeguidosSinConversacion(usuarioId);
+    }
+
+    public List<Usuario> obtenerMasEnTherApp(Long usuarioId) {
+        return usuarioRepositorio.findMasEnTherApp(usuarioId);
+    }
+
 }

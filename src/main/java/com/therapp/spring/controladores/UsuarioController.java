@@ -14,17 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.therapp.spring.dto.ConversacionDTO;
 import com.therapp.spring.dto.CreateUsuarioDTO;
@@ -125,5 +117,17 @@ public class UsuarioController {
     public ResponseEntity<List<Usuario>> obtenerSeguidoresComunes(@RequestParam Long usuarioId, @RequestParam Long buscadoId) {
         List<Usuario> seguidoresComunes = seguidorService.obtenerSeguidoresComunes(usuarioId, buscadoId);
         return ResponseEntity.ok(seguidoresComunes);
+    }
+
+    @GetMapping("/seguidos-sin-conversacion")
+    public ResponseEntity<List<Usuario>> obtenerUsuariosSeguidosSinConversacion(@RequestParam Long usuarioId) {
+        List<Usuario> usuarios = usuarioService.obtenerUsuariosSeguidosSinConversacion(usuarioId);
+        return ResponseEntity.ok(usuarios);
+    }
+
+    @GetMapping("/mas-en-therapp")
+    public ResponseEntity<List<Usuario>> obtenerMasEnTherApp(@RequestParam Long usuarioId) {
+        List<Usuario> usuarios = usuarioService.obtenerMasEnTherApp(usuarioId);
+        return ResponseEntity.ok(usuarios);
     }
 }
