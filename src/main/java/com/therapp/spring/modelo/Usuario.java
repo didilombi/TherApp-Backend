@@ -68,6 +68,10 @@ public class Usuario implements UserDetails {
     @JsonManagedReference
     private Terapeuta terapeuta;
 
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private SolicitudTerapeuta solicitudTerapeuta;
+
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Organizacion organizacion;
 
@@ -108,5 +112,10 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return confirmado;
+    }
+
+    public void cambiarRol(Rol nuevoRol){
+        this.rol.clear();
+        this.rol.add(nuevoRol);
     }
 }
