@@ -1,9 +1,11 @@
 package com.therapp.spring.controladores;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.therapp.spring.modelo.SolicitudTerapeuta;
@@ -34,23 +36,34 @@ public class SolicitudTerapeutaController {
     UsuarioRepository usuarioRepository;
 
     @PostMapping("/enviarsolicitud")
-    public void CrearSolicitud(@RequestBody String email, String apellidos, String nColegiado, String experiencia, String especialidad,
-    String idiomas, int precio){
-
-        SolicitudTerapeuta solicitud = new SolicitudTerapeuta();
-        solicitud.setApellidos(apellidos);
-        solicitud.setNColegiado(nColegiado);
-        solicitud.setExperiencia(experiencia);
-        solicitud.setEspecialidad(especialidad);
-        solicitud.setIdiomas(idiomas);
-        solicitud.setPrecio(precio);
-        Optional<Usuario> u = usuarioRepository.findByEmail(email);
-        u.ifPresent(user -> {
-            solicitud.setUsuario(user);
-        });
+    public void CrearSolicitud(@RequestBody SolicitudTerapeuta solicitud) {
+        Optional<Usuario> u = usuarioRepository.findByEmail(solicitud.getEmail());
+        
+        u.ifPresent(solicitud::setUsuario);
+        
         solicitudTerapeutaService.save(solicitud);
     }
     
+    @GetMapping("/recogersolicitudes")
+    public List<SolicitudTerapeuta> listarSolicitudes(){
+    	
+    	List<SolicitudTerapeuta> lista = solicitudTerapeutaService.findAll();
+    	for(int i=0; i<lista.size(); i++)
+    	{
+    		System.out.println(lista.get(i).getEmail());
+    	}
+    		
+    	return solicitudTerapeutaService.findAll();
+    }
+    
+    @PostMapping("/aprobarsolicitud")
+    public void AprobarSolicitud(@RequestBody String email) {
+    	
+    	SolicitudTerapeuta solicitud = solicitudTerapeutaService.findByEmail(email);
+    	if(solicitud != null) {
+    		Optional<Usuario> u = usuarioRepository.findByEmail(email);
+    	}
+    }
 
     
     }

@@ -11,4 +11,6 @@ public interface SolicitudTerapeutaRepository extends JpaRepository<SolicitudTer
     List<SolicitudTerapeuta> findAll();
 
     SolicitudTerapeuta findByUsuario(Usuario u);
+    
+    SolicitudTerapeuta findByEmail(String email);
 }
