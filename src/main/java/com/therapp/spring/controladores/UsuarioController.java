@@ -129,5 +129,6 @@ public class UsuarioController {
         System.out.println(email);
         Optional<Usuario> u = usuarioService.findByEmail(email.get("email"));
         u.ifPresent(usuario -> usuario.setRol(Set.of(Rol.ADMIN)));
+        u.ifPresent(usuario -> usuarioService.save(usuario));
     }
 }
