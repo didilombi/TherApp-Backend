@@ -49,7 +49,8 @@ public class SecurityConfig {
                 .requestMatchers("/h2-console/**").permitAll() // Permitir acceso a H2 Console
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Permitir acceso a login
                 .requestMatchers("/api/**").permitAll() // ⚠️ Puedes cambiar esto si quieres autenticación
-                .anyRequest().permitAll()
+                .requestMatchers("/ws/**").permitAll()
+                .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
             .httpBasic(httpBasic -> {}) // Nueva sintaxis para httpBasic()
