@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,6 +35,7 @@ import com.therapp.spring.servicios.EmailService;
 import com.therapp.spring.servicios.SeguidorService;
 import com.therapp.spring.servicios.UsuarioService;
 
+import io.jsonwebtoken.lang.Collections;
 import io.jsonwebtoken.lang.Collections;
 import jakarta.validation.Valid;
 
@@ -91,6 +93,13 @@ public class UsuarioController {
         return conversacionDTO;
     }
 
+    @GetMapping("/conversaciones/{id}")
+    public ConversacionDTO getConversaciones(@PathVariable Long id) {
+        Usuario usuario = usuarioService.findById(id).get();
+        ConversacionDTO conversacionDTO = new ConversacionDTO(usuario);
+        return conversacionDTO;
+    }
+
     @GetMapping("/get/{nombre}")
     public PerfilDTO getPerfilDTO(@PathVariable String nombre) {
         PerfilDTO perfilDTO = new PerfilDTO(usuarioService.findByUsername(nombre));
@@ -124,6 +133,22 @@ public class UsuarioController {
         List<Usuario> seguidoresComunes = seguidorService.obtenerSeguidoresComunes(usuarioId, buscadoId);
         return ResponseEntity.ok(seguidoresComunes);
     }
+
+    @GetMapping("/seguidos-sin-conversacion")
+    public ResponseEntity<List<Usuario>> obtenerUsuariosSeguidosSinConversacion(@RequestParam(name = "usuarioId") Long usuarioId) {
+        if (usuarioId == null || usuarioId <= 0) {
+            return ResponseEntity.badRequest().body(Collections.emptyList());
+        }
+        List<Usuario> usuarios = usuarioService.obtenerUsuariosSeguidosSinConversacion(usuarioId);
+        return ResponseEntity.ok(usuarios);
+    }
+
+    @GetMapping("/mas-en-therapp")
+    public ResponseEntity<List<Usuario>> obtenerUsuariosMasEnTherApp(@RequestParam Long usuarioId) {
+        List<Usuario> usuarios = usuarioService.obtenerUsuariosMasEnTherApp(usuarioId);
+        return ResponseEntity.ok(usuarios);
+    }
+
 
     @GetMapping("/seguidos-sin-conversacion")
     public ResponseEntity<List<Usuario>> obtenerUsuariosSeguidosSinConversacion(@RequestParam(name = "usuarioId") Long usuarioId) {
