@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,20 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.therapp.spring.dto.MensajeDTO;
 import com.therapp.spring.modelo.Mensaje;
 import com.therapp.spring.modelo.MultimediaMensaje;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.MensajeService;
 import com.therapp.spring.servicios.MultimediaMensajeService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.MediaType;
-import org.springframework.web.multipart.MultipartFile;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/messages")
@@ -47,34 +40,33 @@ public class MensajeController {
     // POST: enviar mensaje de id1 -> id2
     @PostMapping(value = "/chat/{id1}/{id2}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> enviarMensaje(
-        @PathVariable("id1") Long id1,  // 👈 Asegurarse de que los nombres sean explícitos
+        @PathVariable("id1") Long id1,
         @PathVariable("id2") Long id2,
         @RequestParam(value = "contenido", required = false) String contenido,
         @RequestParam(value = "archivo", required = false) MultipartFile archivo) {
 
-        System.out.println("📩 Enviando mensaje...");
-        System.out.println("🆔 ID Emisor: " + id1);
-        System.out.println("🆔 ID Receptor: " + id2);
-        System.out.println("📝 Contenido: " + contenido);
-        System.out.println("📂 Archivo: " + (archivo != null ? archivo.getOriginalFilename() : "Ninguno"));            
+        System.out.println("📩 Enviando mensaje de " + id1 + " a " + id2);
+        System.out.println("📌 Contenido recibido: " + contenido);
+        System.out.println("📂 Archivo recibido: " + (archivo != null ? archivo.getOriginalFilename() : "Ninguno"));
 
-        // 1️⃣ Primero, guardar el mensaje sin archivo
+        // ✅ Si el contenido es `null`, asignarle un texto por defecto para depuración
+        if (contenido == null || contenido.trim().isEmpty()) {
+            contenido = "⚠️ Mensaje vacío recibido";
+        }
+
         Mensaje nuevoMensaje = mensajeService.enviarMensaje(id1, id2, contenido, null);
 
         if (nuevoMensaje == null) {
-            System.out.println("❌ Error: El mensaje no se creó correctamente.");
             return ResponseEntity.status(500).body("Error al crear el mensaje");
         }
 
-        // 2️⃣ Ahora, guardar el archivo multimedia si existe
+        // Si hay archivo, guardarlo
         if (archivo != null && !archivo.isEmpty()) {
             try {
                 MultimediaMensaje multimediaMensaje = multimediaMensajeService.saveFile(archivo, nuevoMensaje.getId());
-                nuevoMensaje.setArchivoUrl(multimediaMensaje.getUrl());  // Actualizar el mensaje con la URL del archivo
-                mensajeService.save(nuevoMensaje); // Guardar el mensaje actualizado con la URL
-                System.out.println("✅ Archivo guardado en: " + multimediaMensaje.getUrl());
+                nuevoMensaje.setArchivoUrl(multimediaMensaje.getUrl());
+                mensajeService.save(nuevoMensaje);
             } catch (Exception e) {
-                System.out.println("❌ Error al guardar el archivo: " + e.getMessage());
                 return ResponseEntity.status(500).body("Error al guardar el archivo");
             }
         }
@@ -91,9 +83,9 @@ public class MensajeController {
             nuevoMensaje.getArchivoUrl()
         );
 
-        System.out.println("📨 Mensaje enviado con éxito: " + mensajeDTO);
         return ResponseEntity.ok(mensajeDTO);
     }
+
 
     @GetMapping("/conversacion")
     public ResponseEntity<List<Mensaje>> obtenerMensajes(
@@ -104,4 +96,10 @@ public class MensajeController {
         return ResponseEntity.ok(mensajes);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/conversaciones/{usuarioId}")
+    public ResponseEntity<List<Usuario>> obtenerConversaciones(@PathVariable Long usuarioId) {
+        List<Usuario> conversaciones = mensajeService.obtenerConversaciones(usuarioId);
+        return ResponseEntity.ok(conversaciones);
+    }
 }
