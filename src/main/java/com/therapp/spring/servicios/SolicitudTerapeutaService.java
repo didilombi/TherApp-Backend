@@ -26,4 +26,8 @@ public class SolicitudTerapeutaService {
     public void save(SolicitudTerapeuta solicitud){
         solicitudTerapeutaRepository.save(solicitud);
     }
+    
+    public SolicitudTerapeuta findByEmail(String email) {
+    	return solicitudTerapeutaRepository.findByEmail(email);
+    }
 }

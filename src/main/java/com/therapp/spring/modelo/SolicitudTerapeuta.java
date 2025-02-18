@@ -26,11 +26,11 @@ public class SolicitudTerapeuta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String email;
     private String apellidos;
     private String nColegiado;
     private String experiencia;
     private String especialidad;
-    private String idiomas;
     private int precio;
 
     @OneToOne
