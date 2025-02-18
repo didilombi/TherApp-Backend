@@ -1,27 +1,38 @@
 package com.therapp.spring.modelo;
 
 import java.util.Set;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "terapeutas")
 public class Terapeuta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String nColegiado;
     private String apellidos;
     private String experiencia;
     private String especialidad;
     private String idiomas;
+    private int precio;
+    private boolean premium;
+    
 
     @OneToOne
     @JoinColumn(name = "usuario_id") // Relaciona con Usuario
+    @JsonBackReference
     private Usuario usuario;
 
     @ManyToOne

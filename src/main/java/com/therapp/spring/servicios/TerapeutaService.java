@@ -1,9 +1,11 @@
 package com.therapp.spring.servicios;
 
-import org.springframework.stereotype.Service;
 import java.util.List;
-import com.therapp.spring.modelo.Terapeuta;
 import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.repositorios.TerapeutaRepository;
 
 @Service
@@ -19,7 +21,7 @@ public class TerapeutaService {
         return terapeutaRepositorio.findAll();
     }
 
-    public Optional<Terapeuta> findById(Integer id) {
+    public Optional<Terapeuta> findById(Long id) {
         return terapeutaRepositorio.findById(id);
     }
     
@@ -32,15 +34,15 @@ public class TerapeutaService {
         terapeutaRepositorio.saveAll(terapeutas);
     }
 
-    public void deleteById(Integer id) {
-        terapeutaRepositorio.deleteById(id.intValue());
+    public void deleteById(Long id) {
+        terapeutaRepositorio.deleteById(id.longValue());
     }
 
     // public Terapeuta registrarTerapeuta(TerapeutaDTo TerapeutaDTO) {
     //     Terapeuta terapeuta = new Terapeuta();
     //     terapeuta.setNombre(TerapeutaDTO.getNombre());
     //     terapeuta.setEspecialidad(TerapeutaDTO.getEspecialidad());
-    //     terapeuta.setNombreUsuario(TerapeutaDTO.getNombreUsuario());
+    //     terapeuta.setUsername(TerapeutaDTO.getUsername());
     //     terapeuta.setEmail(TerapeutaDTO.getEmail());
     //     return terapeutaRepositorio.save(terapeuta);
     // }

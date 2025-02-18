@@ -26,7 +26,7 @@ public class LikeComentarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public void darLike(Integer comentarioId, Integer usuarioId) {
+    public void darLike(Long comentarioId, Long usuarioId) {
         ComentarioPublicacion comentario = comentarioPublicacionRepository.findById(comentarioId)
                 .orElseThrow(() -> new IllegalArgumentException("Comentario no encontrado"));
         Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -43,7 +43,7 @@ public class LikeComentarioService {
         likeComentarioRepository.save(like);
     }
 
-    public void quitarLike(Integer comentarioId, Integer usuarioId) {
+    public void quitarLike(Long comentarioId, Long usuarioId) {
         ComentarioPublicacion comentario = comentarioPublicacionRepository.findById(comentarioId)
                 .orElseThrow(() -> new IllegalArgumentException("Comentario no encontrado"));
         Usuario usuario = usuarioRepository.findById(usuarioId)

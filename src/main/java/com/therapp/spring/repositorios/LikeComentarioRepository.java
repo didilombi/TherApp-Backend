@@ -8,6 +8,6 @@ import com.therapp.spring.modelo.ComentarioPublicacion;
 import com.therapp.spring.modelo.LikeComentario;
 import com.therapp.spring.modelo.Usuario;
 
-public interface LikeComentarioRepository extends JpaRepository<LikeComentario, Integer> {
+public interface LikeComentarioRepository extends JpaRepository<LikeComentario, Long> {
     Optional<LikeComentario> findByUsuarioAndComentario(Usuario usuario, ComentarioPublicacion comentario);
 }

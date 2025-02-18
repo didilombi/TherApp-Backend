@@ -26,7 +26,7 @@ public class LikePublicacionService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public void darLike(Integer publicacionId, Integer usuarioId) {
+    public void darLike(Long publicacionId, Long usuarioId) {
         Publicacion publicacion = publicacionRepository.findById(publicacionId)
                 .orElseThrow(() -> new IllegalArgumentException("Publicación no encontrada"));
         Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -43,7 +43,7 @@ public class LikePublicacionService {
         likePublicacionRepository.save(like);
     }
 
-    public void quitarLike(Integer publicacionId, Integer usuarioId) {
+    public void quitarLike(Long publicacionId, Long usuarioId) {
         Publicacion publicacion = publicacionRepository.findById(publicacionId)
                 .orElseThrow(() -> new IllegalArgumentException("Publicación no encontrada"));
         Usuario usuario = usuarioRepository.findById(usuarioId)

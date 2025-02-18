@@ -4,11 +4,14 @@ import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
-@Getter
-@Setter
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Paciente extends Usuario {
 

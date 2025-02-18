@@ -8,24 +8,27 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
-@Getter
-@Setter
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Seguidor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "usuarioSeguidoId", nullable = false)
+    @JoinColumn(name = "USUARIO_SEGUIDO_ID", nullable = false)
     private Usuario usuarioSeguido;
 
     @ManyToOne
-    @JoinColumn(name = "usuarioSeguidorId", nullable = false)
+    @JoinColumn(name = "USUARIO_SEGUIDOR_ID", nullable = false)
     private Usuario usuarioSeguidor;
 
     private Date fechaSeguimiento;

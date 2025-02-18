@@ -30,29 +30,35 @@ public class MultimediaMensajeService {
     private MensajeRepository mensajeRepository;
 
     // Guardar archivo en el servidor y la base de datos
-    public MultimediaMensaje saveFile(MultipartFile file, int mensajeId) {
+    public MultimediaMensaje saveFile(MultipartFile file, Long mensajeId) {
         try {
             if (!Files.exists(rootLocation)) {
                 Files.createDirectories(rootLocation);
             }
-
+    
             String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-            Files.copy(file.getInputStream(), rootLocation.resolve(fileName));
-
+            Path filePath = rootLocation.resolve(fileName);
+            Files.copy(file.getInputStream(), filePath);
+    
+            // Buscar mensaje asociado
+            Mensaje mensaje = mensajeRepository.findById(mensajeId)
+                    .orElseThrow(() -> new RuntimeException("❌ Mensaje no encontrado con ID: " + mensajeId));
+    
+            // Guardar información en la base de datos
             MultimediaMensaje multimediaMensaje = new MultimediaMensaje();
             multimediaMensaje.setTipoContenido(file.getContentType());
             multimediaMensaje.setUrl(fileName);
             multimediaMensaje.setFechaEnvio(new Date());
-
-            Mensaje mensaje = mensajeRepository.findById(mensajeId).orElseThrow(() -> new RuntimeException("Mensaje no encontrado"));
             multimediaMensaje.setMensaje(mensaje);
-
+    
             return multimediaMensajeRepository.save(multimediaMensaje);
-
+    
         } catch (IOException e) {
-            throw new RuntimeException("❌ Error al guardar el archivo: " + e.getMessage());
+            throw new RuntimeException("❌ Error al guardar el archivo: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new RuntimeException("❌ Error en saveFile: " + e.getMessage(), e);
         }
-    }
+    }     
 
     // Cargar archivo desde el servidor
     public Resource loadFile(String filename) {

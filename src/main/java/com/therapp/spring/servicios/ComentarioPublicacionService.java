@@ -26,7 +26,7 @@ public class ComentarioPublicacionService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public ComentarioPublicacion agregarComentario(Integer publicacionId, Integer usuarioId, String contenido) {
+    public ComentarioPublicacion agregarComentario(Long publicacionId, Long usuarioId, String contenido) {
         Publicacion publicacion = publicacionRepository.findById(publicacionId)
                 .orElseThrow(() -> new IllegalArgumentException("Publicación no encontrada"));
         Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -40,7 +40,7 @@ public class ComentarioPublicacionService {
         return comentarioPublicacionRepository.save(comentario);
     }
 
-    public ComentarioPublicacion agregarRespuesta(Integer comentarioPadreId, Integer usuarioId, String contenido) {
+    public ComentarioPublicacion agregarRespuesta(Long comentarioPadreId, Long usuarioId, String contenido) {
         ComentarioPublicacion comentarioPadre = comentarioPublicacionRepository.findById(comentarioPadreId)
                 .orElseThrow(() -> new IllegalArgumentException("Comentario padre no encontrado"));
         Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -55,7 +55,7 @@ public class ComentarioPublicacionService {
         return comentarioPublicacionRepository.save(respuesta);
     }
 
-    public void eliminarComentario(Integer comentarioId) {
+    public void eliminarComentario(Long comentarioId) {
         comentarioPublicacionRepository.deleteById(comentarioId);
     }
 }

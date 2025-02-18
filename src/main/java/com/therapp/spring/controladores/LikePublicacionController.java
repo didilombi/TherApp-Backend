@@ -22,12 +22,12 @@ public class LikePublicacionController {
     }
 
     @PostMapping("/{publicacionId}/likes")
-    public void darLike(@PathVariable Integer publicacionId, @RequestParam Integer usuarioId) {
+    public void darLike(@PathVariable Long publicacionId, @RequestParam Long usuarioId) {
         likePublicacionService.darLike(publicacionId, usuarioId);
     }
 
     @DeleteMapping("/{publicacionId}/likes")
-    public void quitarLike(@PathVariable Integer publicacionId, @RequestParam Integer usuarioId) {
+    public void quitarLike(@PathVariable Long publicacionId, @RequestParam Long usuarioId) {
         likePublicacionService.quitarLike(publicacionId, usuarioId);
     }
 }

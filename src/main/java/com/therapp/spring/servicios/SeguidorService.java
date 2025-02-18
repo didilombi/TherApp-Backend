@@ -1,6 +1,8 @@
 package com.therapp.spring.servicios;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +15,8 @@ import com.therapp.spring.repositorios.UsuarioRepository;
 @Service
 public class SeguidorService {
 
-    private final SeguidorRepository seguidorRepository;
-    private final UsuarioRepository usuarioRepository;
+        private final SeguidorRepository seguidorRepository;
+        private final UsuarioRepository usuarioRepository;
 
     @Autowired
     public SeguidorService(SeguidorRepository seguidorRepository, UsuarioRepository usuarioRepository) {
@@ -22,7 +24,7 @@ public class SeguidorService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public void seguirUsuario(Integer seguidorId, Integer seguidoId) {
+    public void seguirUsuario(Long seguidorId, Long seguidoId) {
         Usuario seguidor = usuarioRepository.findById(seguidorId)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario seguidor no encontrado"));
         Usuario seguido = usuarioRepository.findById(seguidoId)
@@ -39,7 +41,7 @@ public class SeguidorService {
         seguidorRepository.save(seguidorEntity);
     }
 
-    public void dejarDeSeguirUsuario(Integer seguidorId, Integer seguidoId) {
+    public void dejarDeSeguirUsuario(Long seguidorId, Long seguidoId) {
         Usuario seguidor = usuarioRepository.findById(seguidorId)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario seguidor no encontrado"));
         Usuario seguido = usuarioRepository.findById(seguidoId)
@@ -49,5 +51,23 @@ public class SeguidorService {
                 .orElseThrow(() -> new IllegalArgumentException("El usuario no sigue a este usuario"));
 
         seguidorRepository.delete(seguidorEntity);
+    }
+
+    public List<Usuario> obtenerSeguidoresComunes(Long usuarioId, Long buscadoId) {
+        List<Usuario> seguidosUsuario = seguidorRepository.findSeguidosByUsuarioId(usuarioId);
+        List<Usuario> seguidoresBuscado = seguidorRepository.findSeguidoresByUsuarioId(buscadoId);
+
+        return seguidosUsuario.stream()
+                .filter(seguidoresBuscado::contains)
+                .collect(Collectors.toList());
+    }
+
+    public Boolean estaSiguiendo(Long seguidorId, Long seguidoId) {
+        Usuario seguidor = usuarioRepository.findById(seguidorId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario seguidor no encontrado"));
+        Usuario seguido = usuarioRepository.findById(seguidoId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario seguido no encontrado"));
+
+        return seguidorRepository.findByUsuarioSeguidorAndUsuarioSeguido(seguidor, seguido).isPresent();
     }
 }

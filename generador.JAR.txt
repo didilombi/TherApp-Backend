@@ -1,0 +1,2 @@
+INSERTAR ESTE COMANDO EN EL TERMINAL PARA GENERAR EL .JAR
+mvn clean package -Dmaven.test.skip=true
