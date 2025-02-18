@@ -1,6 +1,7 @@
 package com.therapp.spring.controladores;
 
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,6 +25,7 @@ import com.therapp.spring.dto.CreateUsuarioDTO;
 import com.therapp.spring.dto.PerfilDTO;
 import com.therapp.spring.modelo.ConfirmationToken;
 import com.therapp.spring.modelo.Rol;
+import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.EmailService;
 import com.therapp.spring.servicios.SeguidorService;
@@ -140,7 +142,12 @@ public class UsuarioController {
     public void hacerAdmin(@RequestBody Map<String, String> email){
         System.out.println(email);
         Optional<Usuario> u = usuarioService.findByEmail(email.get("email"));
-        u.ifPresent(usuario -> usuario.setRol(Set.of(Rol.ADMIN)));
+        
+        u.ifPresent(usuario -> {
+            if(usuario.getRol().contains(Rol.USER)){
+                usuario.cambiarRol(Rol.ADMIN);
+            }
+        });
         u.ifPresent(usuario -> usuarioService.save(usuario));
     }
 }

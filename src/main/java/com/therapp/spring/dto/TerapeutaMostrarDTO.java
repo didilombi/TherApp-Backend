@@ -20,6 +20,7 @@ public class TerapeutaMostrarDTO {
     private String especialidad;
     private int precio;
     private boolean premium;
+    private String email;
 
     public TerapeutaMostrarDTO(Terapeuta t){
         this.nombre = t.getUsuario().getNombre();
@@ -29,5 +30,6 @@ public class TerapeutaMostrarDTO {
         this.especialidad = t.getEspecialidad();
         this.precio = t.getPrecio();
         this.premium = t.isPremium();
+        this.email = t.getUsuario().getEmail();
     }
 }
