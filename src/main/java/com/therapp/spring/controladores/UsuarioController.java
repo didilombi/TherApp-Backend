@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.therapp.spring.dto.ConversacionDTO;
 import com.therapp.spring.dto.CreateUsuarioDTO;
 import com.therapp.spring.dto.PerfilDTO;
 import com.therapp.spring.modelo.ConfirmationToken;
@@ -76,6 +77,13 @@ public class UsuarioController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/conversaciones/{id}")
+    public ConversacionDTO getConversaciones(@PathVariable Long id) {
+        Usuario usuario = usuarioService.findById(id).get();
+        ConversacionDTO conversacionDTO = new ConversacionDTO(usuario);
+        return conversacionDTO;
     }
 
     @GetMapping("/get/{nombre}")
