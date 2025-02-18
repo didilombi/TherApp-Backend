@@ -28,6 +28,7 @@ import com.therapp.spring.servicios.EmailService;
 import com.therapp.spring.servicios.SeguidorService;
 import com.therapp.spring.servicios.UsuarioService;
 
+import io.jsonwebtoken.lang.Collections;
 import jakarta.validation.Valid;
 
 
@@ -120,14 +121,18 @@ public class UsuarioController {
     }
 
     @GetMapping("/seguidos-sin-conversacion")
-    public ResponseEntity<List<Usuario>> obtenerUsuariosSeguidosSinConversacion(@RequestParam Long usuarioId) {
+    public ResponseEntity<List<Usuario>> obtenerUsuariosSeguidosSinConversacion(@RequestParam(name = "usuarioId") Long usuarioId) {
+        if (usuarioId == null || usuarioId <= 0) {
+            return ResponseEntity.badRequest().body(Collections.emptyList());
+        }
         List<Usuario> usuarios = usuarioService.obtenerUsuariosSeguidosSinConversacion(usuarioId);
         return ResponseEntity.ok(usuarios);
     }
 
     @GetMapping("/mas-en-therapp")
-    public ResponseEntity<List<Usuario>> obtenerMasEnTherApp(@RequestParam Long usuarioId) {
-        List<Usuario> usuarios = usuarioService.obtenerMasEnTherApp(usuarioId);
+    public ResponseEntity<List<Usuario>> obtenerUsuariosMasEnTherApp(@RequestParam Long usuarioId) {
+        List<Usuario> usuarios = usuarioService.obtenerUsuariosMasEnTherApp(usuarioId);
         return ResponseEntity.ok(usuarios);
     }
+
 }
