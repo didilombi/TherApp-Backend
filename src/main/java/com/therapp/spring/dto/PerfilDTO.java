@@ -3,9 +3,7 @@ package com.therapp.spring.dto;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
-
 import com.therapp.spring.modelo.Usuario;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

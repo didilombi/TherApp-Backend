@@ -1,9 +1,7 @@
 package com.therapp.spring.dto.converter;
 
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Component;
-
 import com.therapp.spring.dto.GetUserDTO;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.modelo.Rol;

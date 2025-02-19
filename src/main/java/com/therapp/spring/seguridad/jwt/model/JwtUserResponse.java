@@ -1,9 +1,7 @@
 package com.therapp.spring.seguridad.jwt.model;
 
 import java.util.Set;
-
 import com.therapp.spring.dto.GetUserDTO;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

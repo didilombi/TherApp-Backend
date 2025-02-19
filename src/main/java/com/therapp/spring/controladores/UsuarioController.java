@@ -12,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,18 +26,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.therapp.spring.dto.ConversacionDTO;
 import com.therapp.spring.dto.CreateUsuarioDTO;
 import com.therapp.spring.dto.PerfilDTO;
 import com.therapp.spring.modelo.ConfirmationToken;
 import com.therapp.spring.modelo.Rol;
-import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.EmailService;
 import com.therapp.spring.servicios.SeguidorService;
 import com.therapp.spring.servicios.UsuarioService;
-
 import io.jsonwebtoken.lang.Collections;
 import jakarta.validation.Valid;
 

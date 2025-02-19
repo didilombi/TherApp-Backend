@@ -2,9 +2,7 @@ package com.therapp.spring.servicios;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
 import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.TerapeutaRepository;
