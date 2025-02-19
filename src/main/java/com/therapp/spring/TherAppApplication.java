@@ -44,41 +44,13 @@ public class TherAppApplication {
     @Transactional
     CommandLineRunner initData(UsuarioService usuarioService, VideoService videoService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService, PasswordEncoder passwordEncoder) {
         return args -> {
-            //Crear usuarios
-            Usuario usuario1 = new Usuario();
-            usuario1.setNombre("Luis");
-            usuario1.setUsername("luisterapeuta");
-            usuario1.setEmail("luis.terapeuta@example.com");
-            usuario1.setClave(passwordEncoder.encode("12345678"));
-            usuario1.setRol(Set.of(Rol.USER));
-            usuario1.setFotoPerfil("assets/terapeuta1.jpg");
-            usuario1.setFechaNacimiento(LocalDate.of(1990, 5, 20));
-            usuario1.setTelefono("123456789");
-            usuario1.setUbicacion("Elche");
-            usuarioService.save(usuario1);
+            // Crear usuarios
+            Usuario usuario1 = new Usuario("Carlos", "CarlosOrg", "carlos@org.com", "password", Rol.ORGANIZACION, "87654321X", LocalDate.of(1985, 5, 15), "123456789", "Madrid");
+            Usuario usuario2 = new Usuario("Ana", "AnaColab", "ana@colab.com", "password", Rol.USUARIO, "12345678X", LocalDate.of(1990, 8, 20), "987654321", "Barcelona");
 
-            Terapeuta terapeutaLuis = new Terapeuta();
-            terapeutaLuis.setUsuario(usuario1);
-            terapeutaLuis.setNColegiado("2578");
-            terapeutaLuis.setApellidos("Pérez López");
-            terapeutaLuis.setExperiencia("12 años");
-            terapeutaLuis.setEspecialidad("Depresión en personas mayores");
-            terapeutaLuis.setIdiomas("Español");
-            terapeutaLuis.setPrecio(48);
-            terapeutaLuis.setPremium(false);
-            terapeutaService.save(terapeutaLuis);
-
-            Usuario usuario2 = new Usuario();
-            usuario2.setNombre("Ana");
-            usuario2.setUsername("anaterapeuta");
-            usuario2.setEmail("ana.terapeuta@example.com");
-            usuario2.setClave(passwordEncoder.encode("12345678"));
-            usuario2.setRol(Set.of(Rol.USER));
-            usuario2.setFotoPerfil("assets/terapeuta3.jpg");
-            usuario2.setFechaNacimiento(LocalDate.of(1990, 5, 20));
-            usuario2.setTelefono("123456789");
-            usuario2.setUbicacion("Valencia");
-            usuarioService.save(usuario2);
+            // // Guardar los usuarios en la base de datos
+            // usuarioService.save(usuario1);
+            // usuarioService.save(usuario2);
 
             // Crear terapeuta a partir del usuario Ana
             Terapeuta terapeutaAna = new Terapeuta();
