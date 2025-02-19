@@ -89,5 +89,17 @@ public class TerapeutaController {
                 });
         });
     }
+
+    @PostMapping("/hacerpremium")
+    public void hacerPremium(@RequestBody String email){
+        Optional<Usuario> u = usuarioService.findByEmail(email);
+        u.ifPresent(usuario -> {
+            Optional<Terapeuta> t = terapeutaService.findByUsuario(usuario);
+            t.ifPresent(terapeuta -> {
+                terapeuta.setPremium(true);
+                terapeutaService.save(terapeuta);
+            });
+        });
+    }
     
 }

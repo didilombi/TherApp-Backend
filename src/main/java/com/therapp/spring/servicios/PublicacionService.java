@@ -126,4 +126,10 @@ public class PublicacionService {
 
         contenidoPublicacionRepository.delete(contenido);
     }
+
+    public List<Publicacion> buscarPublicacionesPorUsuario(Usuario u){
+        List<UsuarioPublicacion> users = usuarioPublicacionRepository.findByUsuario(u);
+        return publicacionRepository.findByUsuarios(users);
+
+    }
 }

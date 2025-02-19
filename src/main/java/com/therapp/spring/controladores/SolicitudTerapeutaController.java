@@ -89,9 +89,10 @@ public class SolicitudTerapeutaController {
             }
                 
             );
+            solicitudTerapeutaService.delete(solicitud);
     	}
 
-        solicitudTerapeutaService.delete(solicitud);
+        
     }
 
     @PostMapping("/rechazarsolicitud")
