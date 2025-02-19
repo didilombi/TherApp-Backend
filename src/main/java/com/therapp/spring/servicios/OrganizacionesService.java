@@ -17,7 +17,7 @@ public class OrganizacionesService {
     }
 
     public Organizacion save(Organizacion organizacion) {
-        return organizacionesRepositorio.save(organizacion);
+         return organizacionesRepositorio.save(organizacion);
     }
 
     public void deleteById(Long id) {
@@ -26,5 +26,9 @@ public class OrganizacionesService {
 
     public Organizacion findById(Long id) {
         return organizacionesRepositorio.findById(id).orElse(null);
+    }
+    
+    public Organizacion findByCif(String cif) {
+    	return organizacionesRepositorio.findByCif(cif);
     }
 }

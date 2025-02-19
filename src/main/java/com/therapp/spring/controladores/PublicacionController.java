@@ -106,15 +106,19 @@ public class PublicacionController {
     }
 
     @GetMapping("/buscarpublicaciones/{id}")
-    public List<Publicacion> buscarPublicacionesPorUsuario(@PathVariable Long id){
+    public List<Publicacion> buscarPublicacionesPorUsuario(@PathVariable("id") Long id){
      
         List<Long> listaid = usuarioPublicacionService.obtenerPublicacionIdsPorUsuario(id);
-        System.out.println(id);
+        System.out.println("ID recibido en el backend: " + id);
         List<Publicacion> lista = new ArrayList<>();
         
         for(int i = 0; i < listaid.size(); i++) {
         	lista.add(publicacionService.findById(listaid.get(i)));
         }
+        
+//        for (Long pubId : listaid) {
+//            lista.add(publicacionService.findById(pubId));
+//        }
         
         return lista;
     }
