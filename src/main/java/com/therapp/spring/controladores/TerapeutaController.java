@@ -23,6 +23,8 @@ import com.therapp.spring.servicios.UsuarioService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 
 @CrossOrigin(origins = "http://localhost:4200") // Permite solicitudes desde Angular
@@ -102,4 +104,27 @@ public class TerapeutaController {
         });
     }
     
+    @PostMapping("/cancelarPremium")
+    public void cancelarPremium(@RequestBody String email) {
+        Optional<Usuario> u = usuarioService.findByEmail(email);
+        u.ifPresent(usuario -> {
+            Optional<Terapeuta> t = terapeutaService.findByUsuario(usuario);
+            t.ifPresent(terapeuta -> {
+                terapeuta.setPremium(false);
+                terapeutaService.save(terapeuta);
+            });
+        });
+    }
+
+    @GetMapping("/esPremium/{usuarioId}")
+    public ResponseEntity<Boolean> esPremium(@PathVariable Long usuarioId) {
+        Optional<Usuario> usuario = usuarioService.findById(usuarioId);
+        if (usuario.isPresent()) {
+            Optional<Terapeuta> terapeuta = terapeutaService.findByUsuario(usuario.get());
+            if (terapeuta.isPresent()) {
+                return ResponseEntity.ok(terapeuta.get().isPremium());
+            }
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+    }
 }

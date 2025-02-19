@@ -2,6 +2,8 @@ package com.therapp.spring.servicios;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
@@ -12,6 +14,7 @@ public class TerapeutaService {
 
     private final TerapeutaRepository terapeutaRepositorio;
 
+    @Autowired
     public TerapeutaService(TerapeutaRepository terapeutaRepositorio) {
         this.terapeutaRepositorio = terapeutaRepositorio;
     }
