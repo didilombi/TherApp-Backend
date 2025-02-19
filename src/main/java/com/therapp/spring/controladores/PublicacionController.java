@@ -1,20 +1,27 @@
 package com.therapp.spring.controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.therapp.spring.modelo.ContenidoPublicacion;
 import com.therapp.spring.modelo.Publicacion;
 import com.therapp.spring.modelo.RolPublicacion;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.ContenidoPublicacionService;
 import com.therapp.spring.servicios.PublicacionService;
+import com.therapp.spring.servicios.UsuarioPublicacionService;
 import com.therapp.spring.servicios.UsuarioService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -31,7 +38,10 @@ public class PublicacionController {
         this.usuarioService = usuarioService;
         this.contenidoPublicacionService = contenidoPublicacionService;
     }
-
+    
+    @Autowired
+    UsuarioPublicacionService usuarioPublicacionService;
+    
     @GetMapping
     public List<Publicacion> getAllPublicaciones() {
         return publicacionService.findAll();
@@ -95,11 +105,18 @@ public class PublicacionController {
         publicacionService.eliminarContenido(publicacion, contenidoId);
     }
 
-    @GetMapping("/buscarpublicaciones")
-    public List<Publicacion> buscarPublicacionesPorUsuario(Usuario u){
-        List<Publicacion> lista = publicacionService.buscarPublicacionesPorUsuario(u);
-        System.out.println(lista.get(0).getTexto());
-        return publicacionService.buscarPublicacionesPorUsuario(u);
+    @GetMapping("/buscarpublicaciones/{id}")
+    public List<Publicacion> buscarPublicacionesPorUsuario(@PathVariable Long id){
+     
+        List<Long> listaid = usuarioPublicacionService.obtenerPublicacionIdsPorUsuario(id);
+        System.out.println(id);
+        List<Publicacion> lista = new ArrayList<>();
+        
+        for(int i = 0; i < listaid.size(); i++) {
+        	lista.add(publicacionService.findById(listaid.get(i)));
+        }
+        
+        return lista;
     }
     
 }
