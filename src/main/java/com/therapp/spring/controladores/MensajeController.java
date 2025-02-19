@@ -51,7 +51,7 @@ public class MensajeController {
 
         // ✅ Si el contenido es `null`, asignarle un texto por defecto para depuración
         if (contenido == null || contenido.trim().isEmpty()) {
-            contenido = "";
+            contenido = "⚠️ Mensaje vacío recibido";
         }
 
         Mensaje nuevoMensaje = mensajeService.enviarMensaje(id1, id2, contenido, null);

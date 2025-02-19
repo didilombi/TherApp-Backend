@@ -134,5 +134,5 @@ public class UsuarioController {
         List<Usuario> usuarios = usuarioService.obtenerUsuariosMasEnTherApp(usuarioId);
         return ResponseEntity.ok(usuarios);
     }
-
+    
 }
