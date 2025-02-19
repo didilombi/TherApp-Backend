@@ -13,6 +13,9 @@ import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.ContenidoPublicacionService;
 import com.therapp.spring.servicios.PublicacionService;
 import com.therapp.spring.servicios.UsuarioService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/publicaciones")
@@ -91,4 +94,12 @@ public class PublicacionController {
         Publicacion publicacion = publicacionService.findById(id);
         publicacionService.eliminarContenido(publicacion, contenidoId);
     }
+
+    @GetMapping("/buscarpublicaciones")
+    public List<Publicacion> buscarPublicacionesPorUsuario(Usuario u){
+        List<Publicacion> lista = publicacionService.buscarPublicacionesPorUsuario(u);
+        System.out.println(lista.get(0).getTexto());
+        return publicacionService.buscarPublicacionesPorUsuario(u);
+    }
+    
 }

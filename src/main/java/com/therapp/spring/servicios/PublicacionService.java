@@ -127,6 +127,7 @@ public class PublicacionService {
 
     public List<Publicacion> buscarPublicacionesPorUsuario(Usuario u){
         List<UsuarioPublicacion> users = usuarioPublicacionRepository.findByUsuario(u);
+        System.out.println(users.get(0).getUsuario().getNombre());
         return publicacionRepository.findByUsuarios(users);
 
     }
