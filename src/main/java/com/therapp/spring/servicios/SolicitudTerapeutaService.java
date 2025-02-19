@@ -13,23 +13,23 @@ public class SolicitudTerapeutaService {
     @Autowired
     SolicitudTerapeutaRepository solicitudTerapeutaRepository;
 
-    public List<SolicitudTerapeuta> findAll(){
+    public List<SolicitudTerapeuta> findAll() {
         return solicitudTerapeutaRepository.findAll();
     }
 
-    public SolicitudTerapeuta findByUsuario(Usuario u){
+    public SolicitudTerapeuta findByUsuario(Usuario u) {
         return solicitudTerapeutaRepository.findByUsuario(u);
     }
 
-    public void save(SolicitudTerapeuta solicitud){
+    public void save(SolicitudTerapeuta solicitud) {
         solicitudTerapeutaRepository.save(solicitud);
     }
-    
+
     public SolicitudTerapeuta findByEmail(String email) {
-    	return solicitudTerapeutaRepository.findByEmail(email);
+        return solicitudTerapeutaRepository.findByEmail(email);
     }
 
-    public void delete(SolicitudTerapeuta solicitud){
+    public void delete(SolicitudTerapeuta solicitud) {
         solicitudTerapeutaRepository.delete(solicitud);
     }
 }

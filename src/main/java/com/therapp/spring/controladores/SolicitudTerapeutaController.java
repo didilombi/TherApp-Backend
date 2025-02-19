@@ -70,10 +70,9 @@ public class SolicitudTerapeutaController {
     
     @PostMapping("/aprobarsolicitud")
     public void AprobarSolicitud(@RequestBody String email) {
-    	
-    	SolicitudTerapeuta solicitud = solicitudTerapeutaService.findByEmail(email);
-    	if(solicitud != null) {
-    		Optional<Usuario> u = usuarioRepository.findByEmail(email);
+        SolicitudTerapeuta solicitud = solicitudTerapeutaService.findByEmail(email);
+        if (solicitud != null) {
+            Optional<Usuario> u = usuarioRepository.findByEmail(email);
             u.ifPresent(usuario -> {
                 Terapeuta t = new Terapeuta();
                 t.setUsuario(usuario);
@@ -85,26 +84,22 @@ public class SolicitudTerapeutaController {
                 t.setPremium(false);
                 terapeutaService.save(t);
 
-                
-            }
-                
-            );
-            solicitudTerapeutaService.delete(solicitud);
-    	}
-
-        
+                // Eliminar la solicitud después de aprobarla
+                solicitudTerapeutaService.delete(solicitud);
+            });
+        }
     }
 
     @PostMapping("/rechazarsolicitud")
     public void RechazarSolicitud(@RequestBody String email) {
-    	
-    	SolicitudTerapeuta solicitud = solicitudTerapeutaService.findByEmail(email);
-    	if(solicitud != null) {
-                solicitudTerapeutaService.delete(solicitud);
-            }
-    	}
+        SolicitudTerapeuta solicitud = solicitudTerapeutaService.findByEmail(email);
+        if (solicitud != null) {
+            // Eliminar la solicitud después de rechazarla
+            solicitudTerapeutaService.delete(solicitud);
+        }
     }
+}
 
-    
-    
+
+
 
