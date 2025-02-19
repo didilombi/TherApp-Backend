@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.therapp.spring.modelo.SolicitudTerapeuta;
+import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
+import com.therapp.spring.repositorios.TerapeutaRepository;
 import com.therapp.spring.repositorios.UsuarioRepository;
 import com.therapp.spring.servicios.SolicitudTerapeutaService;
+import com.therapp.spring.servicios.TerapeutaService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -35,13 +38,22 @@ public class SolicitudTerapeutaController {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    @Autowired
+    TerapeutaService terapeutaService;
+
     @PostMapping("/enviarsolicitud")
     public void CrearSolicitud(@RequestBody SolicitudTerapeuta solicitud) {
-        Optional<Usuario> u = usuarioRepository.findByEmail(solicitud.getEmail());
+        if(solicitudTerapeutaService.findByEmail(solicitud.getEmail()) == null){
+            Optional<Usuario> u = usuarioRepository.findByEmail(solicitud.getEmail());
         
-        u.ifPresent(solicitud::setUsuario);
+            u.ifPresent(solicitud::setUsuario);
         
-        solicitudTerapeutaService.save(solicitud);
+            solicitudTerapeutaService.save(solicitud);
+        }
+        else{
+            System.out.println("Ya has enviado una solicitud");
+        }
+        
     }
     
     @GetMapping("/recogersolicitudes")
@@ -62,9 +74,36 @@ public class SolicitudTerapeutaController {
     	SolicitudTerapeuta solicitud = solicitudTerapeutaService.findByEmail(email);
     	if(solicitud != null) {
     		Optional<Usuario> u = usuarioRepository.findByEmail(email);
+            u.ifPresent(usuario -> {
+                Terapeuta t = new Terapeuta();
+                t.setUsuario(usuario);
+                t.setApellidos(solicitud.getApellidos());
+                t.setEspecialidad(solicitud.getEspecialidad());
+                t.setExperiencia(solicitud.getExperiencia());
+                t.setNColegiado(solicitud.getNColegiado());
+                t.setPrecio(solicitud.getPrecio());
+                t.setPremium(false);
+                terapeutaService.save(t);
+
+                
+            }
+                
+            );
+    	}
+
+        solicitudTerapeutaService.delete(solicitud);
+    }
+
+    @PostMapping("/rechazarsolicitud")
+    public void RechazarSolicitud(@RequestBody String email) {
+    	
+    	SolicitudTerapeuta solicitud = solicitudTerapeutaService.findByEmail(email);
+    	if(solicitud != null) {
+                solicitudTerapeutaService.delete(solicitud);
+            }
     	}
     }
 
     
-    }
+    
 
