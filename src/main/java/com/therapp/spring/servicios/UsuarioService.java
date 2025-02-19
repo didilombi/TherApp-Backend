@@ -14,9 +14,11 @@ import com.therapp.spring.dto.CreateUsuarioDTO;
 import com.therapp.spring.modelo.ConfirmationToken;
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
+import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.repositorios.ConfirmationTokenRepository;
 import com.therapp.spring.repositorios.UsuarioPublicacionRepository;
 import com.therapp.spring.repositorios.UsuarioRepository;
+import com.therapp.spring.repositorios.TerapeutaRepository;
 
 @Service
 public class UsuarioService {
@@ -26,14 +28,16 @@ public class UsuarioService {
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final TerapeutaRepository terapeutaRepository;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepositorio, UsuarioPublicacionRepository usuarioPublicacionRepository, ConfirmationTokenRepository confirmationTokenRepository, PasswordEncoder passwordEncoder, EmailService emailService) {
+    public UsuarioService(UsuarioRepository usuarioRepositorio, UsuarioPublicacionRepository usuarioPublicacionRepository, ConfirmationTokenRepository confirmationTokenRepository, PasswordEncoder passwordEncoder, EmailService emailService, TerapeutaRepository terapeutaRepository) {
         this.usuarioRepositorio = usuarioRepositorio;
         this.usuarioPublicacionRepository = usuarioPublicacionRepository;
         this.confirmationTokenRepository = confirmationTokenRepository;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.terapeutaRepository = terapeutaRepository;
     }
 
     public List<Usuario> findAll() {
@@ -125,5 +129,14 @@ public class UsuarioService {
 
     public List<Usuario> obtenerUsuariosMasEnTherApp(@RequestParam Long usuarioId) {
         return usuarioRepositorio.findMasEnTherApp(usuarioId);
+    }
+
+    public boolean esTerapeuta(Long usuarioId) {
+        Optional<Usuario> usuario = usuarioRepositorio.findById(usuarioId);
+        if (usuario.isPresent()) {
+            Optional<Terapeuta> terapeuta = terapeutaRepository.findByUsuario(usuario.get());
+            return terapeuta.isPresent();
+        }
+        return false;
     }
 }

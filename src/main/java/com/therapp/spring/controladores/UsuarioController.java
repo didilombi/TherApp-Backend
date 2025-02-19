@@ -200,4 +200,9 @@ public class UsuarioController {
         // Devolver la URL del archivo
         return originalFilename;
     }
+
+    @GetMapping("/{usuarioId}/esTerapeuta")
+    public boolean esTerapeuta(@PathVariable Long usuarioId) {
+        return usuarioService.esTerapeuta(usuarioId);
+    }
 }
