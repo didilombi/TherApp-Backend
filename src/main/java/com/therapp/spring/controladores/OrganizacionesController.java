@@ -1,6 +1,7 @@
 package com.therapp.spring.controladores;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.therapp.spring.modelo.Organizacion;
+import com.therapp.spring.modelo.SolicitudOrganizacion;
+import com.therapp.spring.modelo.Usuario;
+import com.therapp.spring.repositorios.UsuarioRepository;
 import com.therapp.spring.servicios.OrganizacionesService;
+import com.therapp.spring.servicios.SolicitudOrganizacionService;
 
 @RestController
 @RequestMapping("/api/organizaciones")
@@ -24,6 +29,12 @@ public class OrganizacionesController {
     public OrganizacionesController(OrganizacionesService organizacionesService) {
         this.organizacionesService = organizacionesService;
     }
+    
+    @Autowired
+    UsuarioRepository usuarioRepository;
+    
+    @Autowired
+    SolicitudOrganizacionService solicitudOrganizacionService;
 
     @GetMapping
     public List<Organizacion> getAllOrganizaciones() {
@@ -44,4 +55,20 @@ public class OrganizacionesController {
     public Organizacion getOrganizacionById(@PathVariable Long id) {
         return organizacionesService.findById(id);
     }
+    
+    @PostMapping("solicitudorganizacion")
+    public void CrearSolicitud(@RequestBody SolicitudOrganizacion solicitud) {
+        if(solicitudOrganizacionService.findByCif(solicitud.getCif()) == null){
+            Optional<Usuario> u = usuarioRepository.findByEmail(solicitud.getEmail());
+        
+            u.ifPresent(solicitud::setUsuario);
+        
+            solicitudOrganizacionService.save(solicitud);
+        }
+        else{
+            System.out.println("Ya has enviado una solicitud");
+        }
+        
+    }
+    
 }

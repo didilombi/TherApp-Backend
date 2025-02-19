@@ -5,4 +5,6 @@ import com.therapp.spring.modelo.Organizacion;
 
 public interface OrganizacionesRepository extends JpaRepository<Organizacion, Long> {
     
+	Organizacion findByCif(String cif);
+	
 }
