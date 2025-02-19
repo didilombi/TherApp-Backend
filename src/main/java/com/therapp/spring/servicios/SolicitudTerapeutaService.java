@@ -30,4 +30,8 @@ public class SolicitudTerapeutaService {
     public SolicitudTerapeuta findByEmail(String email) {
     	return solicitudTerapeutaRepository.findByEmail(email);
     }
+
+    public void delete(SolicitudTerapeuta solicitud){
+        solicitudTerapeutaRepository.delete(solicitud);
+    }
 }
