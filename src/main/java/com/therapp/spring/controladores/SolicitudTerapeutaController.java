@@ -58,13 +58,7 @@ public class SolicitudTerapeutaController {
     
     @GetMapping("/recogersolicitudes")
     public List<SolicitudTerapeuta> listarSolicitudes(){
-    	
-    	List<SolicitudTerapeuta> lista = solicitudTerapeutaService.findAll();
-    	for(int i=0; i<lista.size(); i++)
-    	{
-    		System.out.println(lista.get(i).getEmail());
-    	}
-    		
+
     	return solicitudTerapeutaService.findAll();
     }
     
@@ -89,6 +83,7 @@ public class SolicitudTerapeutaController {
             }
                 
             );
+            System.out.println("Intentando eliminar solicitud con ID: " + solicitud.getId());
             solicitudTerapeutaService.delete(solicitud);
     	}
 

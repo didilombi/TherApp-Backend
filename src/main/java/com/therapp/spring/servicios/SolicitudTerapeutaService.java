@@ -7,6 +7,8 @@ import com.therapp.spring.modelo.SolicitudTerapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.SolicitudTerapeutaRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class SolicitudTerapeutaService {
 
@@ -29,6 +31,7 @@ public class SolicitudTerapeutaService {
     	return solicitudTerapeutaRepository.findByEmail(email);
     }
 
+    @Transactional
     public void delete(SolicitudTerapeuta solicitud){
         solicitudTerapeutaRepository.delete(solicitud);
     }
