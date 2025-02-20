@@ -99,7 +99,7 @@ public class UsuarioController {
         return perfilDTO;
     }    
     @GetMapping("/confirmar")
-    public ResponseEntity<?> confirmarUsuario(@RequestParam String token) {
+    public ResponseEntity<?> confirmarUsuario(@RequestParam("token") String token) {
         Optional<Usuario> usuarioOpt = usuarioService.findByToken(token);
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
