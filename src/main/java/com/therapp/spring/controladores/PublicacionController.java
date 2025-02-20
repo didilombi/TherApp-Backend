@@ -2,7 +2,7 @@ package com.therapp.spring.controladores;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -116,33 +116,41 @@ public class PublicacionController {
         List<Long> listaid = usuarioPublicacionService.obtenerPublicacionIdsPorUsuario(id);
         System.out.println("ID recibido en el backend: " + id);
         List<PublicacionDTO> lista = new ArrayList<>();
+
+        
         
         for(int i = 0; i < listaid.size(); i++) {
             PublicacionDTO publi = new PublicacionDTO();
             publi.setTexto(publicacionService.findById(listaid.get(i)).getTexto());
             publi.setFechaPublicacion(publicacionService.findById(listaid.get(i)).getFechaPublicacion());
-            publi.setTipo(publicacionService.findTipo(listaid.get(i)));
-            publi.setUrl(publicacionService.findUrl(listaid.get(i)));
+            Optional<Usuario> user = usuarioService.findById(id);
+            user.ifPresent(usuario -> {
+                publi.setNombre(usuario.getNombre());
+                publi.setFoto(usuario.getFotoPerfil());
+            });
             lista.add(publi);
         }
-        
-//        for (Long pubId : listaid) {
-//            lista.add(publicacionService.findById(pubId));
-//        }
         
         return lista;
     }
 
     @GetMapping("/buscarpublicacionesdeseguidos/{id}")
-    public List<Publicacion> buscarPublicacionesDeSeguidos(@PathVariable("id") Long id){
-        List<Publicacion> lista = new ArrayList<>();
+    public List<PublicacionDTO> buscarPublicacionesDeSeguidos(@PathVariable("id") Long id){
+        List<PublicacionDTO> lista = new ArrayList<>();
 
         List<Long> idSeguidos = seguidorService.buscarIdSeguidos(id);
 
         for(int i = 0; i < idSeguidos.size(); i++) {
-            Publicacion publi = new Publicacion();
+            PublicacionDTO publi = new PublicacionDTO();
             publi.setTexto(publicacionService.findById(idSeguidos.get(i)).getTexto());
             publi.setFechaPublicacion(publicacionService.findById(idSeguidos.get(i)).getFechaPublicacion());
+            Optional<Usuario> user = usuarioService.findById(idSeguidos.get(i));
+            user.ifPresent(usuario -> {
+                publi.setNombre(usuario.getNombre());
+                
+                publi.setFoto(usuario.getFotoPerfil());
+            });
+            System.out.println(publi.getNombre());
             lista.add(publi);
         }
 
