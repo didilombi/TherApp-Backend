@@ -209,4 +209,9 @@ public class UsuarioController {
     public boolean esTerapeuta(@PathVariable Long usuarioId) {
         return usuarioService.esTerapeuta(usuarioId);
     }
+
+    @GetMapping("/{usuarioId}/esAdmin")
+    public boolean esAdmin(@PathVariable Long usuarioId) {
+        return usuarioService.esAdmin(usuarioId);
+    }
 }
