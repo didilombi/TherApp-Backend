@@ -10,6 +10,8 @@ import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.TerapeutaRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class TerapeutaService {
 
@@ -27,7 +29,6 @@ public class TerapeutaService {
     public Optional<Terapeuta> findById(Long id) {
         return terapeutaRepositorio.findById(id);
     }
-    
 
     public Terapeuta save(Terapeuta terapeuta) {
         return terapeutaRepositorio.save(terapeuta);
@@ -38,20 +39,15 @@ public class TerapeutaService {
     }
 
     public void deleteById(Long id) {
-        terapeutaRepositorio.deleteById(id.longValue());
+        terapeutaRepositorio.deleteById(id);
     }
 
-    public Optional<Terapeuta> findByUsuario(Usuario u){
+    public Optional<Terapeuta> findByUsuario(Usuario u) {
         return terapeutaRepositorio.findByUsuario(u);
     }
 
-    // public Terapeuta registrarTerapeuta(TerapeutaDTo TerapeutaDTO) {
-    //     Terapeuta terapeuta = new Terapeuta();
-    //     terapeuta.setNombre(TerapeutaDTO.getNombre());
-    //     terapeuta.setEspecialidad(TerapeutaDTO.getEspecialidad());
-    //     terapeuta.setUsername(TerapeutaDTO.getUsername());
-    //     terapeuta.setEmail(TerapeutaDTO.getEmail());
-    //     return terapeutaRepositorio.save(terapeuta);
-    // }
-    
+    @Transactional
+    public void deleteByUsuarioId(Long usuarioId) {
+        terapeutaRepositorio.deleteByUsuarioId(usuarioId);
+    }
 }
