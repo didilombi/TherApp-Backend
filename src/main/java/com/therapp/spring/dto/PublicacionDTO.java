@@ -20,6 +20,6 @@ public class PublicacionDTO {
     private Long id;
     private String texto;
     private LocalDateTime fechaPublicacion;
-    private String tipo;
-    private String url;
+    private String nombre;
+    private String foto;
 }
