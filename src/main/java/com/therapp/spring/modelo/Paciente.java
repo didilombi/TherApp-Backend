@@ -1,13 +1,11 @@
 package com.therapp.spring.modelo;
 
 import java.util.Set;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-
 
 @Data
 @NoArgsConstructor

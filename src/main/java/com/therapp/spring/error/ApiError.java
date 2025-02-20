@@ -1,12 +1,9 @@
 package com.therapp.spring.error;
 
 import java.time.LocalDateTime;
-
 import org.springframework.http.HttpStatus;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -2,10 +2,8 @@ package com.therapp.spring.servicios;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.therapp.spring.modelo.ContenidoPublicacion;
 import com.therapp.spring.modelo.Publicacion;
 import com.therapp.spring.modelo.RolPublicacion;
@@ -125,5 +123,11 @@ public class PublicacionService {
         }
 
         contenidoPublicacionRepository.delete(contenido);
+    }
+
+    public List<Publicacion> buscarPublicacionesPorUsuario(Usuario u){
+        List<UsuarioPublicacion> users = usuarioPublicacionRepository.findByUsuario(u);
+        return publicacionRepository.findByUsuarios(users);
+
     }
 }

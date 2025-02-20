@@ -2,7 +2,6 @@ package com.therapp.spring.modelo;
 
 import java.util.Date;
 import java.util.UUID;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

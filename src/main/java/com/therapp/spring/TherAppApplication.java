@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.therapp.spring.modelo.CategoriaVideos;
 import com.therapp.spring.modelo.ComentarioPublicacion;
 import com.therapp.spring.modelo.ContenidoPublicacion;
 import com.therapp.spring.modelo.Mensaje;
@@ -21,6 +24,7 @@ import com.therapp.spring.modelo.RolPublicacion;
 import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.modelo.Video;
+import com.therapp.spring.servicios.CategoriaService;
 import com.therapp.spring.servicios.ComentarioPublicacionService;
 import com.therapp.spring.servicios.LikeComentarioService;
 import com.therapp.spring.servicios.LikePublicacionService;
@@ -42,9 +46,9 @@ public class TherAppApplication {
 
     @Bean
     @Transactional
-    CommandLineRunner initData(UsuarioService usuarioService, VideoService videoService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService, PasswordEncoder passwordEncoder) {
+    CommandLineRunner initData(UsuarioService usuarioService, VideoService videoService, CategoriaService categoriaService, PublicacionService publicacionService, LikePublicacionService likePublicacionService, ComentarioPublicacionService comentarioPublicacionService, LikeComentarioService likeComentarioService, SeguidorService seguidorService, TerapeutaService terapeutaService, MensajeService mensajeService, PasswordEncoder passwordEncoder) {
         return args -> {
-            // //Crear usuarios
+            //Crear usuarios
             // Usuario usuario1 = new Usuario();
             // usuario1.setNombre("Luis");
             // usuario1.setUsername("luisterapeuta");
@@ -285,15 +289,50 @@ public class TherAppApplication {
 
             // // Guardar el mensaje en la BD
             // mensajeService.save(mensaje);
+            // // Guardar el mensaje en la BD
+            // mensajeService.save(mensaje);
+            // // Guardar el mensaje en la BD
+            // mensajeService.save(mensaje);
 
             // Video video1 = new Video();
             // video1.setTitulo("Vídeo de prueba");
             // video1.setDescripcion("Un conejo");
             // video1.setFechaPublicacion(LocalDateTime.now());
-            // video1.setRuta("https://www.w3schools.com/html/mov_bbb.mp4");
+            // video1.setUrl("https://www.w3schools.com/html/mov_bbb.mp4");
             // videoService.save(video1);
 
-            
+            // CategoriaVideos cat1 = new CategoriaVideos();
+            // cat1.setNombre("Prueba");
+
+            // categoriaService.save(cat1);
+
+            // Set<CategoriaVideos> set1 = new HashSet<>();
+            // set1.add(cat1);
+
+            // Set<Video> set2 = new HashSet<>();
+            // set2.add(video1);
+
+            // video1.setCategorias(set1);
+            // cat1.setVideos(set2);
+
+            // // video1.setCategorias(new Set<CategoriaVideos> = );
+
+            // CategoriaVideos cat1 = new CategoriaVideos();
+            // cat1.setNombre("Prueba");
+
+            // categoriaService.save(cat1);
+
+            // Set<CategoriaVideos> set1 = new HashSet<>();
+            // set1.add(cat1);
+
+            // Set<Video> set2 = new HashSet<>();
+            // set2.add(video1);
+
+            // video1.setCategorias(set1);
+            // cat1.setVideos(set2);
+
+            // // video1.setCategorias(new Set<CategoriaVideos> = );
+
 
             // System.out.println("Datos de prueba insertados correctamente.");
         };

@@ -1,6 +1,8 @@
 package com.therapp.spring.controladores;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -33,8 +35,25 @@ public class MensajeController {
     // GET: listar mensajes entre 2 usuarios
     @GetMapping("/chat/{id1}/{id2}")
     public ResponseEntity<List<MensajeDTO>> obtenerChat(@PathVariable Long id1, @PathVariable Long id2) {
-        List<MensajeDTO> mensajes = mensajeService.obtenerChat(id1, id2);
+        List<MensajeDTO> mensajes = mensajeService.obtenerChat(id1, id2, true);
         return ResponseEntity.ok(mensajes);
+    }
+
+    @GetMapping("/sinLeer/{id1}/{id2}")
+    public ResponseEntity<Long> obtenerMensajesSinLeer(@PathVariable Long id1, @PathVariable Long id2) {
+        List<MensajeDTO> mensajes = mensajeService.obtenerChat(id1, id2, false);
+        Long cantidad = (long) 0;
+
+        for (MensajeDTO mensajeDTO : mensajes) {
+            if (mensajeDTO.getVisto() == false && mensajeDTO.getReceptorId() == id1) {
+                cantidad++;
+            }
+        }
+        
+        System.out.println(id2);
+        System.out.println(cantidad);
+
+        return ResponseEntity.ok(cantidad);
     }
 
     // POST: enviar mensaje de id1 -> id2

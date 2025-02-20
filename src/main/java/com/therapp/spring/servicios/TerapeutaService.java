@@ -2,10 +2,9 @@ package com.therapp.spring.servicios;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
 import com.therapp.spring.modelo.Terapeuta;
+import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.TerapeutaRepository;
 
 @Service
@@ -36,6 +35,10 @@ public class TerapeutaService {
 
     public void deleteById(Long id) {
         terapeutaRepositorio.deleteById(id.longValue());
+    }
+
+    public Optional<Terapeuta> findByUsuario(Usuario u){
+        return terapeutaRepositorio.findByUsuario(u);
     }
 
     // public Terapeuta registrarTerapeuta(TerapeutaDTo TerapeutaDTO) {

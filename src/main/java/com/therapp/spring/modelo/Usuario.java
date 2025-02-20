@@ -3,17 +3,12 @@ package com.therapp.spring.modelo;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -24,7 +19,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -67,6 +61,10 @@ public class Usuario implements UserDetails {
     @JsonManagedReference
     private Terapeuta terapeuta;
 
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private SolicitudTerapeuta solicitudTerapeuta;
+
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Organizacion organizacion;
 
@@ -107,5 +105,10 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return confirmado;
+    }
+
+    public void cambiarRol(Rol nuevoRol){
+        this.rol.clear();
+        this.rol.add(nuevoRol);
     }
 }

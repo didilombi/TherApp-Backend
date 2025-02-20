@@ -1,10 +1,8 @@
 package com.therapp.spring.dto;
 
 import com.therapp.spring.modelo.Rol;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

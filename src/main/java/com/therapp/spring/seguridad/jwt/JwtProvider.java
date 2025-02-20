@@ -2,13 +2,10 @@ package com.therapp.spring.seguridad.jwt;
 
 import java.util.Date;
 import java.util.stream.Collectors;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
 import com.therapp.spring.modelo.Rol;
 import com.therapp.spring.modelo.Usuario;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

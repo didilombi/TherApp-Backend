@@ -3,10 +3,8 @@ package com.therapp.spring.servicios;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.therapp.spring.modelo.Seguidor;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.SeguidorRepository;

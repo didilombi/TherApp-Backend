@@ -7,7 +7,6 @@ import com.therapp.spring.repositorios.MensajeRepository;
 import com.therapp.spring.repositorios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,9 +26,21 @@ public class MensajeService {
     }
 
     // Obtener todos los mensajes entre dos usuarios (bidireccional)
-    public List<MensajeDTO> obtenerChat(Long userId1, Long userId2) {
+    public List<MensajeDTO> obtenerChat(Long userId1, Long userId2, boolean ponerMensajesEnVisto) {
     List<Mensaje> mensajes = mensajeRepository.findChatBetweenUsers(userId1, userId2);
+    
+    if (ponerMensajesEnVisto) {   
+        mensajes.stream().map(m -> {
+            Mensaje mensaje = mensajeRepository.findById(m.getId()).orElse(null);
+            if (mensaje != null && mensaje.getReceptor().getId() == userId1) {
+                mensaje.setVisto(true);
+            }
+            return mensaje;
+        }).toList();
         
+        mensajeRepository.saveAll(mensajes);
+    }
+
         return mensajes.stream().map(m -> new MensajeDTO(
             m.getId(),
             m.getContenido(),

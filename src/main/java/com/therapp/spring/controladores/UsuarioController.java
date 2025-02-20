@@ -1,11 +1,19 @@
 package com.therapp.spring.controladores;
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.therapp.spring.dto.ConversacionDTO;
 import com.therapp.spring.dto.CreateUsuarioDTO;
 import com.therapp.spring.dto.PerfilDTO;
@@ -27,7 +35,6 @@ import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.EmailService;
 import com.therapp.spring.servicios.SeguidorService;
 import com.therapp.spring.servicios.UsuarioService;
-
 import io.jsonwebtoken.lang.Collections;
 import jakarta.validation.Valid;
 
@@ -134,5 +141,63 @@ public class UsuarioController {
         List<Usuario> usuarios = usuarioService.obtenerUsuariosMasEnTherApp(usuarioId);
         return ResponseEntity.ok(usuarios);
     }
+
+    @PostMapping("/haceradmin")
+    public void hacerAdmin(@RequestBody Map<String, String> email){
+        System.out.println(email);
+        Optional<Usuario> u = usuarioService.findByEmail(email.get("email"));
+        
+        u.ifPresent(usuario -> {
+            if(usuario.getRol().contains(Rol.USER)){
+                usuario.cambiarRol(Rol.ADMIN);
+            }
+        });
+        u.ifPresent(usuario -> usuarioService.save(usuario));
+    }
+
     
+
+    @PostMapping("/{nombreUsuario}/foto")
+    public ResponseEntity<?> subirFotoPerfil(@PathVariable String nombreUsuario, @RequestParam("foto") MultipartFile foto) {
+        Usuario usuario = usuarioService.findByUsername(nombreUsuario).orElse(null);
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+
+        // Aquí puedes guardar el archivo en el servidor y obtener la URL del archivo
+        String fotoUrl = guardarArchivo(foto);
+
+        usuario.setFotoPerfil(fotoUrl);
+        usuarioService.save(usuario);
+        return ResponseEntity.ok(usuario);
+    }
+
+    private static final String UPLOAD_DIR = "uploads/";
+
+    private String guardarArchivo(MultipartFile archivo) {
+        // Crear el directorio de subida si no existe
+        File uploadDir = new File(UPLOAD_DIR);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        // Obtener el nombre original del archivo
+        String originalFilename = archivo.getOriginalFilename();
+        if (originalFilename == null) {
+            throw new RuntimeException("El archivo no tiene nombre");
+        }
+
+        // Crear la ruta completa del archivo
+        Path filePath = Paths.get(UPLOAD_DIR, originalFilename);
+
+        try {
+            // Guardar el archivo en el servidor
+            Files.copy(archivo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al guardar el archivo", e);
+        }
+
+        // Devolver la URL del archivo
+        return originalFilename;
+    }
 }

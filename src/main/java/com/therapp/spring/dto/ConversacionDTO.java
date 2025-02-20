@@ -1,7 +1,6 @@
 package com.therapp.spring.dto;
 
 import com.therapp.spring.modelo.Usuario;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

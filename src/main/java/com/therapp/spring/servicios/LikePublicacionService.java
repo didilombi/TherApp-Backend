@@ -1,10 +1,8 @@
 package com.therapp.spring.servicios;
 
 import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.therapp.spring.modelo.LikePublicacion;
 import com.therapp.spring.modelo.Publicacion;
 import com.therapp.spring.modelo.Usuario;

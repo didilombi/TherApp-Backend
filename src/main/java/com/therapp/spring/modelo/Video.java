@@ -2,7 +2,6 @@ package com.therapp.spring.modelo;
 
 import java.time.LocalDateTime;
 import java.util.Set;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +27,7 @@ public class Video {
     private String titulo;
     private String descripcion;
     private LocalDateTime fechaPublicacion;
-    private String ruta;
+    private String url;
 
     @ManyToMany
     @JoinTable(
