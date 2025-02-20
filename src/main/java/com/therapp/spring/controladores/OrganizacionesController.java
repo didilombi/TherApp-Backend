@@ -1,6 +1,7 @@
 package com.therapp.spring.controladores;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.therapp.spring.modelo.Organizacion;
 import com.therapp.spring.modelo.SolicitudOrganizacion;
+import com.therapp.spring.modelo.SolicitudTerapeuta;
+import com.therapp.spring.modelo.Terapeuta;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.repositorios.UsuarioRepository;
 import com.therapp.spring.servicios.OrganizacionesService;
@@ -70,5 +73,45 @@ public class OrganizacionesController {
         }
         
     }
+
+    @GetMapping("/recogersolicitudes")
+    public List<SolicitudOrganizacion> listarSolicitudes(){
+    		
+    	return solicitudOrganizacionService.findAll();
+    }
+
+    @PostMapping("/aprobarsolicitud")
+    public void AprobarSolicitud(@RequestBody Map<String, String> datos) {
+
+        System.out.println(datos.get("email"));
+    	
+    	SolicitudOrganizacion solicitud = solicitudOrganizacionService.findByCif(datos.get("cif"));
+    	if(solicitud != null) {
+    		Optional<Usuario> u = usuarioRepository.findByEmail(datos.get("email"));
+            u.ifPresent(usuario -> {
+                Organizacion o = new Organizacion();
+                o.setUsuario(usuario);
+                o.setCif(solicitud.getCif());
+                o.setDireccion(solicitud.getDireccion());
+                o.setTelefono(solicitud.getTelefono());
+                o.setEmail(solicitud.getEmail());
+                o.setWeb(solicitud.getWeb());
+                organizacionesService.save(o);
+            }
+            );
+            solicitudOrganizacionService.delete(solicitud);
+    	}
+
+        
+    }
+
+    @PostMapping("/rechazarsolicitud")
+    public void RechazarSolicitud(@RequestBody String cif) {
+    	
+    	SolicitudOrganizacion solicitud = solicitudOrganizacionService.findByCif(cif);
+    	if(solicitud != null) {
+                solicitudOrganizacionService.delete(solicitud);
+            }
+    	}
     
 }
