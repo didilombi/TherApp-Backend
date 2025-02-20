@@ -139,4 +139,9 @@ public class UsuarioService {
         }
         return false;
     }
+
+    public boolean esAdmin(Long usuarioId) {
+        Optional<Usuario> usuarioOpt = usuarioRepositorio.findById(usuarioId);
+        return usuarioOpt.map(usuario -> usuario.getRol().contains(Rol.ADMIN)).orElse(false);
+    }
 }
