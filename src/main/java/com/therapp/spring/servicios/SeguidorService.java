@@ -68,4 +68,8 @@ public class SeguidorService {
 
         return seguidorRepository.findByUsuarioSeguidorAndUsuarioSeguido(seguidor, seguido).isPresent();
     }
+
+    public List<Long> buscarIdSeguidos(Long id){
+        return seguidorRepository.findUsuariosSeguidosBySeguidorId(id);
+    }
 }

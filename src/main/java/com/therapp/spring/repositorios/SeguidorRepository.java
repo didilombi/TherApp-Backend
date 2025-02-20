@@ -16,4 +16,7 @@ public interface SeguidorRepository extends JpaRepository<Seguidor, Long> {
 
     @Query("SELECT s.usuarioSeguido FROM Seguidor s WHERE s.usuarioSeguidor.id = :usuarioId")
     List<Usuario> findSeguidosByUsuarioId(@Param("usuarioId") Long usuarioId);
+
+    @Query("SELECT s.usuarioSeguido.id FROM Seguidor s WHERE s.usuarioSeguidor.id = :seguidorId")
+    List<Long> findUsuariosSeguidosBySeguidorId(@Param("seguidorId") Long seguidorId);
 }
