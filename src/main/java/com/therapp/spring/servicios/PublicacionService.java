@@ -131,4 +131,12 @@ public class PublicacionService {
         return publicacionRepository.findByUsuarios(users);
 
     }
+
+    public String findTipo(Long id){
+        return publicacionRepository.findTipoByPublicacionId(id);
+    }
+
+    public String findUrl(Long id){
+        return publicacionRepository.findUrlByPublicacionId(id);
+    }
 }

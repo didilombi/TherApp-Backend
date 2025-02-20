@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.therapp.spring.dto.PublicacionDTO;
 import com.therapp.spring.modelo.Publicacion;
 import com.therapp.spring.modelo.RolPublicacion;
 import com.therapp.spring.modelo.Usuario;
 import com.therapp.spring.servicios.ContenidoPublicacionService;
 import com.therapp.spring.servicios.PublicacionService;
+import com.therapp.spring.servicios.SeguidorService;
 import com.therapp.spring.servicios.UsuarioPublicacionService;
 import com.therapp.spring.servicios.UsuarioService;
 
@@ -41,6 +43,9 @@ public class PublicacionController {
     
     @Autowired
     UsuarioPublicacionService usuarioPublicacionService;
+
+    @Autowired
+    SeguidorService seguidorService;
     
     @GetMapping
     public List<Publicacion> getAllPublicaciones() {
@@ -106,20 +111,41 @@ public class PublicacionController {
     }
 
     @GetMapping("/buscarpublicaciones/{id}")
-    public List<Publicacion> buscarPublicacionesPorUsuario(@PathVariable("id") Long id){
+    public List<PublicacionDTO> buscarPublicacionesPorUsuario(@PathVariable("id") Long id){
      
         List<Long> listaid = usuarioPublicacionService.obtenerPublicacionIdsPorUsuario(id);
         System.out.println("ID recibido en el backend: " + id);
-        List<Publicacion> lista = new ArrayList<>();
+        List<PublicacionDTO> lista = new ArrayList<>();
         
         for(int i = 0; i < listaid.size(); i++) {
-        	lista.add(publicacionService.findById(listaid.get(i)));
+            PublicacionDTO publi = new PublicacionDTO();
+            publi.setTexto(publicacionService.findById(listaid.get(i)).getTexto());
+            publi.setFechaPublicacion(publicacionService.findById(listaid.get(i)).getFechaPublicacion());
+            publi.setTipo(publicacionService.findTipo(listaid.get(i)));
+            publi.setUrl(publicacionService.findUrl(listaid.get(i)));
+            lista.add(publi);
         }
         
 //        for (Long pubId : listaid) {
 //            lista.add(publicacionService.findById(pubId));
 //        }
         
+        return lista;
+    }
+
+    @GetMapping("/buscarpublicacionesdeseguidos/{id}")
+    public List<Publicacion> buscarPublicacionesDeSeguidos(@PathVariable("id") Long id){
+        List<Publicacion> lista = new ArrayList<>();
+
+        List<Long> idSeguidos = seguidorService.buscarIdSeguidos(id);
+
+        for(int i = 0; i < idSeguidos.size(); i++) {
+            Publicacion publi = new Publicacion();
+            publi.setTexto(publicacionService.findById(idSeguidos.get(i)).getTexto());
+            publi.setFechaPublicacion(publicacionService.findById(idSeguidos.get(i)).getFechaPublicacion());
+            lista.add(publi);
+        }
+
         return lista;
     }
     
