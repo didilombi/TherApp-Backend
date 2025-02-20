@@ -127,4 +127,14 @@ public class TerapeutaController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
+
+    @DeleteMapping("/eliminar/{usuarioId}")
+    public ResponseEntity<Void> eliminarTerapeuta(@PathVariable Long usuarioId) {
+        Optional<Usuario> usuario = usuarioService.findById(usuarioId);
+        if (usuario.isPresent()) {
+            terapeutaService.deleteByUsuarioId(usuarioId);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }
