@@ -77,7 +77,7 @@ public class UsuarioController {
             // Enviar correo de confirmación
             String subject = "Confirmación de Registro";
             String text = "Hola " + usuario.getNombre() + ",\n\nGracias por registrarte en nuestra aplicación. Por favor, confirma tu correo electrónico haciendo clic en el siguiente enlace:\n"
-                    + "http://localhost:9000/api/usuarios/confirmar?token=" + confirmationToken.getToken();
+                    + "http://68.221.24.123/api/usuarios/confirmar?token=" + confirmationToken.getToken();
             emailService.sendEmail(usuario.getEmail(), subject, text);
 
             return ResponseEntity.ok(nuevoUsuario);
